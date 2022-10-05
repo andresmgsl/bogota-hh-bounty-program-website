@@ -24,23 +24,23 @@ const ParticipantSection = ({ owner, hunter }) => (
     <div className="flex h-16 w-full min-w-0 flex-1 flex-row gap-3">
         <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
             <Text variant="label" className="text-secondary">
-                Owner
+                Hunter
             </Text>
             <Text
-                variant="paragraph"
+                variant="heading"
                 className="w-full overflow-hidden text-ellipsis whitespace-nowrap"
             >
                 {owner}
             </Text>
         </div>
-        <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
+        {/* <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
             <Text variant="label" className="text-secondary">
                 Hunter
             </Text>
             <div className="flex w-full flex-row items-center gap-3 overflow-hidden">
                 {hunter ? (
                     <Text
-                        variant="paragraph"
+                        variant="heading"
                         className="w-full overflow-hidden text-ellipsis whitespace-nowrap"
                     >
                         {hunter}
@@ -51,6 +51,46 @@ const ParticipantSection = ({ owner, hunter }) => (
                     </Text>
                 )}
             </div>
+        </div> */}
+    </div>
+);
+
+const ChallengeSection = ({ name }) => (
+    <div className="flex h-16 w-full min-w-0 flex-1 flex-row gap-3">
+        <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
+            <Text variant="label" className="text-secondary">
+                Hunter
+            </Text>
+            <div className="flex w-full flex-row items-center gap-3 overflow-hidden">
+                {name ? (
+                    <Text
+                        variant="paragraph"
+                        className="w-full overflow-hidden text-ellipsis whitespace-nowrap"
+                    >
+                        {name}
+                    </Text>
+                ) : (
+                    <Text variant="paragraph" className="hidden sm:inline">
+                        None
+                    </Text>
+                )}
+            </div>
+        </div>
+    </div>
+);
+
+const PointsSection = ({ owner, hunter }) => (
+    <div className="flex h-16 w-full min-w-0 flex-2 flex-row gap-3">
+        <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
+            <Text variant="label" className="text-secondary">
+                Points
+            </Text>
+            <Text
+                variant="paragraph"
+                className="w-full overflow-hidden text-ellipsis whitespace-nowrap"
+            >
+                {owner}
+            </Text>
         </div>
     </div>
 );
@@ -80,9 +120,9 @@ const TagsSection = ({ tags, maxTags }) => (
 );
 
 const RewardSection = ({ reward, showDetails, responsive }) => (
-    <div className="basis-18 flex h-16 flex-shrink-0 flex-col items-end justify-between overflow-hidden">
+    <div className="basis-18 flex h-16 flex-shrink-0 flex-col justify-between overflow-hidden">
         <Text variant="label" className="inline text-secondary">
-            {(!responsive || showDetails) && 'Reward ·'} Tickets
+            Points
         </Text>
         <Text
             variant="heading"
@@ -95,7 +135,8 @@ const RewardSection = ({ reward, showDetails, responsive }) => (
 
 const BasicsSection = ({ name, createdAt }) => (
     <div className="flex h-16 flex-col justify-between">
-        <Chip highlightValue={createdAt} />
+        {/* <Chip highlightValue={createdAt} /> */}
+        <Chip highlightValue={'rank'} />
         <Text
             variant="heading"
             className={cn(
@@ -118,44 +159,43 @@ const BountyCard = ({
     tags,
     responsive = true,
     maxTags = 5,
-    showDetails = false,
+    showDetails = true,
+    rank,
+    total,
 }: BountyCardProps) => (
-    <Link href={`/explorer/${id}`} passHref>
+    // <Link href={`/explorer/${id}`} passHref>
+    <div>
         <a>
             <Card
                 className={cn(
-                    'flex h-fit w-80 flex-shrink-0 snap-start flex-col items-start justify-between gap-5 p-6 sm:w-98',
+                    'flex h-fit w-80 flex-shrink-0 snap-start flex-col items-start justify-between gap-2 p-6 sm:w-98',
                     responsive && '!w-full 2lg:flex-row 2lg:items-center',
                     !showDetails &&
                         'transition-all duration-300 hover:bg-opacity-[97%]',
                 )}
             >
                 <div className="w-full overflow-hidden">
-                    {showDetails ? (
-                        <ParticipantSection owner={owner} hunter={hunter} />
-                    ) : (
-                        <BasicsSection name={id} createdAt={createdAt} />
-                    )}
+                    <BasicsSection name={rank} createdAt={createdAt} />
                 </div>
 
                 <div className="flex w-full max-w-full flex-row justify-between overflow-hidden">
-                    {showDetails ? (
-                        <TagsSection tags={tags} maxTags={maxTags} />
-                    ) : (
-                        <ParticipantSection owner={owner} hunter={hunter} />
-                    )}
-
-                    {showDetails && (
-                        <RewardSection
-                            reward={reward ?? '-'}
-                            showDetails={showDetails}
-                            responsive={responsive}
-                        />
-                    )}
+                    <ParticipantSection owner={owner} hunter={hunter} />
                 </div>
+
+                <div className="flex w-full max-w-full flex-row md:justify-end justify-between overflow-hidden">
+                    <RewardSection
+                        reward={total ?? '-'}
+                        showDetails={showDetails}
+                        responsive={responsive}
+                    />
+                </div>
+
+
             </Card>
         </a>
-    </Link>
+    {/* </Link>
+     */}
+     </div>
 );
 
 export default BountyCard;

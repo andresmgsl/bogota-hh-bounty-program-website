@@ -77,15 +77,12 @@ const NewPage: NextPage = () => {
             });
             setValidBountyName(false);
             return;
-        } else if (hunter === '') {
-            hunterRef.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-            });
-            setValidHunter(false);
-            return;
         }
-        const responseUser = await fetch(`/api/${hunter}`);
+        const challengerName = session?.user?.name;
+        console.log(`session user: `, challengerName);
+
+        const responseUser = await fetch(`/api/${challengerName}`);
+
         const user = await responseUser.json();
 
         if (!user) {
@@ -100,7 +97,7 @@ const NewPage: NextPage = () => {
         try {
             const response = await fetch('/api/bounties', {
                 body: JSON.stringify({
-                    assignee: hunter,
+                    assignee: challengerName,
                     body: description,
                     title: title,
                 }),

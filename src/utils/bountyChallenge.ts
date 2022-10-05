@@ -1,4 +1,4 @@
-import { Bounty } from 'types/bounty';
+import { Bounty, BountyChallenge, IssueLabel } from 'types/bounty';
 import { DrillResponse } from 'types/drill';
 import { Issue } from 'types/github';
 import { formatDate } from 'utils';
@@ -35,7 +35,7 @@ const getDrillResponsesFromIssues = async (
  * @param issue Issue object
  * @param drillResponse DrillResponse object
  */
-const toBounty = (issue: Issue, drillResponse: DrillResponse): Bounty => {
+const toBountyChallenge = (issue: Issue, drillResponse: DrillResponse): BountyChallenge => {
     const {
         assignee,
         created_at,
@@ -48,9 +48,10 @@ const toBounty = (issue: Issue, drillResponse: DrillResponse): Bounty => {
         user: creator,
     } = issue;
 
-    const reward = Number(drillResponse?.amount) / 1_000_000;
+    const points = labels.filter(z => z.name.includes('points'))[0] as unknown as IssueLabel;
+    const reward = Number(points?.name.split(':')[1]);
     const rank = 9999;
-    
+
     return {
         address: drillResponse?.address?.toString() ?? null,
         createdAt: formatDate(created_at),
@@ -61,8 +62,9 @@ const toBounty = (issue: Issue, drillResponse: DrillResponse): Bounty => {
         mint: drillResponse?.mint?.toString() ?? null,
         name: title,
         owner: creator.login,
-        reward,
+        reward: reward,
         state,
+        labels,
         tags: labels.map(label => ({ value: label.name })),
         rank,
     };
@@ -75,9 +77,9 @@ const toBounty = (issue: Issue, drillResponse: DrillResponse): Bounty => {
  * @param issues List of Issue objects.
  * @param drillResponses List of DrillResponse objects.
  */
-const toBountyList = (
+const toBountyChallengeList = (
     issues: Issue[],
     drillResponses: DrillResponse[],
-): Bounty[] => issues.map((issue, i) => toBounty(issue, drillResponses[i]));
+): BountyChallenge[] => issues.map((issue, i) => toBountyChallenge(issue, drillResponses[i]));
 
-export { filterBounties, getDrillResponsesFromIssues, toBounty, toBountyList };
+export { filterBounties as filterBountyChallenges, getDrillResponsesFromIssues, toBountyChallenge, toBountyChallengeList };

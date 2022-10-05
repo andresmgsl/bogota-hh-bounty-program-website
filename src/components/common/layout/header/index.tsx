@@ -41,7 +41,9 @@ const Header = () => {
             <div className="flex h-full flex-row items-center gap-5">
                 <div className="flex h-2/3 flex-row gap-5 self-end sm:gap-7">
                     <NavElement label="Home" href="/" />
-                    <NavElement label="Explorer" href="/explorer" />
+                    {/* <NavElement label="Explorer" href="/explorer" /> */}
+                    <NavElement label="Leader Board" href="/leaderboard" />
+                    <NavElement label="Challenges" href="/challenges" />
                 </div>
 
                 <div className="h-1/2 w-px bg-line" />
@@ -72,8 +74,7 @@ const Header = () => {
                         onClick={query.toggle}
                     />
 
-                    {/* <div className="hidden h-1/2 w-px bg-line md:inline" /> */}
-
+                    <div className="hidden h-1/2 w-px bg-line md:inline" />
                     {/* <OverflowMenu /> */}
                 </div>
             </div>

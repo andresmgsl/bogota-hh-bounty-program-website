@@ -14,7 +14,9 @@ const BountyList = ({ bounties: initialBounties }: BountyListProps) => {
         query: '',
     });
 
-    const bounties = filterData.bounties;
+    let bounties = filterData.bounties;
+
+    bounties = filterData.bounties.sort(rank_ascending);
 
     const onSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const query = e.target.value;
@@ -23,7 +25,9 @@ const BountyList = ({ bounties: initialBounties }: BountyListProps) => {
         );
         setFilterData({ bounties: filteredBounties, query });
     };
-
+    function rank_ascending(a, b) {
+        return a.id < b.id ? -1 : (a.id < b.id ? 1 : 0);
+    }
     return (
         <div className="flex flex-col gap-4">
             <FilterMenu onSearchInputChange={onSearchInputChange} />
