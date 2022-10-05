@@ -10,7 +10,7 @@ const Home: NextPage = () => (
     <>
         <div>
             <HeroSection />
-            <StatsSection />
+            {/* <StatsSection /> */}
         </div>
         <AboutSection />
         <FaqSection />

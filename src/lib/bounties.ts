@@ -19,7 +19,7 @@ const getBountyChallenges = async (accessToken: string) => {
     const issues = await getIssues(accessToken);
 
     if (!issues) {
-        return null;
+        return [];
     }
     return toBountyChallengeList(issues, []);
 };

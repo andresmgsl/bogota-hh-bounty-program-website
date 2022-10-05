@@ -184,20 +184,18 @@ Your submission should include the following:
             return;
         }
         const challengerName = session?.user?.name;
-        console.log(`session user: `, challengerName);
-
         const responseUser = await fetch(`/api/${challengerName}`);
 
         const user = await responseUser.json();
 
-        if (!user) {
-            setValidHunter(false);
-            hunterRef.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-            });
-            return;
-        }
+        // if (!user) {
+        //     setValidHunter(false);
+        //     hunterRef.current.scrollIntoView({
+        //         behavior: 'smooth',
+        //         block: 'center',
+        //     });
+        //     return;
+        // }
 
         try {
             const submission = `
@@ -218,7 +216,7 @@ ${submitProgramID}
 
 `;
 
-            setSubmission (submission);
+            setSubmission(submission);
             const response = await fetch('/api/bounties', {
                 body: JSON.stringify({
                     // assignee: hunter,
@@ -231,7 +229,6 @@ ${submitProgramID}
             });
 
             const data = await response.json();
-
             if (response.ok) {
                 alert('Submission Sent!');
                 router.push('/challenges');

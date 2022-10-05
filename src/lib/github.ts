@@ -49,24 +49,21 @@ const closeIssue = async (id: number, token: string) => {
 const createIssue = async (issue: IssueToCreate, token: string) => {
     const url = `${process.env.GITHUB_API}/repos/${process.env.GITHUB_REPOSITORY}/issues`;
     const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
-    console.log(`fetch url:` , url)
-    const { assignee, body, labels = [], title } = issue;
-
+    const { body, labels = [], title } = issue;
     try {
         const response = await fetch(url, {
             body: JSON.stringify({
-                assignees: [assignee],
+                assignees: [],
                 body,
+                owner,
+                repo,
+                title,
                 labels: [
                     DRILL_BOUNTY_LABEL,
                     DRILL_BOUNTY_CHALLENGE_LABEL,
                     DRILL_BOUNTY_POINTS_LABEL,
-                    "completed",
                     ...labels
                 ],
-                owner,
-                repo,
-                title,
             }),
             headers: {
                 Accept: 'application/vnd.github+json',
@@ -75,7 +72,6 @@ const createIssue = async (issue: IssueToCreate, token: string) => {
             },
             method: 'POST',
         });
-
         return response.json();
     } catch (error) {
         throw new Error(error);

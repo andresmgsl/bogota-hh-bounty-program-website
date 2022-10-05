@@ -49,7 +49,7 @@ const toBountyChallenge = (issue: Issue, drillResponse: DrillResponse): BountyCh
     } = issue;
 
     const points = labels.filter(z => z.name.includes('points'))[0] as unknown as IssueLabel;
-    const reward = Number(points?.description);
+    const reward = Number(points?.name.split(':')[1]);
     const rank = 9999;
 
     return {

@@ -5,7 +5,7 @@ import Text from 'components/common/text';
 const Footer = () => (
     <footer className="my-16 flex flex-col justify-center gap-16 px-4 md:px-16 lg:px-32 xl:px-48">
         <div className="h-px w-full bg-line" />
-        <Card className="flex w-full flex-row justify-between rounded-xl p-7">
+        <Card className="flex w-full flex-row justify-between rounded-xl px-7">
             <div className="flex flex-row items-center gap-3">
                 <Image
                     src="/logo-icon.svg"
@@ -16,10 +16,10 @@ const Footer = () => (
                 />
                 <Text variant="label" className="font-thin !tracking-widest">
                     {' '}
-                    Bounty{' '}
+                    Bounty Program{' '}
                 </Text>
             </div>
-            <Text variant="label" className="font-light">
+            {/* <Text variant="label" className="font-light">
                 Powered by{' '}
                 <a
                     href="https://solana.com"
@@ -38,7 +38,17 @@ const Footer = () => (
                 >
                     Heavy Duty
                 </a>
-            </Text>
+            </Text> */}
+            <div>
+                <a href='https://heavyduty.builders/' target="_blank" rel="noreferrer">
+                    <Image
+                        src="/heavy.png"
+                        alt="Heavy Duty Builder "
+                        width={200}
+                        height={150}
+                    />
+                </a>
+            </div>
         </Card>
     </footer>
 );
