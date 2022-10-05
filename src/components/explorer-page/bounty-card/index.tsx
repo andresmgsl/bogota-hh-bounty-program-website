@@ -103,7 +103,7 @@ const BasicsSection = ({ name, createdAt }) => (
                 // responsive && '2lg:hidden',
             )}
         >
-            {name}
+            #{name}
         </Text>
     </div>
 );
@@ -134,7 +134,7 @@ const BountyCard = ({
                     {showDetails ? (
                         <ParticipantSection owner={owner} hunter={hunter} />
                     ) : (
-                        <BasicsSection name={name} createdAt={createdAt} />
+                        <BasicsSection name={id} createdAt={createdAt} />
                     )}
                 </div>
 

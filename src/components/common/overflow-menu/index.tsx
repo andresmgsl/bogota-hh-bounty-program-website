@@ -20,11 +20,11 @@ const OverflowMenu = () => {
     const { data: session } = useSession();
     const [menuOpen, setMenuOpen] = useState(false);
     const { user } = useUser(session?.login as string);
-    const { publicKey, wallet } = useWallet();
+    // const { publicKey, wallet } = useWallet();
 
-    const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
-    const walletName = wallet?.adapter.name;
-    const walletImage = getWalletImage(walletName?.toLowerCase());
+    // const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
+    // const walletName = wallet?.adapter.name;
+    // const walletImage = getWalletImage(walletName?.toLowerCase());
 
     const closedBountiesCount = user?.closedBountiesCount.toString() ?? '-';
     const level = `${user?.level ?? '-'}`;
@@ -119,7 +119,7 @@ const OverflowMenu = () => {
                         />
                     </div>
                     <div className="h-px w-full bg-line" />
-                    <div className="flex w-full min-w-0 flex-col gap-3 p-5">
+                    {/* <div className="flex w-full min-w-0 flex-col gap-3 p-5">
                         <div className="flex w-full min-w-0 flex-1 items-center justify-between">
                             <div className="flex w-full flex-col gap-1">
                                 <Text
@@ -165,7 +165,7 @@ const OverflowMenu = () => {
                         </div>
 
                         <WalletMultiButton />
-                    </div>
+                    </div> */}
                 </Card>
             </div>
 

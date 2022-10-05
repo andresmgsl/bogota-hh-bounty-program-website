@@ -137,6 +137,14 @@ const CommandPalette = props => {
             section: 'Navigation',
             perform: () => (window.location.pathname = '/explorer'),
         },
+        // {
+        //     id: 'leaderboard',
+        //     name: 'Leader Board',
+        //     keywords: 'leader board',
+        //     shortcut: ['e'],
+        //     section: 'Navigation',
+        //     perform: () => (window.location.pathname = '/leaderboard'),
+        // },
         {
             id: 'create-bounty',
             name: 'Create bounty',

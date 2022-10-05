@@ -6,7 +6,6 @@ import { NextPage } from 'next';
 import StatsSection from 'components/home-page/stats-section';
 
 // Home
-
 const Home: NextPage = () => (
     <>
         <div>
