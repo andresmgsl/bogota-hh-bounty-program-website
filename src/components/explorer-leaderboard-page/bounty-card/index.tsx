@@ -22,18 +22,18 @@ type BountyCardProps = Omit<Bounty, 'githubUrl' | 'tags'> & {
 
 const ParticipantSection = ({ owner, hunter }) => (
     <div className="flex h-16 w-full min-w-0 flex-1 flex-row gap-3">
-        {/* <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
+        <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
             <Text variant="label" className="text-secondary">
-                Owner
+                Hunter
             </Text>
             <Text
-                variant="paragraph"
+                variant="heading"
                 className="w-full overflow-hidden text-ellipsis whitespace-nowrap"
             >
                 {owner}
             </Text>
-        </div> */}
-        <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
+        </div>
+        {/* <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
             <Text variant="label" className="text-secondary">
                 Hunter
             </Text>
@@ -51,34 +51,12 @@ const ParticipantSection = ({ owner, hunter }) => (
                     </Text>
                 )}
             </div>
-        </div>
-        {/* <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
-            <Text variant="label" className="text-secondary">
-                Points
-            </Text>
-            <Text
-                variant="paragraph"
-                className="w-full overflow-hidden text-ellipsis whitespace-nowrap"
-            >
-                {owner}
-            </Text>
         </div> */}
     </div>
 );
 
 const ChallengeSection = ({ name }) => (
     <div className="flex h-16 w-full min-w-0 flex-1 flex-row gap-3">
-        {/* <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
-            <Text variant="label" className="text-secondary">
-                Owner
-            </Text>
-            <Text
-                variant="paragraph"
-                className="w-full overflow-hidden text-ellipsis whitespace-nowrap"
-            >
-                {owner}
-            </Text>
-        </div> */}
         <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
             <Text variant="label" className="text-secondary">
                 Hunter
@@ -97,42 +75,12 @@ const ChallengeSection = ({ name }) => (
                     </Text>
                 )}
             </div>
-        </div>       
+        </div>
     </div>
 );
 
 const PointsSection = ({ owner, hunter }) => (
     <div className="flex h-16 w-full min-w-0 flex-2 flex-row gap-3">
-        {/* <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
-            <Text variant="label" className="text-secondary">
-                Owner
-            </Text>
-            <Text
-                variant="paragraph"
-                className="w-full overflow-hidden text-ellipsis whitespace-nowrap"
-            >
-                {owner}
-            </Text>
-        </div> */}
-        <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
-            <Text variant="label" className="text-secondary">
-                Hunter
-            </Text>
-            <div className="flex w-full flex-row items-center gap-3 overflow-hidden">
-                {hunter ? (
-                    <Text
-                        variant="paragraph"
-                        className="w-full overflow-hidden text-ellipsis whitespace-nowrap"
-                    >
-                        {hunter}
-                    </Text>
-                ) : (
-                    <Text variant="paragraph" className="hidden sm:inline">
-                        None
-                    </Text>
-                )}
-            </div>
-        </div>
         <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
             <Text variant="label" className="text-secondary">
                 Points
@@ -174,7 +122,6 @@ const TagsSection = ({ tags, maxTags }) => (
 const RewardSection = ({ reward, showDetails, responsive }) => (
     <div className="basis-18 flex h-16 flex-shrink-0 flex-col justify-between overflow-hidden">
         <Text variant="label" className="inline text-secondary">
-            {/* {(!responsive || showDetails) && 'Reward ·'} Tickets */}
             Points
         </Text>
         <Text
@@ -198,7 +145,6 @@ const BasicsSection = ({ name, createdAt }) => (
             )}
         >
             #{name}
-            {/* ok */}
         </Text>
     </div>
 );
@@ -218,7 +164,6 @@ const BountyCard = ({
     total,
 }: BountyCardProps) => (
     // <Link href={`/explorer/${id}`} passHref>
-    // <Link href={``} style={{pointerEvents: 'none'}} >
     <div>
         <a>
             <Card
@@ -230,67 +175,19 @@ const BountyCard = ({
                 )}
             >
                 <div className="w-full overflow-hidden">
-                <BasicsSection name={rank} createdAt={createdAt} />
-                    {/* {showDetails ? (
-                        <ParticipantSection owner={owner} hunter={hunter} />
-                    ) : (
-                        <BasicsSection name={id} createdAt={createdAt} />
-                    )} */}
+                    <BasicsSection name={rank} createdAt={createdAt} />
                 </div>
 
-                {/* <div className="flex w-full max-w-full flex-row justify-between overflow-hidden">
-                <ChallengeSection name={name} />
-                </div> */}
-
                 <div className="flex w-full max-w-full flex-row justify-between overflow-hidden">
-                <ParticipantSection owner={owner} hunter={hunter} />
-                {/* <RewardSection
-                            reward={reward ?? '-'}
-                            showDetails={showDetails}
-                            responsive={responsive}
-                    /> */}
-                    {/* {
-                    showDetails ? (
-                        <TagsSection tags={tags} maxTags={maxTags} />
-                    ) : (
-                        <ParticipantSection owner={owner} hunter={hunter} />
-                    )
-                    }
-
-                    {showDetails && (
-                        <RewardSection
-                            reward={reward ?? '-'}
-                            showDetails={showDetails}
-                            responsive={responsive}
-                        />
-                    )} */}
+                    <ParticipantSection owner={owner} hunter={hunter} />
                 </div>
 
                 <div className="flex w-full max-w-full flex-row md:justify-end justify-between overflow-hidden">
-                    {/* {showDetails ? (
-                        <TagsSection tags={tLinkags} maxTags={maxTags} />
-                    ) : (
-                        <PointsSection owner={owner} hunter={hunter} />
-                    )} */}
-
-                    {/* <RewardSection
-                            reward={reward ?? '-'}
-                            showDetails={showDetails}
-                    /> */}
-
                     <RewardSection
-                            reward={total ?? '-'}
-                            showDetails={showDetails}
-                            responsive={responsive}
+                        reward={total ?? '-'}
+                        showDetails={showDetails}
+                        responsive={responsive}
                     />
-
-                    {/* {showDetails && (
-                        <RewardSection
-                            reward={reward ?? '-'}
-                            showDetails={showDetails}
-                            responsive={responsive}
-                        />
-                    )} */}
                 </div>
 
 

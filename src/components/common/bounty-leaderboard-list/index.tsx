@@ -20,8 +20,20 @@ const BountyLeaderboardList = ({ bounties: initialBounties }: BountyLeaderboardL
     bounties = bounties.filter(x => x.labels.some(z => z.name == 'completed'));
 
     const totals = [];
+    // By Hunter (for demo: if assigned mode)
+    // bounties.forEach(x => {
+    //     const obj = totals.find(o => o.hunter === x.hunter);
+    //     if (obj) {
+    //         obj.total = obj.total + x.reward;
+    //     } else {
+    //         x.total = x.reward;
+    //         totals.push(x);
+    //     }
+    // });
+
+    // By Owner (for demo: as challenger/player is creating the issue, for challenger mode)
     bounties.forEach(x => {
-        const obj = totals.find(o => o.hunter === x.hunter);
+        const obj = totals.find(o => o.owner === x.owner);
         if (obj) {
             obj.total = obj.total + x.reward;
         } else {
@@ -31,9 +43,9 @@ const BountyLeaderboardList = ({ bounties: initialBounties }: BountyLeaderboardL
     });
 
     bounties = totals.sort(total_ascending);
-
     let index = 1;
     bounties.forEach(item => {
+        console.log(`item: `, item);
         item.rank = index++;
     });
 
@@ -46,8 +58,10 @@ const BountyLeaderboardList = ({ bounties: initialBounties }: BountyLeaderboardL
     };
 
     function total_ascending(a, b) {
-        return a.total > b.total ? -1 : (a.total > b.total ? 1 : 0);
+        return a.total < b.total ? 1 : (a.total > b.total ? -1 : 0);
+        // return b.total - a.total;
     }
+
     return (
         <div className="flex flex-col gap-4">
             {/* <FilterMenu onSearchInputChange={onSearchInputChange} /> */}

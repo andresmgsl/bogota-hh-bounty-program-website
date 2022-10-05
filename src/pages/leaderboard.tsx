@@ -91,14 +91,14 @@ const LeaderboardPage: NextPage<LeaderboardPageProps> = ({ bounties }) => {
             <div className="flex flex-col gap-12 pt-14">
                 {/* <FeaturedSection bounties={openBounties.slice(0, 5)} /> */}
                 <div className="flex flex-col gap-0">
-                <Text variant="sub-heading" className="text-center"> Bogota, Colombia </Text>
+                    <Text variant="sub-heading" className="text-center"> Bogota, Colombia </Text>
                     <div className="flex w-full flex-col gap-2 px-5 sm:px-8 md:px-16 lg:px-32 xl:px-48">
                         <Text variant="big-heading" className="text-center text-transparent text-8xl bg-clip-text bg-gradient-to-tl from-[#ef3c11] via-[#fdb735] to-[#ffeb3a]">
                                 Leaderboard{' '}
                         </Text>
 
                         <div className="mt-6">
-                        {currentTab.content}
+                            {currentTab.content}
                         </div>
                     </div>
                 </div>
