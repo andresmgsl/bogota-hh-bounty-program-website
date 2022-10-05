@@ -20,6 +20,7 @@ export const mockBounties: Bounty[] = [
             { value: 'explorer-page' },
             { value: 'explorer-page' },
         ],
+        rank: 9999,
     },
     {
         address: 'a',
@@ -40,6 +41,7 @@ export const mockBounties: Bounty[] = [
             { value: 'explorer-page' },
             { value: 'explorer-page' },
         ],
+        rank: 9999,
     },
     {
         address: 'a',
@@ -60,6 +62,7 @@ export const mockBounties: Bounty[] = [
             { value: 'explorer-page' },
             { value: 'explorer-page' },
         ],
+        rank: 9999,
     },
     {
         address: 'a',
@@ -80,5 +83,6 @@ export const mockBounties: Bounty[] = [
             { value: 'explorer-page' },
             { value: 'explorer-page' },
         ],
+        rank: 9999,
     },
 ];
