@@ -13,7 +13,7 @@ import Text from 'components/common/text';
 import { cn } from 'utils';
 import { useRouter } from 'next/router';
 
-const NewChallengeTwoPage: NextPage = () => {
+const SocialChallenge: NextPage = () => {
     const [validBountyName, setValidBountyName] = useState(true);
     const [validHunter, setValidHunter] = useState(true);
     const titleRef = useRef(null);
@@ -297,7 +297,7 @@ ${submitSolanaUniversityDiscord}
                         {currentChallenge.content}
                         {currentSubmission.content}
 
-                        <div className="width-full flex flex-row justify-end gap-2">
+                        <div className="flex flex-row justify-end gap-2 text-right">
                             <Markdown>
                                 **please review your entry before clicking submit*
                             </Markdown>
@@ -318,4 +318,4 @@ ${submitSolanaUniversityDiscord}
     );
 };
 
-export default NewChallengeTwoPage;
+export default SocialChallenge;

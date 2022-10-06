@@ -12,7 +12,7 @@ import { FormEvent, useMemo, useRef, useState } from 'react';
 import { TbBrandGithub } from 'react-icons/tb';
 import { cn } from 'utils';
 
-const NewChallengePage: NextPage = () => {
+const DeployChallengePage: NextPage = () => {
     const [validBountyName, setValidBountyName] = useState(true);
     const [validHunter, setValidHunter] = useState(true);
     const titleRef = useRef(null);
@@ -28,7 +28,6 @@ const NewChallengePage: NextPage = () => {
     const [submission, setSubmission] = useState('');
     const [challengeID, setChallengeID] = useState('221004010');
     const [points, setPoints] = useState(50);
-
 
     const [description, setDescription] = useState(
         `
@@ -77,8 +76,8 @@ Your submission should include the following:
 
 *That was almost too easy..*
 
-`
-);
+`,
+    );
 
     const tabsDescription = useMemo(
         () => [
@@ -96,48 +95,49 @@ Your submission should include the following:
             {
                 content: (
                     <div>
-
                         <Markdown>{`### Submit your answers`}</Markdown>
 
                         <input
-                            className="w-full py-5 border-none bg-transparent outline-none"
-                            value='1. Transaction Id: from your program deployment'
-                        />
-                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
-
-                            <input
-                                className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitTransactionID(e.target.value)}
-                                placeholder='Enter transaction Id...'
-                            />
-                        </Card>
-
-                        <input
-                            className="w-full py-5 border-none bg-transparent outline-none"
-                            value='2. Program Id:'
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="1. Transaction Id: from your program deployment"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitProgramID(e.target.value)}
-                                placeholder='Enter program Id...'
+                                onChange={e =>
+                                    setSubmitTransactionID(e.target.value)
+                                }
+                                placeholder="Enter transaction Id..."
                             />
                         </Card>
 
                         <input
-                            className="w-full py-5 border-none bg-transparent outline-none"
-                            value='3. How long did it take?  (minutes)'
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="2. Program Id:"
+                        />
+                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
+                            <input
+                                className="w-full items-center bg-transparent outline-none"
+                                onChange={e =>
+                                    setSubmitProgramID(e.target.value)
+                                }
+                                placeholder="Enter program Id..."
+                            />
+                        </Card>
+
+                        <input
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="3. How long did it take?  (minutes)"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
                                 onChange={e => setSubmitTime(e.target.value)}
-                                placeholder='Enter number of minutes it took to deploy your program...'
+                                placeholder="Enter number of minutes it took to deploy your program..."
                             />
                         </Card>
 
                         {/* additional feedback, was it easy, suggestions, etc */}
-
                     </div>
                 ),
                 id: 'submission',
@@ -219,7 +219,7 @@ ${submitProgramID}
                     assignee: challengerName,
                     body: description + submission,
                     title: `Challenge Submission: ` + title,
-                    points
+                    points,
                 }),
                 headers: { 'Content-Type': 'application/json' },
                 method: 'POST',
@@ -270,7 +270,9 @@ ${submitProgramID}
             ></NextSeo>
             <form className="flex flex-col" onSubmit={onSubmit}>
                 <section className="flex w-full flex-col gap-7 bg-gradient-to-tr from-primary/75 to-secondary/75 p-5 sm:p-8 md:px-16 lg:px-32 lg:py-16 xl:px-48 xl:py-20">
-                    <Text variant="label">Bounty Challenge: #{challengeID}</Text>
+                    <Text variant="label">
+                        Bounty Challenge: #{challengeID}
+                    </Text>
                     <div
                         className={cn(
                             'tooltip-bottom tooltip-error',
@@ -319,14 +321,14 @@ ${submitProgramID}
                         {currentChallenge.content}
                         {currentSubmission.content}
 
-                        <div className="width-full flex flex-row justify-end gap-2">
+                        <div className="flex flex-row justify-end gap-2 text-right">
                             <Markdown>
                                 **please review your entry before clicking submit*
                             </Markdown>
                         </div>
                         <div className="width-full flex flex-row justify-end gap-2">
                             <Button
-                                className='w-40'
+                                className="w-40"
                                 type="submit"
                                 variant="orange"
                                 text="Submit"
@@ -340,4 +342,4 @@ ${submitProgramID}
     );
 };
 
-export default NewChallengePage;
+export default DeployChallengePage;

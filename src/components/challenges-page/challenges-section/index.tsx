@@ -21,7 +21,7 @@ const ChallengesSection = () => (
                 </Text>
                 <Text variant="label" className="text-primary"> Difficulty: Easy </Text>
             </div>
-            <Link href="/challenges/new-challenge" passHref>
+            <Link href="/challenges/deploy-challenge" passHref>
                 <a className="flex flex-row justify-end">
                     <Button className='w-20 h-20 rounded-full border-2' variant="transparent" >
                         <MdPlayArrow size={40} />
@@ -43,7 +43,7 @@ const ChallengesSection = () => (
                 </Text>
                 <Text variant="label" className="text-primary"> Difficulty: Easy </Text>
             </div>
-            <Link href="/challenges/new-challenge-two" passHref>
+            <Link href="/challenges/social-challenge" passHref>
                 <a className="flex flex-row justify-end">
                     <Button className='w-20 h-20 rounded-full border-2' variant="transparent" >
                         <MdPlayArrow size={40} />
