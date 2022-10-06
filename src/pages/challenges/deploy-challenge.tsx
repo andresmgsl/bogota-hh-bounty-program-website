@@ -27,7 +27,7 @@ const DeployChallengePage: NextPage = () => {
     const [submitTime, setSubmitTime] = useState('');
     const [submission, setSubmission] = useState('');
     const [challengeID, setChallengeID] = useState('221004010');
-    const [points, setPoints] = useState(50);
+    const [points, setPoints] = useState(100);
 
     const [description, setDescription] = useState(
         `

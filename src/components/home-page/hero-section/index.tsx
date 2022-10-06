@@ -6,9 +6,8 @@ import Button from 'components/common/button';
 import Headlines from './headlines';
 import Image from 'components/common/image';
 import Link from 'next/link';
-import { MdOutlineExplore } from 'react-icons/md';
 import React from 'react';
-import { TbBrandGithub } from 'react-icons/tb';
+import { TbBrandChrome, TbBrandGithub } from 'react-icons/tb';
 import Text from 'components/common/text';
 import { cn } from 'utils';
 
@@ -48,6 +47,7 @@ const HeroSection = () => {
                     <span style={{ color: '#F07546' }}>Bounties</span> are here.
                     <br />
                     Do you have what it takes?
+
                 </Text>
                 <Headlines />
                 <div className="flex w-full flex-row flex-wrap justify-center gap-4 md:justify-start">
@@ -79,6 +79,18 @@ const HeroSection = () => {
                                     />
                                 )}
                             </Button>
+                        </a>
+                    </Link>
+                    <Link href="https://heavyduty.builders/" passHref>
+                        <a className="flex-1 sm:flex-none" target="_blank">
+                            <Button
+                                icon={TbBrandChrome}
+                                text={
+                                    'View Heavy Duty website'
+                                }
+                                variant="transparent"
+                                className="!w-full"
+                            ></Button>
                         </a>
                     </Link>
                 </div>
