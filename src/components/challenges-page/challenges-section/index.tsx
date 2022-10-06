@@ -12,7 +12,7 @@ const ChallengesSection = () => (
             <div className="flex max-w-xl flex-col gap-5">
                 <BiRocket size={35} />
                 <div className="flex flex-col gap-1">
-                    <Text variant="label" className="text-secondary"> Crypto and open-source fanatics </Text>
+                    <Text variant="label" className="text-secondary"> Deploy Challenge </Text>
                     <Text variant="big-heading">Challenge 1</Text>
                     <Text variant="sub-heading">Reward: 50 points + NFT</Text>
                 </div>
