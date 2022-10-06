@@ -5,6 +5,7 @@ type IssueToCreate = {
     body: string;
     labels?: string[];
     title: string;
+    points?: number;
 };
 
 type SearchApiResponse = {
@@ -12,14 +13,14 @@ type SearchApiResponse = {
 };
 
 const DRILL_BOUNTY_LABEL = 'drill:bounty';
-const DRILL_BOUNTY_ENABLED_LABEL = 'drill:bounty:enabled';
+const DRILL_BOUNTY_ENABLED_LABEL = 'drill:bounty';
 const DRILL_BOUNTY_CLOSED_LABEL = 'drill:bounty:closed';
 const DRILL_BOUNTY_CHALLENGE_LABEL = 'challenge';
-const DRILL_BOUNTY_POINTS_LABEL = 'points:50';
+const DRILL_BOUNTY_POINTS_LABEL = 'points:';
 
 const getDrillBountyUrlQuery = (params: string[] = []) =>
     `q=${encodeURIComponent(
-        `is:issue label:"${DRILL_BOUNTY_ENABLED_LABEL}","${DRILL_BOUNTY_CLOSED_LABEL}" repo:${
+        `is:issue label:"${DRILL_BOUNTY_CHALLENGE_LABEL}","${DRILL_BOUNTY_LABEL}" repo:${
             process.env.GITHUB_REPOSITORY
         } ${params.length ? params.join(' ') : ''}`,
     )}`;
@@ -49,7 +50,16 @@ const closeIssue = async (id: number, token: string) => {
 const createIssue = async (issue: IssueToCreate, token: string) => {
     const url = `${process.env.GITHUB_API}/repos/${process.env.GITHUB_REPOSITORY}/issues`;
     const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
-    const { body, labels = [], title } = issue;
+    const { body, title } = issue;
+
+    let pointsLabel = "";
+
+    if (issue.points) {
+        pointsLabel = DRILL_BOUNTY_POINTS_LABEL + String(issue.points);
+    } else {
+        pointsLabel = DRILL_BOUNTY_POINTS_LABEL + '0';
+    }
+
     try {
         const response = await fetch(url, {
             body: JSON.stringify({
@@ -59,10 +69,8 @@ const createIssue = async (issue: IssueToCreate, token: string) => {
                 repo,
                 title,
                 labels: [
-                    DRILL_BOUNTY_LABEL,
                     DRILL_BOUNTY_CHALLENGE_LABEL,
-                    DRILL_BOUNTY_POINTS_LABEL,
-                    ...labels
+                    pointsLabel
                 ],
             }),
             headers: {

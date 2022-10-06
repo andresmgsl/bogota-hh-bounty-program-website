@@ -27,6 +27,7 @@ import { mockBounties } from 'mocks/bounties';
 type LeaderboardPageProps = { bounties: BountyChallenge[] };
 
 const LeaderboardPage: NextPage<LeaderboardPageProps> = ({ bounties }) => {
+    console.log("EPA", bounties)
     const closedBounties = useMemo(
         () =>
             bounties.filter(
@@ -110,7 +111,6 @@ const LeaderboardPage: NextPage<LeaderboardPageProps> = ({ bounties }) => {
 export default LeaderboardPage;
 
 export const getServerSideProps: GetServerSideProps = async context => {
-    console.log(`getServerSideProps..Leaderboard`);
     const session = await unstable_getServerSession(
         context.req,
         context.res,

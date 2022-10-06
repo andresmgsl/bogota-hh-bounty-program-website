@@ -20,11 +20,6 @@ const ActionsSection = () => (
                     Grow your open-source portfolio by completing bounties that interest you, expand your network, and get paid for your work.
                 </Text>
             </div>
-            <Link href="/explorer" passHref>
-                <a className="flex flex-row justify-end">
-                    <Button text="Start Exploring" variant="transparent" />
-                </a>
-            </Link>
         </Card>
         <Card className="flex flex-1 flex-col justify-between gap-10 p-12">
             <div className="flex max-w-xl flex-col gap-5">

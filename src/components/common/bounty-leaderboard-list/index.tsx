@@ -15,7 +15,6 @@ const BountyLeaderboardList = ({ bounties: initialBounties }: BountyLeaderboardL
     });
 
     let bounties = filterData.bounties;
-
     bounties = bounties.filter(x => x.labels.some(z => z.name == 'challenge'));
     bounties = bounties.filter(x => x.labels.some(z => z.name == 'completed'));
 
