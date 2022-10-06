@@ -46,8 +46,6 @@ const Header = () => {
                     <NavElement label="Challenges" href="/challenges" />
                 </div>
 
-                <div className="h-1/2 w-px bg-line" />
-
                 <div className="flex h-full flex-row items-center gap-3 md:gap-5">
                     {/* <Button
                         variant="transparent"
