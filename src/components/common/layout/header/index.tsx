@@ -49,7 +49,7 @@ const Header = () => {
                 <div className="h-1/2 w-px bg-line" />
 
                 <div className="flex h-full flex-row items-center gap-3 md:gap-5">
-                    <Button
+                    {/* <Button
                         variant="transparent"
                         icon={MdOutlineSearch}
                         className="group hidden md:flex"
@@ -65,7 +65,7 @@ const Header = () => {
                                 k{' '}
                             </kbd>
                         </div>
-                    </Button>
+                    </Button> */}
 
                     <Button
                         variant="transparent"
@@ -75,7 +75,7 @@ const Header = () => {
                     />
 
                     <div className="hidden h-1/2 w-px bg-line md:inline" />
-                    {/* <OverflowMenu /> */}
+                    <OverflowMenu />
                 </div>
             </div>
         </header>
