@@ -40,7 +40,7 @@ In this challenge your mission is to deploy your first Solana program to devnet!
 
 How long do you think it will take you to deploy?
 
-Good luck **${session?.user?.name}**!
+Good luck **Hunter**!
 
 1. Visit the Solana developer docs: [https://docs.solana.com/developers](https://docs.solana.com/developers)
 2. Click on the [Get Started](https://docs.solana.com/getstarted/hello-world) button

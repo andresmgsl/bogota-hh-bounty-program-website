@@ -44,7 +44,6 @@ const BountyLeaderboardList = ({ bounties: initialBounties }: BountyLeaderboardL
     bounties = totals.sort(total_ascending);
     let index = 1;
     bounties.forEach(item => {
-        console.log(`item: `, item);
         item.rank = index++;
     });
 

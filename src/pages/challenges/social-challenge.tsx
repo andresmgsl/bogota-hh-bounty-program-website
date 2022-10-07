@@ -1,16 +1,17 @@
+import { FormEvent, useMemo, useRef, useState } from 'react';
+import { signIn, useSession } from 'next-auth/react';
+
 import Button from 'components/common/button';
 import Card from 'components/common/card';
-import NavElement from 'components/common/layout/header/nav-element';
-import Markdown from 'components/common/markdown';
-import Text from 'components/common/text';
-import { NextPage } from 'next';
-import { signIn, useSession } from 'next-auth/react';
-import { NextSeo } from 'next-seo';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { FormEvent, useMemo, useRef, useState } from 'react';
+import Markdown from 'components/common/markdown';
+import NavElement from 'components/common/layout/header/nav-element';
+import { NextPage } from 'next';
+import { NextSeo } from 'next-seo';
 import { TbBrandGithub } from 'react-icons/tb';
+import Text from 'components/common/text';
 import { cn } from 'utils';
+import { useRouter } from 'next/router';
 
 const SocialChallenge: NextPage = () => {
     const [validBountyName, setValidBountyName] = useState(true);
@@ -40,17 +41,17 @@ Hey hunter, trying to break into web3? Let's start by joining some communities w
 
 There's many awesome communities out there, for now let's start with joining Solana University and Heavy Duty Builders. Both communities intention is to help builders break into Solana development!
 
-- Follow Heavy Duty Builders on Twitter.
-- Join Heavy Duty Builders discord and say hi in the welcome challenge
-- Join Solana University discord and say hi in the welcome challenge
+- Follow Heavy Duty Builders on <a href="https://twitter.com/HeavyDutyBuild" target="_blank">Twitter</a>.
+- Join Heavy Duty Builders <a href="https://discord.gg/Ej47EUAj4u">Discord</a> and say hi in the '🛠general' channel
+- Join Solana University <a href="https://discord.gg/W96qdnqb">Discord</a> and say hi in the 'welcome' channel
 
 ___
 
 ### How to Submit
 Your submission should include the following:
-- Enter your twitter handle
-- Enter the link to your message in Heavy Duty Builders discord
-- Enter the link to your message in Solana University discord
+- Enter your Twitter handle
+- Enter the link to your message in Heavy Duty Builders Discord
+- Enter the link to your message in Solana Universihttps://ty Discord
 
 `
 );
