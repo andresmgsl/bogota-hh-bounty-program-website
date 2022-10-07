@@ -28,7 +28,6 @@ const DeployChallengePage: NextPage = () => {
     const [submission, setSubmission] = useState('');
     const [challengeID, setChallengeID] = useState('221004010');
     const [points, setPoints] = useState(100);
-
     const [description, setDescription] = useState(
         `
 ### Rewards: ${points} Points 🔥 *NFT! 👻

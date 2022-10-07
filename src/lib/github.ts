@@ -1,3 +1,4 @@
+import { signIn } from 'next-auth/react';
 import { User as GithubUser, Issue, User } from 'types/github';
 
 type IssueToCreate = {
@@ -97,6 +98,11 @@ const getGithubData = async <T>(url: string, token: string): Promise<T> => {
             return null;
         }
 
+        if (response.status === 401) {
+            console.log("Token Expired");
+            await signIn('github');
+            return null;
+        }
         return response.json();
     } catch (error) {
         throw new Error(error);
@@ -110,7 +116,7 @@ const getIssues = async (accessToken: string): Promise<Issue[] | null> => {
         url,
         accessToken,
     );
-
+    
     if (!issues.length) {
         return null;
     }
@@ -121,7 +127,7 @@ const getIssuesByAssignee = async (
     username: string,
     accessToken: string,
 ): Promise<Issue[] | null> => {
-    const query = getDrillBountyUrlQuery([`assignee:${username}`]);
+    const query = getDrillBountyUrlQuery([`author:${username}`]);
     const url = `${process.env.GITHUB_API}/search/issues?${query}`;
     const { items: issuesByAssignee } = await getGithubData<SearchApiResponse>(
         url,

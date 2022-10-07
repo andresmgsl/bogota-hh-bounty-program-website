@@ -84,7 +84,10 @@ const OverflowMenu = () => {
                                         variant="label"
                                         className="!normal-case text-secondary"
                                     >
-                                        Connect your GitHub account for an enhanced user experience, including the ability to create new and claim completed bounties.
+                                        Connect your GitHub account for an
+                                        enhanced user experience, including the
+                                        ability to create new and claim
+                                        completed bounties.
                                     </Text>
                                 ) : (
                                     <div className="flex flex-row items-center gap-1">

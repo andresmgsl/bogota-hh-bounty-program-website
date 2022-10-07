@@ -25,7 +25,6 @@ const getBountyChallenges = async (accessToken: string) => {
 
 const getBountiesByAssignee = async (username: string, accessToken: string) => {
     const issuesByAssignee = await getIssuesByAssignee(username, accessToken);
-
     if (!issuesByAssignee) {
         return null;
     }
