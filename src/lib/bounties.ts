@@ -15,7 +15,6 @@ const getBounties = async (accessToken: string) => {
 };
 
 const getBountyChallenges = async (accessToken: string) => {
-    console.log(`getBountyChallenges..`)
     const issues = await getIssues(accessToken);
 
     if (!issues) {
@@ -26,7 +25,6 @@ const getBountyChallenges = async (accessToken: string) => {
 
 const getBountiesByAssignee = async (username: string, accessToken: string) => {
     const issuesByAssignee = await getIssuesByAssignee(username, accessToken);
-
     if (!issuesByAssignee) {
         return null;
     }

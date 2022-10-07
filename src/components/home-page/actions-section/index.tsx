@@ -20,24 +20,19 @@ const ActionsSection = () => (
                     Grow your open-source portfolio by completing bounties that interest you, expand your network, and get paid for your work.
                 </Text>
             </div>
-            <Link href="/explorer" passHref>
-                <a className="flex flex-row justify-end">
-                    <Button text="Start Exploring" variant="transparent" />
-                </a>
-            </Link>
         </Card>
         <Card className="flex flex-1 flex-col justify-between gap-10 p-12">
             <div className="flex max-w-xl flex-col gap-5">
                 <BiRocket size={35} />
                 <div className="flex flex-col gap-1">
                     <Text variant="label" className="text-secondary"> Crypto and open-source fanatics </Text> 
-                    <Text variant="big-heading">Fund Open Bounties</Text>
+                    <Text variant="big-heading">Fund Open Challenge</Text>
                 </div>
                 <Text variant="paragraph">
                     Support the open-source community by providing funding for the software you love.
                 </Text>
             </div>
-            <Link href="/explorer" passHref>
+            <Link href="/challenges" passHref>
                 <a className="flex flex-row justify-end">
                     <Button text="Get Started" variant="transparent" />
                 </a>

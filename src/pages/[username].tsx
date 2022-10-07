@@ -40,7 +40,7 @@ const ProfilePage: NextPage<ProfilePageProps> = ({ bounties, user }) => {
                     <BountyList bounties={openBounties} key="open-bounties" />
                 ),
                 id: 'open',
-                label: 'Open',
+                label: 'Waiting for review',
                 amount: openBounties.length,
             },
             {
@@ -51,7 +51,7 @@ const ProfilePage: NextPage<ProfilePageProps> = ({ bounties, user }) => {
                     />
                 ),
                 id: 'closed',
-                label: 'Closed',
+                label: 'Completed',
                 amount: closedBounties.length,
             },
         ],

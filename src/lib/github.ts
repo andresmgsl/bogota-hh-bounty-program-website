@@ -1,3 +1,4 @@
+import { signIn } from 'next-auth/react';
 import { User as GithubUser, Issue, User } from 'types/github';
 
 type IssueToCreate = {
@@ -5,6 +6,7 @@ type IssueToCreate = {
     body: string;
     labels?: string[];
     title: string;
+    points?: number;
 };
 
 type SearchApiResponse = {
@@ -12,14 +14,14 @@ type SearchApiResponse = {
 };
 
 const DRILL_BOUNTY_LABEL = 'drill:bounty';
-const DRILL_BOUNTY_ENABLED_LABEL = 'drill:bounty:enabled';
+const DRILL_BOUNTY_ENABLED_LABEL = 'drill:bounty';
 const DRILL_BOUNTY_CLOSED_LABEL = 'drill:bounty:closed';
 const DRILL_BOUNTY_CHALLENGE_LABEL = 'challenge';
-const DRILL_BOUNTY_POINTS_LABEL = 'points:50';
+const DRILL_BOUNTY_POINTS_LABEL = 'points:';
 
 const getDrillBountyUrlQuery = (params: string[] = []) =>
     `q=${encodeURIComponent(
-        `is:issue label:"${DRILL_BOUNTY_ENABLED_LABEL}","${DRILL_BOUNTY_CLOSED_LABEL}" repo:${
+        `is:issue label:"${DRILL_BOUNTY_CHALLENGE_LABEL}","${DRILL_BOUNTY_LABEL}" repo:${
             process.env.GITHUB_REPOSITORY
         } ${params.length ? params.join(' ') : ''}`,
     )}`;
@@ -49,7 +51,16 @@ const closeIssue = async (id: number, token: string) => {
 const createIssue = async (issue: IssueToCreate, token: string) => {
     const url = `${process.env.GITHUB_API}/repos/${process.env.GITHUB_REPOSITORY}/issues`;
     const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
-    const { body, labels = [], title } = issue;
+    const { body, title } = issue;
+
+    let pointsLabel = "";
+
+    if (issue.points) {
+        pointsLabel = DRILL_BOUNTY_POINTS_LABEL + String(issue.points);
+    } else {
+        pointsLabel = DRILL_BOUNTY_POINTS_LABEL + '0';
+    }
+
     try {
         const response = await fetch(url, {
             body: JSON.stringify({
@@ -59,10 +70,8 @@ const createIssue = async (issue: IssueToCreate, token: string) => {
                 repo,
                 title,
                 labels: [
-                    DRILL_BOUNTY_LABEL,
                     DRILL_BOUNTY_CHALLENGE_LABEL,
-                    DRILL_BOUNTY_POINTS_LABEL,
-                    ...labels
+                    pointsLabel
                 ],
             }),
             headers: {
@@ -89,6 +98,11 @@ const getGithubData = async <T>(url: string, token: string): Promise<T> => {
             return null;
         }
 
+        if (response.status === 401) {
+            console.log("Token Expired");
+            await signIn('github');
+            return null;
+        }
         return response.json();
     } catch (error) {
         throw new Error(error);
@@ -102,7 +116,7 @@ const getIssues = async (accessToken: string): Promise<Issue[] | null> => {
         url,
         accessToken,
     );
-
+    
     if (!issues.length) {
         return null;
     }
@@ -113,7 +127,7 @@ const getIssuesByAssignee = async (
     username: string,
     accessToken: string,
 ): Promise<Issue[] | null> => {
-    const query = getDrillBountyUrlQuery([`assignee:${username}`]);
+    const query = getDrillBountyUrlQuery([`author:${username}`]);
     const url = `${process.env.GITHUB_API}/search/issues?${query}`;
     const { items: issuesByAssignee } = await getGithubData<SearchApiResponse>(
         url,

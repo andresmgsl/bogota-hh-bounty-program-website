@@ -14,8 +14,9 @@ const getUser = async (
     }
 
     const { avatar_url: avatarUrl, name: fullName } = githubUser;
-
+    
     const bounties = await getBountiesByAssignee(username, accessToken);
+    
     const closedBounties = bounties?.filter(({ state }) => state === 'closed');
     const closedBountiesCount = closedBounties?.length ?? 0;
 
