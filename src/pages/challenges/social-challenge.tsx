@@ -51,7 +51,7 @@ ___
 Your submission should include the following:
 - Enter your Twitter handle
 - Enter the link to your message in Heavy Duty Builders Discord
-- Enter the link to your message in Solana Universihttps://ty Discord
+- Enter the link to your message in Solana University Discord
 
 `
 );
