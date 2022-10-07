@@ -38,7 +38,7 @@ const ChallengesSection = () => (
                     <Text variant="sub-heading">Reward: 100 points + NFT</Text>
                 </div>
                 <Text variant="paragraph">
-                    Learn the basics: Solana 101 is a quick overview on the cheapest and fastest blockchain in web3.
+                    Deploy your first program in a flash with Solana Playground by following our quick start guide!
                 </Text>
                 <Text variant="label" className="text-primary"> Difficulty: Easy </Text>
             </div>
