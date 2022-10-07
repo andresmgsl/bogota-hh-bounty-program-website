@@ -73,6 +73,9 @@ Your submission should include the following:
 2. The \`Program ID\` from your deployed program.
 3. Time it took to deploy your program.
 
+
+NOTE: if devnet is failing, you can use testnet and show how to properly switch network.
+
 *That was almost too easy..*
 
 `,

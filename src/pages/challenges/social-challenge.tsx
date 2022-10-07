@@ -177,10 +177,10 @@ ___
 
 Challenge Id: [#${challengeID}]
 
-Hunter: <a href="https://twitter.com/${session?.user?.name}" target="_blank">${session?.user?.name}</a>
+Hunter: ${session?.user?.name}
 
 1. Twitter handle:
-${submitTwitterHandle}
+<a href="https://twitter.com/${submitTwitterHandle}" target="_blank">${submitTwitterHandle}</a>
 
 2. Heavy Duty link to discord:
 ${submitHeavyDutyDiscord}
