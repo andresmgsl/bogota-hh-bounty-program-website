@@ -26,7 +26,7 @@ const ActionsSection = () => (
                 <BiRocket size={35} />
                 <div className="flex flex-col gap-1">
                     <Text variant="label" className="text-secondary"> Crypto and open-source fanatics </Text> 
-                    <Text variant="big-heading">Fund Open Challenge</Text>
+                    <Text variant="big-heading">Find an open Challenge</Text>
                 </div>
                 <Text variant="paragraph">
                     Support the open-source community by providing funding for the software you love.
