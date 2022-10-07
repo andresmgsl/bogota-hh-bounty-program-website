@@ -12,7 +12,6 @@ import { BountyChallenge } from 'types/bounty';
 
 import { authOptions } from './api/auth/[...nextauth]';
 
-console.log(`LEADERBOARD..`);
 type LeaderboardPageProps = { bounties: BountyChallenge[] };
 
 const LeaderboardPage: NextPage<LeaderboardPageProps> = ({ bounties }) => {

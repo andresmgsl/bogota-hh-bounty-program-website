@@ -64,7 +64,7 @@ const BountyLeaderboardList = ({ bounties: initialBounties }: BountyLeaderboardL
     return (
         <div className="flex flex-col gap-4">
             {/* <FilterMenu onSearchInputChange={onSearchInputChange} /> */}
-            <div className="sticky top-36 z-30 hidden flex-row justify-between gap-5 bg-neutral bg-opacity-40 px-6 py-3 text-base-content backdrop-blur-xl 2lg:flex">
+            <div className="top-36 z-30 hidden flex-row justify-between gap-5 bg-neutral bg-opacity-40 px-6 py-3 text-base-content backdrop-blur-xl 2lg:flex">
                 <div className="flex w-full justify-start text-amber-400">
                     <Text variant="heading">Rank</Text>
                 </div>

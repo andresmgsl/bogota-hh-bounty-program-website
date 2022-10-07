@@ -54,7 +54,7 @@ const getBountyReward = async (id: number) => {
     if (!drillResponse) {
         return null;
     }
-    console.log(drillResponse);
+    
     return Number(drillResponse.amount);
 };
 
