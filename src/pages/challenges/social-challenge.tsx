@@ -1,17 +1,16 @@
-import { FormEvent, useMemo, useRef, useState } from 'react';
-import { signIn, useSession } from 'next-auth/react';
-
 import Button from 'components/common/button';
 import Card from 'components/common/card';
-import Link from 'next/link';
-import Markdown from 'components/common/markdown';
 import NavElement from 'components/common/layout/header/nav-element';
-import { NextPage } from 'next';
-import { NextSeo } from 'next-seo';
-import { TbBrandGithub } from 'react-icons/tb';
+import Markdown from 'components/common/markdown';
 import Text from 'components/common/text';
-import { cn } from 'utils';
+import { NextPage } from 'next';
+import { signIn, useSession } from 'next-auth/react';
+import { NextSeo } from 'next-seo';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { FormEvent, useMemo, useRef, useState } from 'react';
+import { TbBrandGithub } from 'react-icons/tb';
+import { cn } from 'utils';
 
 const SocialChallenge: NextPage = () => {
     const [validBountyName, setValidBountyName] = useState(true);

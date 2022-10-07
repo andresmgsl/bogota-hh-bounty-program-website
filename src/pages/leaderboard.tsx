@@ -1,29 +1,18 @@
-console.log(`LEADERBOARD..`);
-import {
-    DRILL_BOUNTY_CLOSED_LABEL,
-    DRILL_BOUNTY_ENABLED_LABEL,
-    DRILL_BOUNTY_CHALLENGE_LABEL,
-    DRILL_BOUNTY_POINTS_LABEL,
-} from 'lib/github';
-import { GetServerSideProps, NextPage } from 'next';
-
-import { Bounty, BountyChallenge } from 'types/bounty';
 import BountyLeaderboardList from 'components/common/bounty-leaderboard-list';
-import Button from 'components/common/button';
-import FeaturedSection from 'components/explorer-page/featured-section';
-import Link from 'next/link';
-import { MdAdd } from 'react-icons/md';
-import NavElement from 'components/common/layout/header/nav-element';
-import { NextSeo } from 'next-seo';
 import Text from 'components/common/text';
-import { authOptions } from './api/auth/[...nextauth]';
 import { getBountyChallenges } from 'lib/bounties';
+import { DRILL_BOUNTY_CLOSED_LABEL, DRILL_BOUNTY_ENABLED_LABEL } from 'lib/github';
+import { GetServerSideProps, NextPage } from 'next';
 import { unstable_getServerSession } from 'next-auth';
-import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-import { mockBounties } from 'mocks/bounties';
+import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/router';
+import { useMemo } from 'react';
+import { BountyChallenge } from 'types/bounty';
 
+import { authOptions } from './api/auth/[...nextauth]';
+
+console.log(`LEADERBOARD..`);
 type LeaderboardPageProps = { bounties: BountyChallenge[] };
 
 const LeaderboardPage: NextPage<LeaderboardPageProps> = ({ bounties }) => {
