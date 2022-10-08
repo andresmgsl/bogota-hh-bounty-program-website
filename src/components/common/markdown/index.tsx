@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import { createElement } from 'react';
+import rehypeRaw from "rehype-raw";
 
 type MarkdownProps = {
     as?: string;
@@ -14,7 +15,7 @@ const Markdown = ({ as = 'div', children }: MarkdownProps) =>
     createElement(
         as,
         { className: 'prose w-full' },
-        <ReactMarkdown>{children}</ReactMarkdown>,
+        <ReactMarkdown rehypePlugins={[rehypeRaw]}>{children}</ReactMarkdown>,
     );
 
 export default Markdown;

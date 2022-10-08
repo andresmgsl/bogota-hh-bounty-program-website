@@ -1,8 +1,8 @@
-import { getIssue, getIssues, getIssuesByAssignee } from './github';
 import { toBounty, toBountyList } from 'utils/bounties';
-import { toBountyChallenge, toBountyChallengeList } from 'utils/bountyChallenge';
+import { toBountyChallengeList } from 'utils/bountyChallenge';
 
 import { getDrillResponse } from './drill';
+import { getIssue, getIssues, getIssuesByAssignee } from './github';
 
 const getBounties = async (accessToken: string) => {
     const issues = await getIssues(accessToken);
@@ -54,7 +54,7 @@ const getBountyReward = async (id: number) => {
     if (!drillResponse) {
         return null;
     }
-    console.log(drillResponse);
+    
     return Number(drillResponse.amount);
 };
 

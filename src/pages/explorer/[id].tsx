@@ -1,26 +1,25 @@
 /* eslint-disable indent */
-import { GetServerSideProps, NextPage } from 'next';
-import { MdChevronLeft, MdLink, MdShare } from 'react-icons/md';
-
-import { Bounty } from 'types/bounty';
-import BountyCard from 'components/explorer-page/bounty-card';
+import { getAssociatedTokenAddress } from '@solana/spl-token';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { PublicKey } from '@solana/web3.js';
 import Button from 'components/common/button';
 import Chip from 'components/common/chip';
-import Link from 'next/link';
-import Markdown from 'components/common/markdown';
 import NavElement from 'components/common/layout/header/nav-element';
-import { NextSeo } from 'next-seo';
-import { PublicKey } from '@solana/web3.js';
+import Markdown from 'components/common/markdown';
 import Text from 'components/common/text';
-import { authOptions } from 'pages/api/auth/[...nextauth]';
-import { getAssociatedTokenAddress } from '@solana/spl-token';
-import { getBounty } from 'lib/bounties';
-import { unstable_getServerSession } from 'next-auth';
+import BountyCard from 'components/explorer-page/bounty-card';
 import { useBountyReward } from 'hooks/use-bounty-reward';
-import { useMemo, useState } from 'react';
-import { useRouter } from 'next/router';
+import { getBounty } from 'lib/bounties';
+import { GetServerSideProps, NextPage } from 'next';
+import { unstable_getServerSession } from 'next-auth';
 import { useSession } from 'next-auth/react';
-import { useWallet } from '@solana/wallet-adapter-react';
+import { NextSeo } from 'next-seo';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
+import { useMemo, useState } from 'react';
+import { MdChevronLeft, MdLink, MdShare } from 'react-icons/md';
+import { Bounty } from 'types/bounty';
 import { cn } from 'utils';
 
 type BountyDetailsPageProps = {

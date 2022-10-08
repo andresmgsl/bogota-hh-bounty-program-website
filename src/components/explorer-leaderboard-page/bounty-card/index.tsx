@@ -2,6 +2,7 @@ import { Bounty } from 'types/bounty';
 import Card from 'components/common/card';
 import Chip from 'components/common/chip';
 import Link from 'next/link';
+import Image from 'components/common/image';
 import Text from 'components/common/text';
 import { cn } from 'utils';
 
@@ -20,18 +21,20 @@ type BountyCardProps = Omit<Bounty, 'githubUrl' | 'tags'> & {
     }>;
 };
 
-const ParticipantSection = ({ owner, hunter }) => (
+const ParticipantSection = ({ owner, hunter, githubUrl }) => (
     <div className="flex h-16 w-full min-w-0 flex-1 flex-row gap-3">
         <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
             <Text variant="label" className="text-secondary">
                 Hunter
             </Text>
-            <Text
-                variant="heading"
-                className="w-full overflow-hidden text-ellipsis whitespace-nowrap"
-            >
-                {owner}
-            </Text>
+            <a href={githubUrl} target='_blank' rel="noreferrer">
+                <Text
+                    variant="heading"
+                    className="w-full overflow-hidden text-ellipsis whitespace-nowrap"
+                >
+                    {owner}
+                </Text>
+            </a>
         </div>
         {/* <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
             <Text variant="label" className="text-secondary">
@@ -162,6 +165,7 @@ const BountyCard = ({
     showDetails = true,
     rank,
     total,
+    githubUrl
 }: BountyCardProps) => (
     // <Link href={`/explorer/${id}`} passHref>
     <div>
@@ -179,7 +183,7 @@ const BountyCard = ({
                 </div>
 
                 <div className="flex w-full max-w-full flex-row justify-between overflow-hidden">
-                    <ParticipantSection owner={owner} hunter={hunter} />
+                    <ParticipantSection owner={owner} hunter={hunter} githubUrl={githubUrl} />
                 </div>
 
                 <div className="flex w-full max-w-full flex-row md:justify-end justify-between overflow-hidden">
@@ -193,9 +197,9 @@ const BountyCard = ({
 
             </Card>
         </a>
-    {/* </Link>
+        {/* </Link>
      */}
-     </div>
+    </div>
 );
 
 export default BountyCard;

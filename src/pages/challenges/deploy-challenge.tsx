@@ -40,20 +40,20 @@ In this challenge your mission is to deploy your first Solana program to devnet!
 
 How long do you think it will take you to deploy?
 
-Good luck **${session?.user?.name}**!
+Good luck **Hunter**!
 
-1. Visit the Solana developer docs: [https://docs.solana.com/developers](https://docs.solana.com/developers)
-2. Click on the [Get Started](https://docs.solana.com/getstarted/hello-world) button
-3. [Follow the guide to deploy a program](https://docs.solana.com/getstarted/hello-world#what-you-will-learn)
-4. [Deploy your program and record the transaction signature](https://docs.solana.com/getstarted/hello-world#deploy-your-program)
-5. [Find and record your program Id](https://docs.solana.com/getstarted/hello-world#find-your-program-id)
+1. Visit the Solana developer docs: <a href="https://docs.solana.com/developers" target="_blank">https://docs.solana.com/developers</a>
+2. Click on the <a href="https://docs.solana.com/getstarted/hello-world" target="_blank">Get Started</a> button
+3. <a href="https://docs.solana.com/getstarted/hello-world#what-you-will-learn" target="_blank">Follow the guide to deploy a program</a>
+4. <a href="https://docs.solana.com/getstarted/hello-world#deploy-your-program" target="_blank">Deploy your program and record the transaction signature</a>
+5. <a href="https://docs.solana.com/getstarted/hello-world#find-your-program-id" target="_blank">Find and record your program Id</a>
 
 💡 Record the end time. How long did it take?
 
 ### Tips:
 - When you click deploy you should see two buttons: Solana Explorer and Solscan. Clicking the buttons should take you to a transaction explorer where you can view details and your transaction Id in the url.
-- Explorer on devnet to search for your program Id: [Solana Explorer](https://explorer.solana.com/?cluster=devnet)
-- [Example transaction Id](https://explorer.solana.com/tx/4v5StXx1jeuWzh9trtBQtQRMeeUjZzk7mJSq9MTx9XhDunbqY5ZpwPZQanVKfN7Tb3X1gHtMa6xgUcARVDaG7x91?cluster=devnet) is in the url followed by: /tx/.
+- Explorer on devnet to search for your program Id: <a href="https://explorer.solana.com/?cluster=devnet" target="_blank"> Solana Explorer</a>
+- <a href="https://explorer.solana.com/tx/4v5StXx1jeuWzh9trtBQtQRMeeUjZzk7mJSq9MTx9XhDunbqY5ZpwPZQanVKfN7Tb3X1gHtMa6xgUcARVDaG7x91?cluster=devnet" target="_blank">Example transaction Id</a> is in the url followed by: /tx/.
 - Id, Address, and Public Key are often used interchangeably to describe an address which can be used to look up account information.
 - Example of a public key or wallet address: 6UmotVc1i6y4e6DnHf5FwYzYX9qCD7ncAbErsiu4oo3U
 
@@ -61,9 +61,9 @@ Good luck **${session?.user?.name}**!
 
 ### Resources:
 
-[Solana Developer Docs](https://docs.solana.com/developers)
+<a href="https://docs.solana.com/developers" target="_blank">Solana Developer</a> 
 
-[Solana Playground](https://beta.solpg.io/)
+<a href="https://beta.solpg.io/" target="_blank">Solana Playground</a>
 
 ___
 
@@ -72,6 +72,9 @@ Your submission should include the following:
 1. Your \`Transaction Id\` (tx, signature, address) from the url above.
 2. The \`Program ID\` from your deployed program.
 3. Time it took to deploy your program.
+
+
+NOTE: if devnet is failing, you can use testnet and show how to properly switch network.
 
 *That was almost too easy..*
 

@@ -70,12 +70,12 @@ const Header = () => {
                         </div>
                     </Button> */}
 
-                    <Button
+                    {/* <Button
                         variant="transparent"
                         icon={MdOutlineSearch}
-                        className="flex md:hidden"
+                        className="hidden sm:inline"
                         onClick={query.toggle}
-                    />
+                    /> */}
 
                     <div className="hidden h-1/2 w-px bg-line md:inline" />
                     <OverflowMenu />

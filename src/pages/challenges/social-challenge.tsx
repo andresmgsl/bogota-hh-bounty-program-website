@@ -41,17 +41,18 @@ Hey hunter, trying to break into web3? Let's start by joining some communities w
 
 There's many awesome communities out there, for now let's start with joining Solana University and Heavy Duty Builders. Both communities intention is to help builders break into Solana development!
 
-- Follow Heavy Duty Builders on Twitter.
-- Join Heavy Duty Builders discord and say hi in the welcome challenge
-- Join Solana University discord and say hi in the welcome challenge
-
+- Follow Heavy Duty Builders on <a href="https://twitter.com/HeavyDutyBuild" target="_blank">Twitter</a>.
+- Join Heavy Duty Builders <a href="https://discord.gg/Ej47EUAj4u" target="_blank">Discord</a> and say hi in the '🛠general' channel
+- Join Solana University <a href="https://discord.gg/W96qdnqb" target="_blank">Discord</a> and say hi in the 'welcome' channel
 ___
 
 ### How to Submit
 Your submission should include the following:
-- Enter your twitter handle
-- Enter the link to your message in Heavy Duty Builders discord
-- Enter the link to your message in Solana University discord
+
+- Enter your Twitter handle
+- Enter the link to your message in Heavy Duty Builders Discord
+- Enter the link to your message in Solana University Discord
+
 
 `
 );
@@ -176,11 +177,10 @@ ___
 ### Submission Entered:
 
 Challenge Id: [#${challengeID}]
-
 Hunter: ${session?.user?.name}
 
 1. Twitter handle:
-${submitTwitterHandle}
+<a href="https://twitter.com/${submitTwitterHandle}" target="_blank">${submitTwitterHandle}</a>
 
 2. Heavy Duty link to discord:
 ${submitHeavyDutyDiscord}

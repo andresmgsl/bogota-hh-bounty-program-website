@@ -1,9 +1,8 @@
 import { BN, Program } from '@heavy-duty/anchor';
+import { getAccount } from '@solana/spl-token';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { DrillBounty, DrillBountyVault, DrillResponse } from 'types/drill';
-
 import { Drill } from 'utils/drill';
-import { getAccount } from '@solana/spl-token';
 import { getProgram } from 'utils/drill/get-program';
 
 const baseUrl = process.env.NEXT_PUBLIC_GATEWAY_URL;
