@@ -100,7 +100,6 @@ const getGithubData = async <T>(url: string, token: string): Promise<T> => {
 
         if (response.status === 401) {
             console.log("Token Expired");
-            await signIn('github');
             return null;
         }
         return response.json();
@@ -112,11 +111,16 @@ const getGithubData = async <T>(url: string, token: string): Promise<T> => {
 const getIssues = async (accessToken: string): Promise<Issue[] | null> => {
     const query = getDrillBountyUrlQuery();
     const url = `${process.env.GITHUB_API}/search/issues?${query}`;
-    const { items: issues } = await getGithubData<SearchApiResponse>(
+    const data = await getGithubData<SearchApiResponse>(
         url,
         accessToken,
     );
-    
+
+    if (!data) return null;
+
+    const {items: issues} = data;
+
+    console.log("y ahora??",issues)
     if (!issues.length) {
         return null;
     }

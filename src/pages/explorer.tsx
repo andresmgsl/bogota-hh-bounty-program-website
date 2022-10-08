@@ -1,20 +1,17 @@
-import {
-    DRILL_BOUNTY_CLOSED_LABEL,
-    DRILL_BOUNTY_ENABLED_LABEL,
-} from 'lib/github';
-import { GetServerSideProps, NextPage } from 'next';
-
-import { Bounty } from 'types/bounty';
 import BountyList from 'components/common/bounty-list';
 import NavElement from 'components/common/layout/header/nav-element';
-import { NextSeo } from 'next-seo';
 import Text from 'components/common/text';
-import { authOptions } from './api/auth/[...nextauth]';
-import { unstable_getServerSession } from 'next-auth';
-import { useMemo } from 'react';
-import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
+import { DRILL_BOUNTY_CLOSED_LABEL, DRILL_BOUNTY_ENABLED_LABEL } from 'lib/github';
 import { mockBounties } from 'mocks/bounties';
+import { GetServerSideProps, NextPage } from 'next';
+import { unstable_getServerSession } from 'next-auth';
+import { useSession } from 'next-auth/react';
+import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/router';
+import { useMemo } from 'react';
+import { Bounty } from 'types/bounty';
+
+import { authOptions } from './api/auth/[...nextauth]';
 
 type ExplorerPageProps = { bounties: Bounty[] };
 

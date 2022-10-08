@@ -29,7 +29,6 @@ const { data: session } = useSession();
 export default ChallengesPage;
 
 export const getServerSideProps: GetServerSideProps = async context => {
-    console.log(`getServerSideProps..Leaderboard`);
     const session = await unstable_getServerSession(
         context.req,
         context.res,

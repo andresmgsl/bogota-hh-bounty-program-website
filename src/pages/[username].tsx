@@ -1,21 +1,21 @@
-import { GetServerSideProps, NextPage } from 'next';
-import React, { useMemo } from 'react';
-
-import { Bounty } from 'types/bounty';
 import BountyList from 'components/common/bounty-list';
 import Button from 'components/common/button';
-import Hero from 'components/profile-page/hero';
-import Link from 'next/link';
-import { MdAdd } from 'react-icons/md';
 import NavElement from 'components/common/layout/header/nav-element';
 import Text from 'components/common/text';
-import { User } from 'types/user';
-import { authOptions } from './api/auth/[...nextauth]';
+import Hero from 'components/profile-page/hero';
 import { getBountiesByAssignee } from 'lib/bounties';
 import { getUser } from 'lib/user';
+import { GetServerSideProps, NextPage } from 'next';
 import { unstable_getServerSession } from 'next-auth';
-import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useMemo } from 'react';
+import { MdAdd } from 'react-icons/md';
+import { Bounty } from 'types/bounty';
+import { User } from 'types/user';
+
+import { authOptions } from './api/auth/[...nextauth]';
 
 type ProfilePageProps = {
     bounties: Bounty[];

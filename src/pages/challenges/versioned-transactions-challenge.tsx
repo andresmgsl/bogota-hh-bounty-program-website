@@ -37,7 +37,7 @@ ___
 In this challenge your going to learn all about Versioned Transactions!
 
 
-1. Preview the Solana Bytes video on [Versioned Transactions](https://www.youtube.com/watch?v=8k68cMeLX2U)
+1. Preview the Solana Bytes video on <a href="https://www.youtube.com/watch?v=8k68cMeLX2U" target="_blank">Versioned Transactions</a>
 2. Look out for the answers to the challenge questions
     - How many transaction versions are supported?
     - How do you construct a MessageV0 formatted transaction?
@@ -51,11 +51,11 @@ In this challenge your going to learn all about Versioned Transactions!
 
 ### Resources:
 
-[Versioned Transactions Docs](https://edge.docs.solana.com/developing/versioned-transactions)
+<a href="https://edge.docs.solana.com/developing/versioned-transactions" target="_blank">Versioned Transactions Docs</a>
 
-[Address Lookup Tables](https://edge.docs.solana.com/developing/lookup-tables#how-to-create-an-address-lookup-table)
+<a href="https://edge.docs.solana.com/developing/lookup-tables#how-to-create-an-address-lookup-table" target="_blank">Address Lookup Tables</a>
 
-[Solana Bytes Youtube Video Playlist](https://www.youtube.com/playlist?list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm)
+<a href="https://www.youtube.com/playlist?list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm" target="_blank">Solana Bytes Youtube Video Playlist</a>
 ___
 
 ### How to Submit
