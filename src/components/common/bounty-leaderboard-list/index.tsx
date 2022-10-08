@@ -9,7 +9,7 @@ import { filterBounties } from 'utils/bounties';
 type BountyLeaderboardListProps = { bounties: BountyChallenge[] };
 
 const BountyLeaderboardList = ({ bounties: initialBounties }: BountyLeaderboardListProps) => {
-    console.log("INITIAL", initialBounties);
+
     const [filterData, setFilterData] = useState({
         bounties: initialBounties,
         query: '',
@@ -41,14 +41,13 @@ const BountyLeaderboardList = ({ bounties: initialBounties }: BountyLeaderboardL
             totals.push(x);
         }
     });
-    console.log("BEFORE LAST", bounties.reverse());
+    
 
     bounties = totals.sort(total_ascending);
     let index = 1;
     bounties.forEach(item => {
         item.rank = index++;
     });
-
 
 
     const onSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {

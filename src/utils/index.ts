@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 // Concatenates classes into a single className string
 const cn = (...args: string[]) => args.join(' ');
 
-const formatDate = (date: string) => format(new Date(date), 'dd MMM');
+const formatDate = (date: string) => format(new Date(date), 'MM/dd/yyyy h:mm:ss');
 
 const bountiesToLevel = (bounties: number) =>
     clamp(Math.round(1.57345 * Math.pow(bounties, 100 / 143)), 1, 100);

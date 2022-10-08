@@ -123,7 +123,7 @@ const getIssues = async (accessToken: string): Promise<Issue[] | null> => {
     if (!issues.length) {
         return null;
     }
-    return issues;
+    return issues.reverse();
 };
 
 const getIssuesByAssignee = async (
@@ -141,7 +141,7 @@ const getIssuesByAssignee = async (
         return null;
     }
 
-    return issuesByAssignee;
+    return issuesByAssignee.reverse();
 };
 
 const getIssue = async (
