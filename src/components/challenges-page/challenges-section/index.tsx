@@ -93,7 +93,7 @@ const ChallengesSection = () => (
                     <Text variant="sub-heading">Reward: 150 points</Text>
                 </div>
                 <Text variant="paragraph">
-                    Learn how to use the new transation format with Versioned Transactions.
+                    Learn how to use the new transaction format with Versioned Transactions.
                 </Text>
                 <Text variant="paragraph" className="text-primary font text-xl"> Difficulty: Easy </Text>
                 <div className="flex flex-row gap-4 absolute bottom-12">
