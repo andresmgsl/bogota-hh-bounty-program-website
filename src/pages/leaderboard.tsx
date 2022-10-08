@@ -15,7 +15,7 @@ import { authOptions } from './api/auth/[...nextauth]';
 type LeaderboardPageProps = { bounties: BountyChallenge[] };
 
 const LeaderboardPage: NextPage<LeaderboardPageProps> = ({ bounties }) => {
-    console.log("EPA", bounties)
+
     const closedBounties = useMemo(
         () =>
             bounties.filter(

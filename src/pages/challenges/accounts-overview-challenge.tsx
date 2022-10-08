@@ -38,7 +38,7 @@ In this challenge we're going to test your knowledge of Solana accounts.
 
 Let's get into it ${session?.user?.name}!
 
-1. Preview the Solana Bytes video on [The Solana Programming Model](https://www.youtube.com/watch?v=pRYs49MqapI&list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm&index=1).
+1. Preview the Solana Bytes video on <a href="https://www.youtube.com/watch?v=pRYs49MqapI&list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm&index=1" target="_blank">The Solana Programming Model</a>.
 2. Look out for the answers to the challenge questions:
     - How can I find where an account is stored on-chain?    
     - What change to an account's data is the only exception to the signer rules?
@@ -53,11 +53,11 @@ Let's get into it ${session?.user?.name}!
 
 ### Resources:
 
-[Solana Developer Docs: Accounts](https://docs.solana.com/developing/programming-model/accounts)
+<a href="https://docs.solana.com/developing/programming-model/accounts" target="_blank">Solana Developer Docs: Accounts</a>
 
-[Solana Cookbook Accounts](https://solanacookbook.com/core-concepts/accounts.html#facts)
+<a href="https://solanacookbook.com/core-concepts/accounts.html#facts" target="_blank">Solana Cookbook Accounts</a>
 
-[Solana Bytes YouTube Playlist](https://www.youtube.com/playlist?list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm)
+<a href="https://www.youtube.com/playlist?list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm" target="_blank">Solana Bytes YouTube Playlist</a>
 
 ___
 
