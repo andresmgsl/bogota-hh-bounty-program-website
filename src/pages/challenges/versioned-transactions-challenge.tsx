@@ -125,7 +125,7 @@ Your submission should include the following:
                             <input
                                 className="w-full items-center bg-transparent outline-none"
                                 onChange={e => setSubmitTime(e.target.value)}
-                                placeholder="Enter the name of method... (only the name)"
+                                placeholder="Enter the method mane... (only the name)"
                             />
                         </Card>
 
