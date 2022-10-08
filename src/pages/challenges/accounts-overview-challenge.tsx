@@ -12,21 +12,21 @@ import { FormEvent, useMemo, useRef, useState } from 'react';
 import { TbBrandGithub } from 'react-icons/tb';
 import { cn } from 'utils';
 
-const VersionedTransactionsChallengePage: NextPage = () => {
+const AccountsOverviewChallengePage: NextPage = () => {
     const [validBountyName, setValidBountyName] = useState(true);
     const [validHunter, setValidHunter] = useState(true);
     const titleRef = useRef(null);
     const hunterRef = useRef(null);
     const { data: session } = useSession();
 
-    const [title, setTitle] = useState('Versioned Transactions');
+    const [title, setTitle] = useState('Accounts Overview');
     const [hunter, setHunter] = useState('');
 
     const [answerTwo, setSubmitProgramID] = useState('');
     const [answerOne, setSubmitTransactionID] = useState('');
     const [answerThree, setSubmitTime] = useState('');
     const [submission, setSubmission] = useState('');
-    const [challengeID, setChallengeID] = useState('221007020');
+    const [challengeID, setChallengeID] = useState('221007030');
     const [points, setPoints] = useState(150);
     const [description, setDescription] = useState(
         `
@@ -34,35 +34,39 @@ const VersionedTransactionsChallengePage: NextPage = () => {
 
 ___
 ### Description
-In this challenge your going to learn all about Versioned Transactions!
+In this challenge we're going to test your knowledge of Solana accounts.
 
+Let's get into it ${session?.user?.name}!
 
-1. Preview the Solana Bytes video on [Versioned Transactions](https://www.youtube.com/watch?v=8k68cMeLX2U)
-2. Look out for the answers to the challenge questions
-    - How many transaction versions are supported?
-    - How do you construct a MessageV0 formatted transaction?
-    - What method is used to get an Address Lookup Table?
+1. Preview the Solana Bytes video on [The Solana Programming Model](https://www.youtube.com/watch?v=pRYs49MqapI&list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm&index=1).
+2. Look out for the answers to the challenge questions:
+    - How can I find where an account is stored on-chain?    
+    - What change to an account's data is the only exception to the signer rules?
+    - If my program is the owner of an account, that allows my program to do what to the account?
+    - If my account is a Program Derived Address (PDA), what's different about my keys?
 
 3. Use the documentation provided as an additional resource!
 
 ### Tips:
-- Learn about the latest Solana features following along with Solana Bytes.
-
+- Listen closely and observe the whiteboard animations.
+- If you have to, rewatch the video again!
 
 ### Resources:
 
-[Versioned Transactions Docs](https://edge.docs.solana.com/developing/versioned-transactions)
+[Solana Developer Docs: Accounts](https://docs.solana.com/developing/programming-model/accounts)
 
-[Address Lookup Tables](https://edge.docs.solana.com/developing/lookup-tables#how-to-create-an-address-lookup-table)
+[Solana Cookbook Accounts](https://solanacookbook.com/core-concepts/accounts.html#facts)
 
-[Solana Bytes Youtube Video Playlist](https://www.youtube.com/playlist?list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm)
+[Solana Bytes YouTube Playlist](https://www.youtube.com/playlist?list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm)
+
 ___
 
 ### How to Submit
 Your submission should include the following:
-1. How many versions of transactions are supported?
-2. How do you construct a MessageV0 formatted transaction?
-3. What method is used to get an Address Lookup Table?
+1. How can I find where an account is stored on-chain?
+2. What change to an account's data is the only exception to the signer rules?
+3. If my program is the owner of an account, that allows my program to do what to the account?
+4. If my account is a Program Derived Address (PDA), what's different about my keys?
 
 
 `,
@@ -88,7 +92,7 @@ Your submission should include the following:
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="1. How many transaction versions are supported?"
+                            value="1. How can I find where an account is stored on-chain?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
@@ -96,35 +100,47 @@ Your submission should include the following:
                                 onChange={e =>
                                     setSubmitTransactionID(e.target.value)
                                 }
-                                placeholder="Enter transaction Id..."
+                                placeholder="Enter your answer..."
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="2. How do you construct a MessageV0 formatted transaction?"
+                            value="2. What change to an account's data is the only exception to the signer rules?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <textarea
                                 className="w-full items-center bg-transparent outline-none"
                                 maxLength={200}
-                                rows={10}
+                                rows={3}
                                 onChange={e =>
                                     setSubmitProgramID(e.target.value)
                                 }
-                                placeholder="Enter the code or method..."
+                                placeholder="Enter your answer..."
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="3. What method is used to get an Address Lookup Table?"
+                            value="3. If my program is the owner of an account, that allows my program to do what to the account?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
                                 onChange={e => setSubmitTime(e.target.value)}
-                                placeholder="Enter the code or method..."
+                                placeholder="Enter your answer..."
+                            />
+                        </Card>
+
+                        <input
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="4. If my account is a Program Derived Address (PDA), what's different about my keys?"
+                        />
+                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
+                            <input
+                                className="w-full items-center bg-transparent outline-none"
+                                onChange={e => setSubmitTime(e.target.value)}
+                                placeholder="Enter your answer..."
                             />
                         </Card>
 
@@ -334,4 +350,4 @@ ${answerThree}
     );
 };
 
-export default VersionedTransactionsChallengePage;
+export default AccountsOverviewChallengePage;

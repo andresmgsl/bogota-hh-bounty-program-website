@@ -7,6 +7,7 @@ import { MdPlayArrow } from 'react-icons/md';
 // import { FiTwitter } from 'react-icons/fi';
 import { FaGithub, FaTwitter } from 'react-icons/fa';
 import { TbArrowsLeftRight } from 'react-icons/tb';
+import { AiOutlineDatabase } from 'react-icons/ai';
 
 const ChallengesSection = () => (
     <section
@@ -23,7 +24,7 @@ const ChallengesSection = () => (
                 <Text variant="paragraph">
                     Join our community and be part of Heavy Duty Builders and Solana University.
                 </Text>
-                
+
                 <Text variant="paragraph"  className="text-primary font text-xl"> Difficulty: Easy </Text>
 
                 <div className="flex flex-row gap-4 absolute bottom-12">
@@ -39,7 +40,7 @@ const ChallengesSection = () => (
                             <FaGithub size={24} />
                         </a>
                     </Link>
-                </div>                
+                </div>
             </div>
             <Link href="/challenges/social-challenge" passHref>
                 <a className="flex flex-row justify-end">
@@ -93,9 +94,19 @@ const ChallengesSection = () => (
                     <Text variant="sub-heading">Reward: 150 points</Text>
                 </div>
                 <Text variant="paragraph">
-                    Learn how to use the new transation format with Versioned Transactions.
+                    Learn how to use the new transaction format with Versioned Transactions.
                 </Text>
                 <Text variant="paragraph" className="text-primary font text-xl"> Difficulty: Easy </Text>
+
+                {/* <div className="flex flex-row gap-4">
+                    <Text variant="label" className="text-secondary font text-xl">
+                        #VersionedTransactions
+                    </Text>
+                    <Text variant="label" className="text-secondary font text-xl">
+                        #AddressLookupTables
+                    </Text>
+                </div> */}
+
                 <div className="flex flex-row gap-4 absolute bottom-12">
                     <Text variant="paragraph" className="text-white"> Author: </Text>
                     <Link href="https://twitter.com/realbuffalojoe" passHref >
@@ -112,6 +123,49 @@ const ChallengesSection = () => (
                 </div>
             </div>
             <Link href="/challenges/versioned-transactions-challenge" passHref>
+                <a className="flex flex-row justify-end">
+                    <Button className='w-20 h-20 rounded-full border-2' variant="transparent" >
+                        <MdPlayArrow size={40} />
+                    </Button>
+                </a>
+            </Link>
+        </Card>
+        <Card className="flex flex-1 flex-col justify-between gap-10 p-12">
+            <div className="flex max-w-xl flex-col gap-5">
+                <AiOutlineDatabase size={35} />
+                <div className="flex flex-col gap-1">
+                    <Text variant="label" className="text-secondary"> Video Challenge</Text>
+                    <Text variant="big-heading">Challenge 4</Text>
+                    <Text variant="sub-heading">Reward: 100 points</Text>
+                </div>
+                <Text variant="paragraph">
+                    Dive into the Solana programming model with this overview on Accounts.
+                </Text>
+                <Text variant="paragraph" className="text-primary font text-xl"> Difficulty: Easy </Text>
+
+                {/* <div className="flex flex-row gap-4">
+                    <Text variant="label" className="text-secondary font text-xl">
+                        #Accounts
+                    </Text>
+                </div> */}
+
+
+                <div className="flex flex-row gap-4 absolute bottom-12">
+                    <Text variant="paragraph" className="text-white"> Author: </Text>
+                    <Link href="https://twitter.com/realbuffalojoe" passHref >
+                        <a className="flex flex-row justify-end" target="_blank" rel="noopener noreferrer">
+                            <FaTwitter className="" size={24} />
+                        </a>
+                    </Link>
+
+                    <Link href="https://github.com/realbuffalojoe" passHref>
+                        <a className="flex flex-row justify-end"  target="_blank" rel="noopener noreferrer">
+                            <FaGithub size={24} />
+                        </a>
+                    </Link>
+                </div>
+            </div>
+            <Link href="/challenges/accounts-overview-challenge" passHref>
                 <a className="flex flex-row justify-end">
                     <Button className='w-20 h-20 rounded-full border-2' variant="transparent" >
                         <MdPlayArrow size={40} />
