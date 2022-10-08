@@ -110,7 +110,7 @@ const getGithubData = async <T>(url: string, token: string): Promise<T> => {
 
 const getIssues = async (accessToken: string): Promise<Issue[] | null> => {
     const query = getDrillBountyUrlQuery();
-    const url = `${process.env.GITHUB_API}/search/issues?${query}`;
+    const url = `${process.env.GITHUB_API}/search/issues?${query}&per_page=1000`;
     const data = await getGithubData<SearchApiResponse>(
         url,
         accessToken,
