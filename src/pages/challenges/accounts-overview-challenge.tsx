@@ -22,9 +22,10 @@ const AccountsOverviewChallengePage: NextPage = () => {
     const [title, setTitle] = useState('Accounts Overview');
     const [hunter, setHunter] = useState('');
 
-    const [answerTwo, setSubmitProgramID] = useState('');
-    const [answerOne, setSubmitTransactionID] = useState('');
-    const [answerThree, setSubmitTime] = useState('');
+    const [answerTwo, setSecondAnswer] = useState('');
+    const [answerOne, setFirstAnswer] = useState('');
+    const [answerThree, setThirdAnswer] = useState('');
+    const [answerFour, setFourAnswer] = useState('');
     const [submission, setSubmission] = useState('');
     const [challengeID, setChallengeID] = useState('221007030');
     const [points, setPoints] = useState(150);
@@ -98,7 +99,7 @@ Your submission should include the following:
                             <input
                                 className="w-full items-center bg-transparent outline-none"
                                 onChange={e =>
-                                    setSubmitTransactionID(e.target.value)
+                                    setFirstAnswer(e.target.value)
                                 }
                                 placeholder="Enter your answer..."
                             />
@@ -114,7 +115,7 @@ Your submission should include the following:
                                 maxLength={200}
                                 rows={3}
                                 onChange={e =>
-                                    setSubmitProgramID(e.target.value)
+                                    setSecondAnswer(e.target.value)
                                 }
                                 placeholder="Enter your answer..."
                             />
@@ -127,7 +128,7 @@ Your submission should include the following:
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitTime(e.target.value)}
+                                onChange={e => setThirdAnswer(e.target.value)}
                                 placeholder="Enter your answer..."
                             />
                         </Card>
@@ -139,7 +140,7 @@ Your submission should include the following:
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitTime(e.target.value)}
+                                onChange={e => setFourAnswer(e.target.value)}
                                 placeholder="Enter your answer..."
                             />
                         </Card>
@@ -210,14 +211,22 @@ Challenge Id: [#${challengeID}]
 
 Hunter: ${session?.user?.name}
 
-1. How many transaction versions are supported?
+
+
+
+
+
+1. How can I find where an account is stored on-chain?
 ${answerOne}
 
-2. How do you construct a MessageV0 formatted transaction?
+2. What change to an account's data is the only exception to the signer rules?
 ${answerTwo}
 
-3. What method is used to get an Address Lookup Table?:
+3. If my program is the owner of an account, that allows my program to do what to the account?
 ${answerThree}
+
+4. If my account is a Program Derived Address (PDA), what's different about my keys?
+${answerFour}
 
 `;
             setSubmission(submission);

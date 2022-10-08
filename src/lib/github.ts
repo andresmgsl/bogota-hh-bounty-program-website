@@ -110,7 +110,7 @@ const getGithubData = async <T>(url: string, token: string): Promise<T> => {
 
 const getIssues = async (accessToken: string): Promise<Issue[] | null> => {
     const query = getDrillBountyUrlQuery();
-    const url = `${process.env.GITHUB_API}/search/issues?${query}&per_page=1000`;
+    const url = `${process.env.GITHUB_API}/search/issues?${query}&per_page=100`;
     const data = await getGithubData<SearchApiResponse>(
         url,
         accessToken,
@@ -120,7 +120,6 @@ const getIssues = async (accessToken: string): Promise<Issue[] | null> => {
 
     const {items: issues} = data;
 
-    console.log("y ahora??",issues)
     if (!issues.length) {
         return null;
     }
@@ -132,7 +131,7 @@ const getIssuesByAssignee = async (
     accessToken: string,
 ): Promise<Issue[] | null> => {
     const query = getDrillBountyUrlQuery([`author:${username}`]);
-    const url = `${process.env.GITHUB_API}/search/issues?${query}`;
+    const url = `${process.env.GITHUB_API}/search/issues?${query}&per_page=100`;
     const { items: issuesByAssignee } = await getGithubData<SearchApiResponse>(
         url,
         accessToken,
