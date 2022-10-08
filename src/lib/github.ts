@@ -1,4 +1,5 @@
-import { Issue, User as GithubUser, User } from 'types/github';
+import { signIn } from 'next-auth/react';
+import { User as GithubUser, Issue, User } from 'types/github';
 
 type IssueToCreate = {
     assignee: string;

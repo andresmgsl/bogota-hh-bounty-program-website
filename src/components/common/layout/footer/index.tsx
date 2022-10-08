@@ -6,15 +6,23 @@ const Footer = () => (
     <footer className="my-16 flex flex-col justify-center gap-16 px-4 md:px-16 lg:px-32 xl:px-48">
         <div className="h-px w-full bg-line" />
         <Card className="flex w-full flex-row justify-between rounded-xl px-7">
-            <div className="flex flex-row items-center gap-3">
-                <Image
-                    src="/logo-icon.svg"
-                    alt="solana icon"
-                    width={20}
-                    height={17.89}
-                    className="saturate-0"
-                />
-                <Text variant="label" className="font-thin !tracking-widest">
+            <div className="flex sm:flex-row flex-col text-center justify-center items-center gap-3">
+                <a
+                    href="https://solana.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-primary"
+                >
+                    <Image
+                        src="/logo-icon.svg"
+                        alt="solana icon"
+                        width={40}
+                        height={36}
+                        className="saturate-0"
+                    />
+                </a>
+                
+                <Text variant="sub-heading" className="font-thin !tracking-widest">
                     {' '}
                     Bounty Program{' '}
                 </Text>

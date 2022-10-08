@@ -1,60 +1,72 @@
-import { FormEvent, useMemo, useRef, useState } from 'react';
-import { signIn, useSession } from 'next-auth/react';
-
 import Button from 'components/common/button';
 import Card from 'components/common/card';
-import Link from 'next/link';
-import Markdown from 'components/common/markdown';
 import NavElement from 'components/common/layout/header/nav-element';
-import { NextPage } from 'next';
-import { NextSeo } from 'next-seo';
-import { TbBrandGithub } from 'react-icons/tb';
+import Markdown from 'components/common/markdown';
 import Text from 'components/common/text';
-import { cn } from 'utils';
+import { NextPage } from 'next';
+import { signIn, useSession } from 'next-auth/react';
+import { NextSeo } from 'next-seo';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { FormEvent, useMemo, useRef, useState } from 'react';
+import { TbBrandGithub } from 'react-icons/tb';
+import { cn } from 'utils';
 
-const SocialChallenge: NextPage = () => {
+const VersionedTransactionsChallengePage: NextPage = () => {
     const [validBountyName, setValidBountyName] = useState(true);
     const [validHunter, setValidHunter] = useState(true);
     const titleRef = useRef(null);
     const hunterRef = useRef(null);
     const { data: session } = useSession();
 
-    const [title, setTitle] = useState('Social Challenge');
+    const [title, setTitle] = useState('New Features: Versioned Transactions');
     const [hunter, setHunter] = useState('');
 
-    const [submitHeavyDutyDiscord, setSubmitHeavyDutyDiscord] = useState('');
-    const [submitTwitterHandle, setSubmitTwitterHandle] = useState('');
-    const [submitSolanaUniversityDiscord, setSubmitSolanaUniversityDiscord] = useState('');
+    const [answerTwo, setSubmitProgramID] = useState('');
+    const [answerOne, setSubmitTransactionID] = useState('');
+    const [answerThree, setSubmitTime] = useState('');
     const [submission, setSubmission] = useState('');
-    const [challengeID, setChallengeID] = useState('221004011');
-    const [points, setPoints] = useState(25);
-
-
+    const [challengeID, setChallengeID] = useState('221007020');
+    const [points, setPoints] = useState(150);
     const [description, setDescription] = useState(
         `
-### Rewards: ${points} Points 🔥 *NFT! 👻
+### Rewards: ${points} Points 🔥
 
 ___
 ### Description
-Hey hunter, trying to break into web3? Let's start by joining some communities where you can learn and questions!
+In this challenge your going to learn all about Versioned Transactions!
 
-There's many awesome communities out there, for now let's start with joining Solana University and Heavy Duty Builders. Both communities intention is to help builders break into Solana development!
 
-- Follow Heavy Duty Builders on Twitter.
-- Join Heavy Duty Builders discord and say hi in the welcome challenge
-- Join Solana University discord and say hi in the welcome challenge
+1. Preview the Solana Bytes video on [Versioned Transactions](https://www.youtube.com/watch?v=8k68cMeLX2U)
+2. Look out for the answers to the challenge questions
+    - How many transaction versions are supported?
+    - How do you construct a MessageV0 formatted transaction?
+    - What method is used to get an Address Lookup Table?
 
+3. Use the documentation provided as an additional resource!
+
+### Tips:
+- Learn about the latest Solana features following along with Solana Bytes.
+
+
+### Resources:
+
+[Versioned Transactions Docs](https://edge.docs.solana.com/developing/versioned-transactions)
+
+[Address Lookup Tables](https://edge.docs.solana.com/developing/lookup-tables#how-to-create-an-address-lookup-table)
+
+[Solana Bytes Youtube Video Playlist](https://www.youtube.com/playlist?list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm)
 ___
 
 ### How to Submit
 Your submission should include the following:
-- Enter your twitter handle
-- Enter the link to your message in Heavy Duty Builders discord
-- Enter the link to your message in Solana University discord
+1. How many versions of transactions are supported?
+2. How do you construct a MessageV0 formatted transaction?
+3. What method is used to get an Address Lookup Table?
 
-`
-);
+
+`,
+    );
 
     const tabsDescription = useMemo(
         () => [
@@ -72,48 +84,51 @@ Your submission should include the following:
             {
                 content: (
                     <div>
-
                         <Markdown>{`### Submit your answers`}</Markdown>
 
                         <input
-                            className="w-full py-5 border-none bg-transparent outline-none"
-                            value='1. Your twitter handle'
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="1. How many transaction versions are supported?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
-
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitTwitterHandle(e.target.value)}
-                                placeholder='Enter your twitter handle...'
+                                onChange={e =>
+                                    setSubmitTransactionID(e.target.value)
+                                }
+                                placeholder="Enter transaction Id..."
                             />
                         </Card>
 
                         <input
-                            className="w-full py-5 border-none bg-transparent outline-none"
-                            value='2. Link to your message in Heavy Duty Builders discord:'
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="2. How do you construct a MessageV0 formatted transaction?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
-                            <input
+                            <textarea
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitHeavyDutyDiscord(e.target.value)}
-                                placeholder='Enter the link to your message in Heavy Duty Builders discord...'
+                                maxLength={200}
+                                rows={10}
+                                onChange={e =>
+                                    setSubmitProgramID(e.target.value)
+                                }
+                                placeholder="Enter the code or method..."
                             />
                         </Card>
 
                         <input
-                            className="w-full py-5 border-none bg-transparent outline-none"
-                            value='3. Link to your message in Solana University discord'
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="3. What method is used to get an Address Lookup Table?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitSolanaUniversityDiscord(e.target.value)}
-                                placeholder='Enter the link to your message in Solana University discord...'
+                                onChange={e => setSubmitTime(e.target.value)}
+                                placeholder="Enter the code or method..."
                             />
                         </Card>
 
                         {/* additional feedback, was it easy, suggestions, etc */}
-
                     </div>
                 ),
                 id: 'submission',
@@ -179,17 +194,16 @@ Challenge Id: [#${challengeID}]
 
 Hunter: ${session?.user?.name}
 
-1. Twitter handle:
-${submitTwitterHandle}
+1. How many transaction versions are supported?
+${answerOne}
 
-2. Heavy Duty link to discord:
-${submitHeavyDutyDiscord}
+2. How do you construct a MessageV0 formatted transaction?
+${answerTwo}
 
-3. Solana University link to discord:
-${submitSolanaUniversityDiscord}
+3. What method is used to get an Address Lookup Table?:
+${answerThree}
 
 `;
-
             setSubmission(submission);
             const response = await fetch('/api/bounties', {
                 body: JSON.stringify({
@@ -197,7 +211,7 @@ ${submitSolanaUniversityDiscord}
                     assignee: challengerName,
                     body: description + submission,
                     title: `Challenge Submission: ` + title,
-                    points
+                    points,
                 }),
                 headers: { 'Content-Type': 'application/json' },
                 method: 'POST',
@@ -248,7 +262,9 @@ ${submitSolanaUniversityDiscord}
             ></NextSeo>
             <form className="flex flex-col" onSubmit={onSubmit}>
                 <section className="flex w-full flex-col gap-7 bg-gradient-to-tr from-primary/75 to-secondary/75 p-5 sm:p-8 md:px-16 lg:px-32 lg:py-16 xl:px-48 xl:py-20">
-                    <Text variant="label">Bounty Challenge: #{challengeID}</Text>
+                    <Text variant="label">
+                        Bounty Challenge: #{challengeID}
+                    </Text>
                     <div
                         className={cn(
                             'tooltip-bottom tooltip-error',
@@ -304,7 +320,7 @@ ${submitSolanaUniversityDiscord}
                         </div>
                         <div className="width-full flex flex-row justify-end gap-2">
                             <Button
-                                className='w-40'
+                                className="w-40"
                                 type="submit"
                                 variant="orange"
                                 text="Submit"
@@ -318,4 +334,4 @@ ${submitSolanaUniversityDiscord}
     );
 };
 
-export default SocialChallenge;
+export default VersionedTransactionsChallengePage;
