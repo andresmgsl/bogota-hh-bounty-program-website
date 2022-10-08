@@ -39,10 +39,15 @@ const Header = () => {
                 </div>
             </Link>
             <div className="flex h-full flex-row items-center gap-5">
-                <div className="flex h-2/3 flex-row gap-5 self-end sm:gap-7">
+                <div className="flex h-2/3 flex-row gap-5 self-end sm:gap-7 sm:flex hidden ">
                     <NavElement label="Home" href="/" />
                     {/* <NavElement label="Explorer" href="/explorer" /> */}
                     <NavElement label="Leader Board" href="/leaderboard" />
+                    <NavElement label="Challenges" href="/challenges" />
+                </div>
+
+                <div className="flex h-2/3 flex-row gap-5 self-end sm:gap-7 sm:hidden">
+                    <NavElement label="Board" href="/leaderboard" />
                     <NavElement label="Challenges" href="/challenges" />
                 </div>
 
