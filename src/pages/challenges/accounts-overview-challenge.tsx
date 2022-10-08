@@ -28,7 +28,7 @@ const AccountsOverviewChallengePage: NextPage = () => {
     const [answerFour, setFourAnswer] = useState('');
     const [submission, setSubmission] = useState('');
     const [challengeID, setChallengeID] = useState('221007030');
-    const [points, setPoints] = useState(150);
+    const [points, setPoints] = useState(100);
     const [description, setDescription] = useState(
         `
 ### Rewards: ${points} Points 🔥
