@@ -9,14 +9,15 @@ import { filterBounties } from 'utils/bounties';
 type BountyLeaderboardListProps = { bounties: BountyChallenge[] };
 
 const BountyLeaderboardList = ({ bounties: initialBounties }: BountyLeaderboardListProps) => {
+
     const [filterData, setFilterData] = useState({
         bounties: initialBounties,
         query: '',
     });
-
     let bounties = filterData.bounties;
     bounties = bounties.filter(x => x.labels.some(z => z.name == 'challenge'));
     bounties = bounties.filter(x => x.labels.some(z => z.name == 'completed'));
+
 
     const totals = [];
     // By Hunter (for demo: if assigned mode)
@@ -40,12 +41,14 @@ const BountyLeaderboardList = ({ bounties: initialBounties }: BountyLeaderboardL
             totals.push(x);
         }
     });
+    
 
     bounties = totals.sort(total_ascending);
     let index = 1;
     bounties.forEach(item => {
         item.rank = index++;
     });
+
 
     const onSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const query = e.target.value;

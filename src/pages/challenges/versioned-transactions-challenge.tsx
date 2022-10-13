@@ -93,10 +93,11 @@ Your submission should include the following:
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
+                                type="number"
                                 onChange={e =>
                                     setSubmitTransactionID(e.target.value)
                                 }
-                                placeholder="Enter transaction Id..."
+                                placeholder="Enter the number of existing versions"
                             />
                         </Card>
 
@@ -107,8 +108,8 @@ Your submission should include the following:
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <textarea
                                 className="w-full items-center bg-transparent outline-none"
-                                maxLength={200}
-                                rows={10}
+                                maxLength={500}
+                                rows={20}
                                 onChange={e =>
                                     setSubmitProgramID(e.target.value)
                                 }
@@ -124,7 +125,7 @@ Your submission should include the following:
                             <input
                                 className="w-full items-center bg-transparent outline-none"
                                 onChange={e => setSubmitTime(e.target.value)}
-                                placeholder="Enter the code or method..."
+                                placeholder="Enter the method mane... (only the name)"
                             />
                         </Card>
 
