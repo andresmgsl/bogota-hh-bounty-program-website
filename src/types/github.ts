@@ -17,14 +17,14 @@ type Issue = {
     labels: any[];
     number: number;
     title: string;
-    state: 'open' | 'closed';
+    state: string;
     user: User;
 };
 
 type User = {
     avatar_url: string;
     login: string;
-    name: string;
+    name?: string;
 };
 
 export type { Issue, User };

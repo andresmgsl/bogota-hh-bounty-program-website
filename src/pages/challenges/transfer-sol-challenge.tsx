@@ -16,76 +16,65 @@ import { TbBrandGithub } from 'react-icons/tb';
 import { User } from 'types/github';
 import { cn } from 'utils';
 
-type DeployChallengePageProps = {
+type TransferSolChallengePageProps = {
     user: User;
 };
-const DeployChallengePage: NextPage<DeployChallengePageProps> = ({ user }) => {
+
+const TransferSolChallengePage: NextPage<TransferSolChallengePageProps> = ({
+    user,
+}) => {
     const [validBountyName, setValidBountyName] = useState(true);
     const [validHunter, setValidHunter] = useState(true);
     const titleRef = useRef(null);
     const hunterRef = useRef(null);
     const { data: session } = useSession();
 
-    const [title, setTitle] = useState('Solana 101: Deploy a Program');
+    const [title, setTitle] = useState('Transfer SOL');
     const [hunter, setHunter] = useState('');
 
-    const [submitProgramID, setSubmitProgramID] = useState('');
-    const [submitTransactionID, setSubmitTransactionID] = useState('');
-    const [submitTime, setSubmitTime] = useState('');
+    const [answerOne, setSubmitProgramID] = useState('');
+    const [answerTwo, setSubmitTransactionID] = useState('');
+    const [answerThree, setSubmitTime] = useState('');
     const [submission, setSubmission] = useState('');
     const [submitUniversity, setSubmitUniversity] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [challengeID, setChallengeID] = useState('221004010');
-    const [points, setPoints] = useState(100);
+    const [challengeID, setChallengeID] = useState('221007104');
+    const [points, setPoints] = useState(300);
     const [description, setDescription] = useState(
         `
-### Rewards: ${points} Points 🔥 *NFT! 👻
-
+### Reward: ${points} Points 🔥
 ___
 ### Description
-In this challenge your mission is to deploy your first Solana program to devnet!
-
+In this challenge your mission is to create a Solana program that can transfer SOL between two accounts!   
 💡 Record the start time so we can reference it later.
-
-How long do you think it will take you to deploy?
-
-Good luck **Hunter**!
-
-1. Visit the Solana developer docs: <a href="https://docs.solana.com/developers" target="_blank">https://docs.solana.com/developers</a>
-2. Click on the <a href="https://docs.solana.com/getstarted/hello-world" target="_blank">Get Started</a> button
-3. <a href="https://docs.solana.com/getstarted/hello-world#what-you-will-learn" target="_blank">Follow the guide to deploy a program</a>
-4. <a href="https://docs.solana.com/getstarted/hello-world#deploy-your-program" target="_blank">Deploy your program and record the transaction signature</a>
-5. <a href="https://docs.solana.com/getstarted/hello-world#find-your-program-id" target="_blank">Find and record your program Id</a>
-
+How long do you think it will take you to write this?   
+Good luck **${user.name ?? user.login}**!
+1. Visit the [Solana Developer Docs](https://docs.solana.com/developers) or the [Solana Cookbook](https://solanacookbook.com/#contributing) for guides.
+2. Write a simple HelloWorld program. You can even reference [this repository](https://docs.solana.com/getstarted/hello-world).
+3. Set up a list of accounts to be passed in as a parameter.
+4. Add a [Cross-Program Invocation](https://docs.solana.com/developing/programming-model/calling-between-programs) to conduct a transfer from one account to the other.
+5. Deploy your program to \`devnet\`.
 💡 Record the end time. How long did it take?
-
 ### Tips:
-- When you click deploy you should see two buttons: Solana Explorer and Solscan. Clicking the buttons should take you to a transaction explorer where you can view details and your transaction Id in the url.
-- Explorer on devnet to search for your program Id: <a href="https://explorer.solana.com/?cluster=devnet" target="_blank"> Solana Explorer</a>
-- <a href="https://explorer.solana.com/tx/4v5StXx1jeuWzh9trtBQtQRMeeUjZzk7mJSq9MTx9XhDunbqY5ZpwPZQanVKfN7Tb3X1gHtMa6xgUcARVDaG7x91?cluster=devnet" target="_blank">Example transaction Id</a> is in the url followed by: /tx/.
-- Id, Address, and Public Key are often used interchangeably to describe an address which can be used to look up account information.
-- Example of a public key or wallet address: 6UmotVc1i6y4e6DnHf5FwYzYX9qCD7ncAbErsiu4oo3U
-
-**some challenges may offer new NFTs while others may even update existing ones!*
-
+- You'll need to use a **Cross-Program Invocation (CPI)** to accomplish this.
+- Your sender (who's account is being debited) will need to sign this transaction.
+- Your program will use three accounts: the sender, the recipient, and the System Program.
+- You can use the Solana Explorer or Solscan to validate the transaction.
+- You can use the CLI to validate the change in balance of two accounts.
 ### Resources:
-
-<a href="https://docs.solana.com/developers" target="_blank">Solana Developer</a>
-
-<a href="https://beta.solpg.io/" target="_blank">Solana Playground</a>
-
+[Solana Playground](https://beta.solpg.io/)   
+[Solana Developer Docs](https://docs.solana.com/developers)   
+[Program Examples](https://github.com/solana-developers/program-examples)   
+[Solana Bytes: Transfer SOL](https://www.youtube.com/watch?v=hDiEv2a7VC0&list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm&index=11)   
 ___
-
 ### How to Submit
 Your submission should include the following:
-1. Your \`Transaction Id\` (tx, signature, address) from the url above.
-2. The \`Program ID\` from your deployed program.
+1. The \`Program ID\` from your deployed program.
+2. The transaction ID of your transfer.
 3. Time it took to deploy your program.
-
-
-NOTE: if devnet is failing, you can use testnet and show how to properly switch network.
-
 *That was almost too easy..*
+
+
 
 `,
     );
@@ -110,21 +99,7 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="1. Transaction Id: from your program deployment"
-                        />
-                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
-                            <input
-                                className="w-full items-center bg-transparent outline-none"
-                                onChange={e =>
-                                    setSubmitTransactionID(e.target.value)
-                                }
-                                placeholder="Enter transaction Id..."
-                            />
-                        </Card>
-
-                        <input
-                            className="w-full border-none bg-transparent py-5 outline-none"
-                            value="2. Program Id:"
+                            value="1. How many transaction versions are supported?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
@@ -132,21 +107,36 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
                                 onChange={e =>
                                     setSubmitProgramID(e.target.value)
                                 }
-                                placeholder="Enter program Id..."
+                                placeholder="Enter the program ID of your deployed program"
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="3. How long did it take?  (minutes)"
+                            value="2. Transaction ID:"
+                        />
+                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
+                            <input
+                                className="w-full items-center bg-transparent outline-none"
+                                onChange={e =>
+                                    setSubmitTransactionID(e.target.value)
+                                }
+                                placeholder="Enter the transaction ID of your program's transfer"
+                            />
+                        </Card>
+
+                        <input
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="3. How long did it take you to deploy without errors?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
                                 onChange={e => setSubmitTime(e.target.value)}
-                                placeholder="Enter number of minutes it took to deploy your program..."
+                                placeholder="Enter the time it took you to deploy the program without errors"
                             />
                         </Card>
+
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
                             value="4. Select your university"
@@ -197,23 +187,22 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
-
         try {
             const submission = `
 ___
 ### Submission Entered:
 
 Challenge Id: [#${challengeID}]
-
 Hunter: ${user.name ?? user.login}
 
-1. Transaction ID:
-${submitTransactionID}
+1. Program ID:
+${answerOne}
 
-2. Program ID:
-${submitProgramID}
+2. Transaction ID: 
+${answerTwo}
 
-3. How long did it take to deploy a program? (minutes): ${submitTime}
+3. How long did it take to deploy a program? (minutes): 
+${answerThree}
 
 4. University:
 ${submitUniversity}
@@ -351,7 +340,7 @@ ${submitUniversity}
     );
 };
 
-export default DeployChallengePage;
+export default TransferSolChallengePage;
 
 export const getServerSideProps: GetServerSideProps = async context => {
     const session = await unstable_getServerSession(

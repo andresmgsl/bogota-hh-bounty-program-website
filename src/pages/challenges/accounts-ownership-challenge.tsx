@@ -16,76 +16,72 @@ import { TbBrandGithub } from 'react-icons/tb';
 import { User } from 'types/github';
 import { cn } from 'utils';
 
-type DeployChallengePageProps = {
+type AccountsAndOwnershipChallengePageProps = {
     user: User;
 };
-const DeployChallengePage: NextPage<DeployChallengePageProps> = ({ user }) => {
+
+const AccountsAndOwnershipChallengePage: NextPage<
+    AccountsAndOwnershipChallengePageProps
+> = ({ user }) => {
     const [validBountyName, setValidBountyName] = useState(true);
     const [validHunter, setValidHunter] = useState(true);
     const titleRef = useRef(null);
     const hunterRef = useRef(null);
     const { data: session } = useSession();
 
-    const [title, setTitle] = useState('Solana 101: Deploy a Program');
+    const [title, setTitle] = useState('Accounts and Ownership');
     const [hunter, setHunter] = useState('');
 
-    const [submitProgramID, setSubmitProgramID] = useState('');
-    const [submitTransactionID, setSubmitTransactionID] = useState('');
-    const [submitTime, setSubmitTime] = useState('');
+    const [answerOne, setWhichProgramResponsible] = useState('');
+    const [answerTwo, setWhichAccountExecutable] = useState('');
+    const [answerThree, setWhichProgramID] = useState('');
+    const [answerFour, setWhichProgramCanChange] = useState('');
     const [submission, setSubmission] = useState('');
-    const [submitUniversity, setSubmitUniversity] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [challengeID, setChallengeID] = useState('221004010');
+    const [submitUniversity, setSubmitUniversity] = useState('');
+    const [challengeID, setChallengeID] = useState('221007100');
     const [points, setPoints] = useState(100);
     const [description, setDescription] = useState(
         `
-### Rewards: ${points} Points 🔥 *NFT! 👻
+### Rewards: ${points} Points 🔥
 
-___
+---
+
 ### Description
-In this challenge your mission is to deploy your first Solana program to devnet!
 
-💡 Record the start time so we can reference it later.
+In this challenge we're going to give you another test on Solana accounts.
 
-How long do you think it will take you to deploy?
+Good luck **${session?.user?.name}**!
 
-Good luck **Hunter**!
-
-1. Visit the Solana developer docs: <a href="https://docs.solana.com/developers" target="_blank">https://docs.solana.com/developers</a>
-2. Click on the <a href="https://docs.solana.com/getstarted/hello-world" target="_blank">Get Started</a> button
-3. <a href="https://docs.solana.com/getstarted/hello-world#what-you-will-learn" target="_blank">Follow the guide to deploy a program</a>
-4. <a href="https://docs.solana.com/getstarted/hello-world#deploy-your-program" target="_blank">Deploy your program and record the transaction signature</a>
-5. <a href="https://docs.solana.com/getstarted/hello-world#find-your-program-id" target="_blank">Find and record your program Id</a>
-
-💡 Record the end time. How long did it take?
+1. Preview the Solana Bytes video on [Accounts](https://www.youtube.com/watch?v=0_j0rQ9Bvks&list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm&index=5).
+2. Look out for the answers to the challenge questions.
+3. Use the documentation provided as an additional resource!
 
 ### Tips:
-- When you click deploy you should see two buttons: Solana Explorer and Solscan. Clicking the buttons should take you to a transaction explorer where you can view details and your transaction Id in the url.
-- Explorer on devnet to search for your program Id: <a href="https://explorer.solana.com/?cluster=devnet" target="_blank"> Solana Explorer</a>
-- <a href="https://explorer.solana.com/tx/4v5StXx1jeuWzh9trtBQtQRMeeUjZzk7mJSq9MTx9XhDunbqY5ZpwPZQanVKfN7Tb3X1gHtMa6xgUcARVDaG7x91?cluster=devnet" target="_blank">Example transaction Id</a> is in the url followed by: /tx/.
-- Id, Address, and Public Key are often used interchangeably to describe an address which can be used to look up account information.
-- Example of a public key or wallet address: 6UmotVc1i6y4e6DnHf5FwYzYX9qCD7ncAbErsiu4oo3U
 
-**some challenges may offer new NFTs while others may even update existing ones!*
+- Listen closely to some of the specifics about accounts & programs.
+- If you have to, rewatch the video again!
 
 ### Resources:
 
-<a href="https://docs.solana.com/developers" target="_blank">Solana Developer</a>
+[Solana Developer Docs: Accounts](https://docs.solana.com/developing/programming-model/accounts)
 
-<a href="https://beta.solpg.io/" target="_blank">Solana Playground</a>
+[Solana Cookbook: Accounts](https://solanacookbook.com/core-concepts/accounts.html#facts)
 
-___
+[Solana Bytes YouTube Playlist](https://www.youtube.com/playlist?list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm)
+
+---
 
 ### How to Submit
+
 Your submission should include the following:
-1. Your \`Transaction Id\` (tx, signature, address) from the url above.
-2. The \`Program ID\` from your deployed program.
-3. Time it took to deploy your program.
+
+1. Which program is responsible for creating new accounts on Solana?
+2. Which type of accounts are marked as \`Executable: true\`?
+3. Which native Solana program holds the Program ID of \`11111111111111111111111111111111\`?
+4. Which program(s) is allowed to change an account’s data?
 
 
-NOTE: if devnet is failing, you can use testnet and show how to properly switch network.
-
-*That was almost too easy..*
 
 `,
     );
@@ -110,46 +106,63 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="1. Transaction Id: from your program deployment"
+                            value="1. Which program is responsible for creating new accounts on Solana?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
                                 onChange={e =>
-                                    setSubmitTransactionID(e.target.value)
+                                    setWhichProgramResponsible(e.target.value)
                                 }
-                                placeholder="Enter transaction Id..."
+                                placeholder="Enter the program's name or ID'"
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="2. Program Id:"
+                            value="2. Which type of accounts are marked as \`Executable: true\`?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
                                 onChange={e =>
-                                    setSubmitProgramID(e.target.value)
+                                    setWhichAccountExecutable(e.target.value)
                                 }
-                                placeholder="Enter program Id..."
+                                placeholder="Enter what these accounts are called"
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="3. How long did it take?  (minutes)"
+                            value="3. Which native Solana program holds the Program ID of 11111111111111111111111111111111?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitTime(e.target.value)}
-                                placeholder="Enter number of minutes it took to deploy your program..."
+                                onChange={e =>
+                                    setWhichProgramID(e.target.value)
+                                }
+                                placeholder="Enter the program's name"
                             />
                         </Card>
+
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="4. Select your university"
+                            value="4. Which program(s) is allowed to change an account’s data?"
+                        />
+                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
+                            <input
+                                className="w-full items-center bg-transparent outline-none"
+                                onChange={e =>
+                                    setWhichProgramCanChange(e.target.value)
+                                }
+                                placeholder="Enter which program can change a particular account's data"
+                            />
+                        </Card>
+
+                        <input
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="5. Select your university"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <select
@@ -207,15 +220,19 @@ Challenge Id: [#${challengeID}]
 
 Hunter: ${user.name ?? user.login}
 
-1. Transaction ID:
-${submitTransactionID}
+1. Which program is responsible for creating new accounts on Solana?
+${answerOne}
 
-2. Program ID:
-${submitProgramID}
+2. Which type of accounts are marked as \`Executable: true\`?
+${answerTwo}
 
-3. How long did it take to deploy a program? (minutes): ${submitTime}
+3. Which native Solana program holds the Program ID of \`11111111111111111111111111111111\`?
+${answerThree}
 
-4. University:
+4. Which program(s) is allowed to change an account’s data?
+${answerFour}
+
+5. University:
 ${submitUniversity}
 -> ${user.login}
 
@@ -351,7 +368,7 @@ ${submitUniversity}
     );
 };
 
-export default DeployChallengePage;
+export default AccountsAndOwnershipChallengePage;
 
 export const getServerSideProps: GetServerSideProps = async context => {
     const session = await unstable_getServerSession(

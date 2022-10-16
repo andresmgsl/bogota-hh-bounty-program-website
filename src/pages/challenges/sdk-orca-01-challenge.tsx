@@ -16,76 +16,72 @@ import { TbBrandGithub } from 'react-icons/tb';
 import { User } from 'types/github';
 import { cn } from 'utils';
 
-type DeployChallengePageProps = {
+type SDKOrca01ChallengePageProps = {
     user: User;
 };
-const DeployChallengePage: NextPage<DeployChallengePageProps> = ({ user }) => {
+
+const SDKOrca01ChallengePage: NextPage<SDKOrca01ChallengePageProps> = ({
+    user,
+}) => {
     const [validBountyName, setValidBountyName] = useState(true);
     const [validHunter, setValidHunter] = useState(true);
     const titleRef = useRef(null);
-    const hunterRef = useRef(null);
     const { data: session } = useSession();
 
-    const [title, setTitle] = useState('Solana 101: Deploy a Program');
+    const [title, setTitle] = useState('Orca SDK Challenge');
     const [hunter, setHunter] = useState('');
 
-    const [submitProgramID, setSubmitProgramID] = useState('');
-    const [submitTransactionID, setSubmitTransactionID] = useState('');
-    const [submitTime, setSubmitTime] = useState('');
-    const [submission, setSubmission] = useState('');
+    const [answerOne, setSubmitProgramID] = useState('');
+    const [answerTwo, setSubmitTransactionIDCreate] = useState('');
+    const [answerThree, setSubmitTransactionIDIncrement] = useState('');
+    const [answerFour, setSubmitAccountAddress] = useState('');
     const [submitUniversity, setSubmitUniversity] = useState('');
+    const [answerFive, setSubmitTime] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [challengeID, setChallengeID] = useState('221004010');
-    const [points, setPoints] = useState(100);
+    const [submission, setSubmission] = useState('');
+    const [challengeID, setChallengeID] = useState('221009218');
+    const [points, setPoints] = useState(1000);
     const [description, setDescription] = useState(
         `
-### Rewards: ${points} Points 🔥 *NFT! 👻
-
+### Rewards: ${points} Points 🔥
 ___
+
 ### Description
-In this challenge your mission is to deploy your first Solana program to devnet!
 
-💡 Record the start time so we can reference it later.
+In this challenge your mission is to build a unique implementation using the ORCA SDK!
 
-How long do you think it will take you to deploy?
+"Orca is the easiest, fastest, and most user-friendly cryptocurrency exchange on the Solana blockchain." - Orca
 
-Good luck **Hunter**!
 
-1. Visit the Solana developer docs: <a href="https://docs.solana.com/developers" target="_blank">https://docs.solana.com/developers</a>
-2. Click on the <a href="https://docs.solana.com/getstarted/hello-world" target="_blank">Get Started</a> button
-3. <a href="https://docs.solana.com/getstarted/hello-world#what-you-will-learn" target="_blank">Follow the guide to deploy a program</a>
-4. <a href="https://docs.solana.com/getstarted/hello-world#deploy-your-program" target="_blank">Deploy your program and record the transaction signature</a>
-5. <a href="https://docs.solana.com/getstarted/hello-world#find-your-program-id" target="_blank">Find and record your program Id</a>
+Good luck **${session?.user?.name}**!
 
-💡 Record the end time. How long did it take?
+1. Review the Orca Github, SDKs, and Docs [Orca Docs](https://docs.orca.so/orca-for-builders/orca-developer-portal).
+2. What are whirlpools?
+3. Create an application capable of interacting with or utilizing the Orca SDK.
+4. Submit your unique entry!
 
 ### Tips:
-- When you click deploy you should see two buttons: Solana Explorer and Solscan. Clicking the buttons should take you to a transaction explorer where you can view details and your transaction Id in the url.
-- Explorer on devnet to search for your program Id: <a href="https://explorer.solana.com/?cluster=devnet" target="_blank"> Solana Explorer</a>
-- <a href="https://explorer.solana.com/tx/4v5StXx1jeuWzh9trtBQtQRMeeUjZzk7mJSq9MTx9XhDunbqY5ZpwPZQanVKfN7Tb3X1gHtMa6xgUcARVDaG7x91?cluster=devnet" target="_blank">Example transaction Id</a> is in the url followed by: /tx/.
-- Id, Address, and Public Key are often used interchangeably to describe an address which can be used to look up account information.
-- Example of a public key or wallet address: 6UmotVc1i6y4e6DnHf5FwYzYX9qCD7ncAbErsiu4oo3U
-
-**some challenges may offer new NFTs while others may even update existing ones!*
+- Good luck!
 
 ### Resources:
 
-<a href="https://docs.solana.com/developers" target="_blank">Solana Developer</a>
+<a href="https://github.com/orca-so" target="_blank">Orca Github</a>
 
-<a href="https://beta.solpg.io/" target="_blank">Solana Playground</a>
+<a href="https://github.com/orca-so/typescript-sdk" target="_blank">Orca Typescript SDK</a>
 
+<a href="hhttps://www.orca.so/" target="_blank">Orca</a>
 ___
 
 ### How to Submit
 Your submission should include the following:
-1. Your \`Transaction Id\` (tx, signature, address) from the url above.
-2. The \`Program ID\` from your deployed program.
-3. Time it took to deploy your program.
+1. A link to your github Orca SDK implementation
+2. A link to your program or transaction Id on a Solana explorer
+3. A link to a demo showcasing your functionality (if applicable)
 
 
-NOTE: if devnet is failing, you can use testnet and show how to properly switch network.
+*Submission must demonstrate unique functionality or integration not mirroring the examples
 
-*That was almost too easy..*
+
 
 `,
     );
@@ -110,21 +106,7 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="1. Transaction Id: from your program deployment"
-                        />
-                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
-                            <input
-                                className="w-full items-center bg-transparent outline-none"
-                                onChange={e =>
-                                    setSubmitTransactionID(e.target.value)
-                                }
-                                placeholder="Enter transaction Id..."
-                            />
-                        </Card>
-
-                        <input
-                            className="w-full border-none bg-transparent py-5 outline-none"
-                            value="2. Program Id:"
+                            value="1. A link to your github SDK implementation"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
@@ -132,24 +114,27 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
                                 onChange={e =>
                                     setSubmitProgramID(e.target.value)
                                 }
-                                placeholder="Enter program Id..."
+                                placeholder="Enter your answer..."
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="3. How long did it take?  (minutes)"
+                            value="2. Were you able to publish a demo?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitTime(e.target.value)}
-                                placeholder="Enter number of minutes it took to deploy your program..."
+                                onChange={e =>
+                                    setSubmitTransactionIDCreate(e.target.value)
+                                }
+                                placeholder="Enter your link..."
                             />
                         </Card>
+
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="4. Select your university"
+                            value="3. Select your university"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <select
@@ -169,7 +154,6 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
                                 </option>
                             </select>
                         </Card>
-
                         {/* additional feedback, was it easy, suggestions, etc */}
                     </div>
                 ),
@@ -207,15 +191,13 @@ Challenge Id: [#${challengeID}]
 
 Hunter: ${user.name ?? user.login}
 
-1. Transaction ID:
-${submitTransactionID}
+1. Github Link to SDK Implementation.
+${answerOne}
 
-2. Program ID:
-${submitProgramID}
+2. Link to demo if available.
+${answerTwo}
 
-3. How long did it take to deploy a program? (minutes): ${submitTime}
-
-4. University:
+3. University:
 ${submitUniversity}
 -> ${user.login}
 
@@ -351,7 +333,7 @@ ${submitUniversity}
     );
 };
 
-export default DeployChallengePage;
+export default SDKOrca01ChallengePage;
 
 export const getServerSideProps: GetServerSideProps = async context => {
     const session = await unstable_getServerSession(

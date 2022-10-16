@@ -11,6 +11,8 @@
     },
     "dependencies": {
         "@heavy-duty/anchor": "^0.24.2-2",
+        "@metaplex-foundation/js": "^0.17.1",
+        "@metaplex-foundation/mpl-token-metadata": "^2.3.3",
         "@solana/spl-token": "^0.2.0",
         "@solana/wallet-adapter-base": "^0.9.3",
         "@solana/wallet-adapter-react": "^0.15.3",
@@ -23,6 +25,7 @@
         "next": "^12.1.6",
         "next-auth": "^4.10.2",
         "next-seo": "^5.5.0",
+        "octokit": "^2.0.9",
         "react": "17.0.2",
         "react-countup": "^6.3.0",
         "react-dom": "17.0.2",

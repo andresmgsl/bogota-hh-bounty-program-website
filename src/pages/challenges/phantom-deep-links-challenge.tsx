@@ -16,76 +16,66 @@ import { TbBrandGithub } from 'react-icons/tb';
 import { User } from 'types/github';
 import { cn } from 'utils';
 
-type DeployChallengePageProps = {
+type PhantomDeepLinksChallengePageProps = {
     user: User;
 };
-const DeployChallengePage: NextPage<DeployChallengePageProps> = ({ user }) => {
+
+const PhantomDeepLinksChallengePage: NextPage<
+    PhantomDeepLinksChallengePageProps
+> = ({ user }) => {
     const [validBountyName, setValidBountyName] = useState(true);
     const [validHunter, setValidHunter] = useState(true);
     const titleRef = useRef(null);
-    const hunterRef = useRef(null);
     const { data: session } = useSession();
 
-    const [title, setTitle] = useState('Solana 101: Deploy a Program');
+    const [title, setTitle] = useState('Phantom Deeplinks: 101');
     const [hunter, setHunter] = useState('');
 
-    const [submitProgramID, setSubmitProgramID] = useState('');
-    const [submitTransactionID, setSubmitTransactionID] = useState('');
-    const [submitTime, setSubmitTime] = useState('');
-    const [submission, setSubmission] = useState('');
+    const [answerTwo, setSecondAnswer] = useState('');
+    const [answerOne, setFirstAnswer] = useState('');
+    const [answerThree, setThirdAnswer] = useState('');
+    const [answerFour, setFourAnswer] = useState('');
     const [submitUniversity, setSubmitUniversity] = useState('');
+    const [submission, setSubmission] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [challengeID, setChallengeID] = useState('221004010');
+    const [challengeID, setChallengeID] = useState('221007051');
     const [points, setPoints] = useState(100);
     const [description, setDescription] = useState(
         `
-### Rewards: ${points} Points 🔥 *NFT! 👻
+### Rewards: ${points} Points 
 
 ___
 ### Description
-In this challenge your mission is to deploy your first Solana program to devnet!
+In this challenge we're going to learn about Phantom Wallet Deep links.
 
-💡 Record the start time so we can reference it later.
+Let's get to it ${session?.user?.name}!
 
-How long do you think it will take you to deploy?
+1. Read about Deeplinks here <a href="https://phantom.app/blog/introducing-phantom-deeplinks" target="_blank">Phantom Deeplinks</a>.
+2. Look out for the answers to the challenge questions:
+    - What do deeplinks also make it easy for users to do?
+    - What is the base url that phantom uses to connect?
+    - What is the payload to Sign and Send a Transaction?
+    - How can users open web apps within Phantom's in-app browser, via what?
 
-Good luck **Hunter**!
-
-1. Visit the Solana developer docs: <a href="https://docs.solana.com/developers" target="_blank">https://docs.solana.com/developers</a>
-2. Click on the <a href="https://docs.solana.com/getstarted/hello-world" target="_blank">Get Started</a> button
-3. <a href="https://docs.solana.com/getstarted/hello-world#what-you-will-learn" target="_blank">Follow the guide to deploy a program</a>
-4. <a href="https://docs.solana.com/getstarted/hello-world#deploy-your-program" target="_blank">Deploy your program and record the transaction signature</a>
-5. <a href="https://docs.solana.com/getstarted/hello-world#find-your-program-id" target="_blank">Find and record your program Id</a>
-
-💡 Record the end time. How long did it take?
+3. Use the documentation provided as an additional resource!
 
 ### Tips:
-- When you click deploy you should see two buttons: Solana Explorer and Solscan. Clicking the buttons should take you to a transaction explorer where you can view details and your transaction Id in the url.
-- Explorer on devnet to search for your program Id: <a href="https://explorer.solana.com/?cluster=devnet" target="_blank"> Solana Explorer</a>
-- <a href="https://explorer.solana.com/tx/4v5StXx1jeuWzh9trtBQtQRMeeUjZzk7mJSq9MTx9XhDunbqY5ZpwPZQanVKfN7Tb3X1gHtMa6xgUcARVDaG7x91?cluster=devnet" target="_blank">Example transaction Id</a> is in the url followed by: /tx/.
-- Id, Address, and Public Key are often used interchangeably to describe an address which can be used to look up account information.
-- Example of a public key or wallet address: 6UmotVc1i6y4e6DnHf5FwYzYX9qCD7ncAbErsiu4oo3U
-
-**some challenges may offer new NFTs while others may even update existing ones!*
+- Discover how easy deepllinks implementation can be
+- If you have to, rewatch the video again!
 
 ### Resources:
 
-<a href="https://docs.solana.com/developers" target="_blank">Solana Developer</a>
-
-<a href="https://beta.solpg.io/" target="_blank">Solana Playground</a>
+<a href="https://docs.phantom.app/integrating/deeplinks-ios-and-android" target="_blank">Deeplinks (iOS & Android)</a>
 
 ___
 
 ### How to Submit
 Your submission should include the following:
-1. Your \`Transaction Id\` (tx, signature, address) from the url above.
-2. The \`Program ID\` from your deployed program.
-3. Time it took to deploy your program.
+1. Answer: What do deeplinks also make it easy for users to do?
+2. Enter the base url for: What is the base url.
+3. Enter the payload used to Sign and Send a Transaction.
+4. Enter the feature that allows users to open web apps within Phantom's in-app browser.
 
-
-NOTE: if devnet is failing, you can use testnet and show how to properly switch network.
-
-*That was almost too easy..*
 
 `,
     );
@@ -110,46 +100,56 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="1. Transaction Id: from your program deployment"
+                            value="1. What do deeplinks also make it easy for users to do?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e =>
-                                    setSubmitTransactionID(e.target.value)
-                                }
-                                placeholder="Enter transaction Id..."
+                                onChange={e => setFirstAnswer(e.target.value)}
+                                placeholder="Enter your answer..."
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="2. Program Id:"
+                            value="2. What is the base url that phantom uses to connect?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e =>
-                                    setSubmitProgramID(e.target.value)
-                                }
-                                placeholder="Enter program Id..."
+                                onChange={e => setSecondAnswer(e.target.value)}
+                                placeholder="Enter your answer..."
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="3. How long did it take?  (minutes)"
+                            value="3. What is the payload to Sign and Send a Transaction?"
+                        />
+                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
+                            <textarea
+                                className="w-full items-center bg-transparent outline-none"
+                                maxLength={200}
+                                rows={3}
+                                onChange={e => setThirdAnswer(e.target.value)}
+                                placeholder="Enter your answer..."
+                            />
+                        </Card>
+
+                        <input
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="4. How can users open web apps within Phantom's in-app browser, via what?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitTime(e.target.value)}
-                                placeholder="Enter number of minutes it took to deploy your program..."
+                                onChange={e => setFourAnswer(e.target.value)}
+                                placeholder="Enter your answer..."
                             />
                         </Card>
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="4. Select your university"
+                            value="5. Select your university"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <select
@@ -169,7 +169,6 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
                                 </option>
                             </select>
                         </Card>
-
                         {/* additional feedback, was it easy, suggestions, etc */}
                     </div>
                 ),
@@ -207,15 +206,20 @@ Challenge Id: [#${challengeID}]
 
 Hunter: ${user.name ?? user.login}
 
-1. Transaction ID:
-${submitTransactionID}
 
-2. Program ID:
-${submitProgramID}
+1. What do deeplinks also make it easy for users to do?
+${answerOne}
 
-3. How long did it take to deploy a program? (minutes): ${submitTime}
+2. What is the base url that phantom uses to connect?"
+${answerTwo}
 
-4. University:
+3. What is the payload to Sign and Send a Transaction?
+${answerThree}
+
+4. How can users open web apps within Phantom's in-app browser, via what?
+${answerFour}
+
+5. University:
 ${submitUniversity}
 -> ${user.login}
 
@@ -351,7 +355,7 @@ ${submitUniversity}
     );
 };
 
-export default DeployChallengePage;
+export default PhantomDeepLinksChallengePage;
 
 export const getServerSideProps: GetServerSideProps = async context => {
     const session = await unstable_getServerSession(

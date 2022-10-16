@@ -16,76 +16,83 @@ import { TbBrandGithub } from 'react-icons/tb';
 import { User } from 'types/github';
 import { cn } from 'utils';
 
-type DeployChallengePageProps = {
+type ProcessingInstructionsChallengePageProps = {
     user: User;
 };
-const DeployChallengePage: NextPage<DeployChallengePageProps> = ({ user }) => {
+
+const ProcessingInstructionsChallengePage: NextPage<
+    ProcessingInstructionsChallengePageProps
+> = ({ user }) => {
     const [validBountyName, setValidBountyName] = useState(true);
     const [validHunter, setValidHunter] = useState(true);
     const titleRef = useRef(null);
-    const hunterRef = useRef(null);
     const { data: session } = useSession();
 
-    const [title, setTitle] = useState('Solana 101: Deploy a Program');
+    const [title, setTitle] = useState('Processing Instructions');
     const [hunter, setHunter] = useState('');
 
-    const [submitProgramID, setSubmitProgramID] = useState('');
-    const [submitTransactionID, setSubmitTransactionID] = useState('');
-    const [submitTime, setSubmitTime] = useState('');
-    const [submission, setSubmission] = useState('');
+    const [answerOne, setSubmitProgramID] = useState('');
+    const [answerTwo, setSubmitTransactionIDCreate] = useState('');
+    const [answerThree, setSubmitTransactionIDIncrement] = useState('');
+    const [answerFour, setSubmitAccountAddress] = useState('');
+    const [answerFive, setSubmitTime] = useState('');
     const [submitUniversity, setSubmitUniversity] = useState('');
+    const [submission, setSubmission] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [challengeID, setChallengeID] = useState('221004010');
+    const [challengeID, setChallengeID] = useState('221007108');
     const [points, setPoints] = useState(100);
     const [description, setDescription] = useState(
         `
-### Rewards: ${points} Points 🔥 *NFT! 👻
-
+### Rewards: ${points} Points 🔥
 ___
+
 ### Description
-In this challenge your mission is to deploy your first Solana program to devnet!
 
-💡 Record the start time so we can reference it later.
+In this challenge your mission is to build a Solana program with two types of instructions.
 
-How long do you think it will take you to deploy?
+This program will be written in native Solana (not Anchor).
 
-Good luck **Hunter**!
+This program will be able to conduct the following two instructions:
+1. Create a counter PDA. This PDA account should have one field: value: \`u8\`.
+2. Increment that counter PDA's value by 1.
 
-1. Visit the Solana developer docs: <a href="https://docs.solana.com/developers" target="_blank">https://docs.solana.com/developers</a>
-2. Click on the <a href="https://docs.solana.com/getstarted/hello-world" target="_blank">Get Started</a> button
-3. <a href="https://docs.solana.com/getstarted/hello-world#what-you-will-learn" target="_blank">Follow the guide to deploy a program</a>
-4. <a href="https://docs.solana.com/getstarted/hello-world#deploy-your-program" target="_blank">Deploy your program and record the transaction signature</a>
-5. <a href="https://docs.solana.com/getstarted/hello-world#find-your-program-id" target="_blank">Find and record your program Id</a>
+Good luck **${session?.user?.name}**!
 
-💡 Record the end time. How long did it take?
+1. Preview the Solana Bytes video on [Processing Instructions](https://www.youtube.com/watch?v=T5p8rGD0-vs&list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm&index=10).
+2. Create a program capable of creating an account.
+3. Create the folowing data structure for your account: one field named "value" of type \`u8\`.
+4. Write the functionality to serialize this data on-chain.
+5. Now add the second function for incrementing the value.
+6. Write a custom instruction data structure to determine which function is to be run when your program is invoked.
+7. Now write a test. Replicate the instruction data on your client side.
+5. Add to your test the functionality to hit your program with both instructions, one after another.
 
 ### Tips:
-- When you click deploy you should see two buttons: Solana Explorer and Solscan. Clicking the buttons should take you to a transaction explorer where you can view details and your transaction Id in the url.
-- Explorer on devnet to search for your program Id: <a href="https://explorer.solana.com/?cluster=devnet" target="_blank"> Solana Explorer</a>
-- <a href="https://explorer.solana.com/tx/4v5StXx1jeuWzh9trtBQtQRMeeUjZzk7mJSq9MTx9XhDunbqY5ZpwPZQanVKfN7Tb3X1gHtMa6xgUcARVDaG7x91?cluster=devnet" target="_blank">Example transaction Id</a> is in the url followed by: /tx/.
-- Id, Address, and Public Key are often used interchangeably to describe an address which can be used to look up account information.
-- Example of a public key or wallet address: 6UmotVc1i6y4e6DnHf5FwYzYX9qCD7ncAbErsiu4oo3U
 
-**some challenges may offer new NFTs while others may even update existing ones!*
+- You'll want to follow the steps to create an account using **CPI**.
+- You'll have to add a struct that leverages Borsh to create the serializable custom data structure.
+- The act of serializing this data takes place after the account has been created, and space for the data structure has been alloted.
+- You'll need to derive the PDA on the client-side, but on your program-side you want to make sure your program is the owner of the new account.
+- You'll want to use a struct for Instruction Data as well as the Data for your account.
+- It helps tremendously to have an InstructionType enum as the first field of your Instruction Data.
+- You may want to leverage a \`match\` statement in your \`processor.rs\` file to direct flow of your program.
 
 ### Resources:
-
-<a href="https://docs.solana.com/developers" target="_blank">Solana Developer</a>
-
-<a href="https://beta.solpg.io/" target="_blank">Solana Playground</a>
-
+<a href="https://docs.solana.com/developers" target="_blank">Solana Developer Docs</a>   
+<a href="https://github.com/solana-developers/program-examples" target="_blank">Program Examples</a>   
+<a href="https://www.youtube.com/playlist?list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm" target="_blank">Solana Bytes YouTube Playlist</a>
 ___
 
 ### How to Submit
 Your submission should include the following:
-1. Your \`Transaction Id\` (tx, signature, address) from the url above.
-2. The \`Program ID\` from your deployed program.
-3. Time it took to deploy your program.
-
-
-NOTE: if devnet is failing, you can use testnet and show how to properly switch network.
-
+1. Your deployed program's \`Program ID\`.
+2. Your \`Transaction Id\` of your "create account" transaction.
+3. Your \`Transaction Id\` of your "increment value" transaction.
+4. The address of your counter account.
+5. Time it took to successfully send this transaction.
 *That was almost too easy..*
+
+
 
 `,
     );
@@ -110,21 +117,7 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="1. Transaction Id: from your program deployment"
-                        />
-                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
-                            <input
-                                className="w-full items-center bg-transparent outline-none"
-                                onChange={e =>
-                                    setSubmitTransactionID(e.target.value)
-                                }
-                                placeholder="Enter transaction Id..."
-                            />
-                        </Card>
-
-                        <input
-                            className="w-full border-none bg-transparent py-5 outline-none"
-                            value="2. Program Id:"
+                            value="1. Enter your deployed program's Program ID:"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
@@ -132,24 +125,68 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
                                 onChange={e =>
                                     setSubmitProgramID(e.target.value)
                                 }
-                                placeholder="Enter program Id..."
+                                placeholder="Program ID"
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="3. How long did it take?  (minutes)"
+                            value="2. Enter the transaction ID of the transaction that created the account:"
+                        />
+                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
+                            <input
+                                className="w-full items-center bg-transparent outline-none"
+                                onChange={e =>
+                                    setSubmitTransactionIDCreate(e.target.value)
+                                }
+                                placeholder="Transaction ID"
+                            />
+                        </Card>
+
+                        <input
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="3. Enter the transaction ID of the transaction that incremented the account's value:"
+                        />
+                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
+                            <input
+                                className="w-full items-center bg-transparent outline-none"
+                                onChange={e =>
+                                    setSubmitTransactionIDIncrement(
+                                        e.target.value,
+                                    )
+                                }
+                                placeholder="Transaction ID"
+                            />
+                        </Card>
+
+                        <input
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="4. Enter the address of the PDA account you created with custom data:"
+                        />
+                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
+                            <input
+                                className="w-full items-center bg-transparent outline-none"
+                                onChange={e =>
+                                    setSubmitAccountAddress(e.target.value)
+                                }
+                                placeholder="Account Addresss"
+                            />
+                        </Card>
+
+                        <input
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="5. How long did it take you to deploy this program without error?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
                                 onChange={e => setSubmitTime(e.target.value)}
-                                placeholder="Enter number of minutes it took to deploy your program..."
+                                placeholder="Enter how long it took you"
                             />
                         </Card>
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="4. Select your university"
+                            value="6. Select your university"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <select
@@ -169,7 +206,6 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
                                 </option>
                             </select>
                         </Card>
-
                         {/* additional feedback, was it easy, suggestions, etc */}
                     </div>
                 ),
@@ -207,15 +243,22 @@ Challenge Id: [#${challengeID}]
 
 Hunter: ${user.name ?? user.login}
 
-1. Transaction ID:
-${submitTransactionID}
+1. Your deployed program's \`Program ID\`.
+${answerOne}
 
-2. Program ID:
-${submitProgramID}
+2. Your \`Transaction Id\` of your "create account" transaction.
+${answerTwo}
 
-3. How long did it take to deploy a program? (minutes): ${submitTime}
+3. Your \`Transaction Id\` of your "increment value" transaction.
+${answerThree}
 
-4. University:
+4. The address of your counter account.
+${answerFour}
+
+5. Time it took to successfully send this transaction.
+${answerFive}
+
+6. University:
 ${submitUniversity}
 -> ${user.login}
 
@@ -351,7 +394,7 @@ ${submitUniversity}
     );
 };
 
-export default DeployChallengePage;
+export default ProcessingInstructionsChallengePage;
 
 export const getServerSideProps: GetServerSideProps = async context => {
     const session = await unstable_getServerSession(

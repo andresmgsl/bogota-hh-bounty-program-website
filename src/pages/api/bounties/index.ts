@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import { NextApiHandler } from 'next';
 import { authOptions } from '../auth/[...nextauth]';
-import { createIssue } from 'lib/github';
+import { createIssue, createIssue2 } from 'lib/github';
 import { getBounties } from 'lib/bounties';
 import { unstable_getServerSession } from 'next-auth';
 
@@ -18,14 +18,10 @@ const handler: NextApiHandler = async (req, res) => {
         }
         // POST /api/bounties
         case 'POST': {
-            const response = await createIssue(req.body, accessToken);
+            const response = await createIssue2(req.body);
 
-            if (response.message === 'Validation Failed') {
-                const {
-                    errors: [error],
-                } = response;
-
-                return res.status(500).json(error);
+            if (response === null) {
+                return res.status(500).json({});
             }
 
             res.status(200).json(response);

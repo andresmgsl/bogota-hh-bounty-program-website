@@ -16,76 +16,65 @@ import { TbBrandGithub } from 'react-icons/tb';
 import { User } from 'types/github';
 import { cn } from 'utils';
 
-type DeployChallengePageProps = {
+type StackExchangeAnswerChallengePageProps = {
     user: User;
 };
-const DeployChallengePage: NextPage<DeployChallengePageProps> = ({ user }) => {
+
+const StackExchangeAnswerChallengePage: NextPage<
+    StackExchangeAnswerChallengePageProps
+> = ({ user }) => {
     const [validBountyName, setValidBountyName] = useState(true);
     const [validHunter, setValidHunter] = useState(true);
     const titleRef = useRef(null);
     const hunterRef = useRef(null);
     const { data: session } = useSession();
 
-    const [title, setTitle] = useState('Solana 101: Deploy a Program');
+    const [title, setTitle] = useState('Demonstrate your Knowledge');
     const [hunter, setHunter] = useState('');
 
-    const [submitProgramID, setSubmitProgramID] = useState('');
-    const [submitTransactionID, setSubmitTransactionID] = useState('');
-    const [submitTime, setSubmitTime] = useState('');
-    const [submission, setSubmission] = useState('');
+    const [answerTwo, setSecondAnswer] = useState('');
+    const [answerOne, setFirstAnswer] = useState('');
     const [submitUniversity, setSubmitUniversity] = useState('');
+    const [submission, setSubmission] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [challengeID, setChallengeID] = useState('221004010');
-    const [points, setPoints] = useState(100);
+    const [challengeID, setChallengeID] = useState('221007055');
+    const [points, setPoints] = useState(150);
     const [description, setDescription] = useState(
         `
-### Rewards: ${points} Points 🔥 *NFT! 👻
+### Rewards: ${points} Points 🔥
 
 ___
 ### Description
-In this challenge your mission is to deploy your first Solana program to devnet!
+In this challenge your mission is to answer a question on Solana Stack Exchange!
 
-💡 Record the start time so we can reference it later.
+Let's get into it ${user.name ?? user.login}!
 
-How long do you think it will take you to deploy?
+1. Answer a question on <a href="https://solana.stackexchange.com/" target="_blank">Solana Stack Exchange</a>.
+2. Reply with your answer
+3. Get your answer approved or upvoted!
+4. Upvote a good answer
+5. Use the documentation provided as an additional resource!
 
-Good luck **Hunter**!
-
-1. Visit the Solana developer docs: <a href="https://docs.solana.com/developers" target="_blank">https://docs.solana.com/developers</a>
-2. Click on the <a href="https://docs.solana.com/getstarted/hello-world" target="_blank">Get Started</a> button
-3. <a href="https://docs.solana.com/getstarted/hello-world#what-you-will-learn" target="_blank">Follow the guide to deploy a program</a>
-4. <a href="https://docs.solana.com/getstarted/hello-world#deploy-your-program" target="_blank">Deploy your program and record the transaction signature</a>
-5. <a href="https://docs.solana.com/getstarted/hello-world#find-your-program-id" target="_blank">Find and record your program Id</a>
-
-💡 Record the end time. How long did it take?
 
 ### Tips:
-- When you click deploy you should see two buttons: Solana Explorer and Solscan. Clicking the buttons should take you to a transaction explorer where you can view details and your transaction Id in the url.
-- Explorer on devnet to search for your program Id: <a href="https://explorer.solana.com/?cluster=devnet" target="_blank"> Solana Explorer</a>
-- <a href="https://explorer.solana.com/tx/4v5StXx1jeuWzh9trtBQtQRMeeUjZzk7mJSq9MTx9XhDunbqY5ZpwPZQanVKfN7Tb3X1gHtMa6xgUcARVDaG7x91?cluster=devnet" target="_blank">Example transaction Id</a> is in the url followed by: /tx/.
-- Id, Address, and Public Key are often used interchangeably to describe an address which can be used to look up account information.
-- Example of a public key or wallet address: 6UmotVc1i6y4e6DnHf5FwYzYX9qCD7ncAbErsiu4oo3U
-
-**some challenges may offer new NFTs while others may even update existing ones!*
+- Reference the cookbook and documentation for many answers to common questions
 
 ### Resources:
 
-<a href="https://docs.solana.com/developers" target="_blank">Solana Developer</a>
+<a href="https://docs.solana.com" target="_blank">Solana Developer Docs</a>
 
-<a href="https://beta.solpg.io/" target="_blank">Solana Playground</a>
+<a href="https://solanacookbook.com/" target="_blank">Solana Cookbook</a>
 
 ___
 
 ### How to Submit
 Your submission should include the following:
-1. Your \`Transaction Id\` (tx, signature, address) from the url above.
-2. The \`Program ID\` from your deployed program.
-3. Time it took to deploy your program.
-
-
-NOTE: if devnet is failing, you can use testnet and show how to properly switch network.
-
-*That was almost too easy..*
+1. Provide the Link to your question and answer.
+2. Provide the link the answer you upvoted
+3. Your answer should be relevant and attempt to answer the question to the best of your ability.
+4. Your answer should be accepted or have at least 1 upvote from another user
+5. Your upvote should be applied to a sufficient answer to a question on Solana stack exchange
+* you may complete this challenge for credit up to 1 times
 
 `,
     );
@@ -110,46 +99,31 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="1. Transaction Id: from your program deployment"
+                            value="1. Enter the url to the question and your answer on Solana Stack Exchange"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e =>
-                                    setSubmitTransactionID(e.target.value)
-                                }
-                                placeholder="Enter transaction Id..."
+                                onChange={e => setFirstAnswer(e.target.value)}
+                                placeholder="Enter your answer..."
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="2. Program Id:"
+                            value="2. Enter the url to the answer on Solana stack exchange you upvoted"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e =>
-                                    setSubmitProgramID(e.target.value)
-                                }
-                                placeholder="Enter program Id..."
+                                onChange={e => setFirstAnswer(e.target.value)}
+                                placeholder="Enter your answer..."
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="3. How long did it take?  (minutes)"
-                        />
-                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
-                            <input
-                                className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitTime(e.target.value)}
-                                placeholder="Enter number of minutes it took to deploy your program..."
-                            />
-                        </Card>
-                        <input
-                            className="w-full border-none bg-transparent py-5 outline-none"
-                            value="4. Select your university"
+                            value="3. Select your university"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <select
@@ -197,25 +171,21 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
-
         try {
             const submission = `
 ___
 ### Submission Entered:
 
 Challenge Id: [#${challengeID}]
-
 Hunter: ${user.name ?? user.login}
 
-1. Transaction ID:
-${submitTransactionID}
+1. Enter the url to the question and your answer on Solana Stack Exchange
+${answerOne}
 
-2. Program ID:
-${submitProgramID}
+2. Enter the url to the answer on Solana stack exchange you upvoted
+${answerTwo}
 
-3. How long did it take to deploy a program? (minutes): ${submitTime}
-
-4. University:
+3. University:
 ${submitUniversity}
 -> ${user.login}
 
@@ -351,7 +321,7 @@ ${submitUniversity}
     );
 };
 
-export default DeployChallengePage;
+export default StackExchangeAnswerChallengePage;
 
 export const getServerSideProps: GetServerSideProps = async context => {
     const session = await unstable_getServerSession(

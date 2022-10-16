@@ -6,18 +6,26 @@ import Card from 'components/common/card';
 import Link from 'next/link';
 import Markdown from 'components/common/markdown';
 import NavElement from 'components/common/layout/header/nav-element';
-import { NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { NextSeo } from 'next-seo';
 import { TbBrandGithub } from 'react-icons/tb';
 import Text from 'components/common/text';
 import { cn } from 'utils';
 import { useRouter } from 'next/router';
+import { unstable_getServerSession } from 'next-auth';
+import { getBountiesByAssignee } from 'lib/bounties';
+import { getCurrentUser, getUser } from 'lib/github';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
+import { User } from 'types/github';
 
-const SocialChallenge: NextPage = () => {
+type SocialChallengePageProps = {
+    user: User;
+};
+
+const SocialChallenge: NextPage<SocialChallengePageProps> = ({ user }) => {
     const [validBountyName, setValidBountyName] = useState(true);
     const [validHunter, setValidHunter] = useState(true);
     const titleRef = useRef(null);
-    const hunterRef = useRef(null);
     const { data: session } = useSession();
 
     const [title, setTitle] = useState('Social Challenge');
@@ -25,11 +33,13 @@ const SocialChallenge: NextPage = () => {
 
     const [submitHeavyDutyDiscord, setSubmitHeavyDutyDiscord] = useState('');
     const [submitTwitterHandle, setSubmitTwitterHandle] = useState('');
-    const [submitSolanaUniversityDiscord, setSubmitSolanaUniversityDiscord] = useState('');
+    const [submitSolanaUniversityDiscord, setSubmitSolanaUniversityDiscord] =
+        useState('');
+    const [submitUniversity, setSubmitUniversity] = useState('');
     const [submission, setSubmission] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const [challengeID, setChallengeID] = useState('221004011');
     const [points, setPoints] = useState(25);
-
 
     const [description, setDescription] = useState(
         `
@@ -43,7 +53,7 @@ There's many awesome communities out there, for now let's start with joining Sol
 
 - Follow Heavy Duty Builders on <a href="https://twitter.com/HeavyDutyBuild" target="_blank">Twitter</a>.
 - Join Heavy Duty Builders <a href="https://discord.gg/sbjg5YvYfM" target="_blank">Discord</a> and say hi in the '🛠general' channel
-- Join Solana University <a href="https://discord.gg/W96qdnqb" target="_blank">Discord</a> and say hi in the 'welcome' channel
+- Join Solana University <a href="https://discord.gg/gB6SaBtc" target="_blank">Discord</a> and say hi in the 'welcome' channel
 ___
 
 ### How to Submit
@@ -54,8 +64,8 @@ Your submission should include the following:
 - Enter the link to your message in Solana University Discord
 
 
-`
-);
+`,
+    );
 
     const tabsDescription = useMemo(
         () => [
@@ -73,48 +83,75 @@ Your submission should include the following:
             {
                 content: (
                     <div>
-
                         <Markdown>{`### Submit your answers`}</Markdown>
 
                         <input
-                            className="w-full py-5 border-none bg-transparent outline-none"
-                            value='1. Your twitter handle'
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="1. Your twitter handle"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
-
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitTwitterHandle(e.target.value)}
-                                placeholder='Enter your twitter handle...'
+                                onChange={e =>
+                                    setSubmitTwitterHandle(e.target.value)
+                                }
+                                placeholder="Enter your twitter handle..."
                             />
                         </Card>
 
                         <input
-                            className="w-full py-5 border-none bg-transparent outline-none"
-                            value='2. Link to your message in Heavy Duty Builders discord:'
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="2. Link to your message in Heavy Duty Builders discord:"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitHeavyDutyDiscord(e.target.value)}
-                                placeholder='Enter the link to your message in Heavy Duty Builders discord...'
+                                onChange={e =>
+                                    setSubmitHeavyDutyDiscord(e.target.value)
+                                }
+                                placeholder="Enter the link to your message in Heavy Duty Builders discord..."
                             />
                         </Card>
 
                         <input
-                            className="w-full py-5 border-none bg-transparent outline-none"
-                            value='3. Link to your message in Solana University discord'
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="3. Link to your message in Solana University discord"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitSolanaUniversityDiscord(e.target.value)}
-                                placeholder='Enter the link to your message in Solana University discord...'
+                                onChange={e =>
+                                    setSubmitSolanaUniversityDiscord(
+                                        e.target.value,
+                                    )
+                                }
+                                placeholder="Enter the link to your message in Solana University discord..."
                             />
+                        </Card>
+                        <input
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="4. Select your university"
+                        />
+                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
+                            <select
+                                className="w-full items-center bg-transparent outline-none"
+                                onChange={e =>
+                                    setSubmitUniversity(e.target.value)
+                                }
+                                placeholder="Tell us where are you from"
+                                required
+                            >
+                                <option value="">None</option>
+                                <option className="text-black" value="CALHACKS">
+                                    CALHACKS
+                                </option>
+                                <option className="text-black" value="HACKTX">
+                                    HACKTX
+                                </option>
+                            </select>
                         </Card>
 
                         {/* additional feedback, was it easy, suggestions, etc */}
-
                     </div>
                 ),
                 id: 'submission',
@@ -140,44 +177,14 @@ Your submission should include the following:
 
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
-
-        if (title === '' && hunter === '') {
-            setValidHunter(false);
-            setValidBountyName(false);
-            titleRef.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-            });
-            return;
-        } else if (title === '') {
-            titleRef.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-            });
-            setValidBountyName(false);
-            return;
-        }
-        const challengerName = session?.user?.name;
-        const responseUser = await fetch(`/api/${challengerName}`);
-
-        const user = await responseUser.json();
-
-        // if (!user) {
-        //     setValidHunter(false);
-        //     hunterRef.current.scrollIntoView({
-        //         behavior: 'smooth',
-        //         block: 'center',
-        //     });
-        //     return;
-        // }
-
+        setIsLoading(true);
         try {
             const submission = `
 ___
 ### Submission Entered:
 
 Challenge Id: [#${challengeID}]
-Hunter: ${session?.user?.name}
+Hunter: ${user.name || user.login}
 
 1. Twitter handle:
 <a href="https://twitter.com/${submitTwitterHandle}" target="_blank">${submitTwitterHandle}</a>
@@ -188,16 +195,19 @@ ${submitHeavyDutyDiscord}
 3. Solana University link to discord:
 ${submitSolanaUniversityDiscord}
 
+4. University:
+${submitUniversity}
+-> ${user.login}
+
 `;
 
             setSubmission(submission);
             const response = await fetch('/api/bounties', {
                 body: JSON.stringify({
-                    // assignee: hunter,
-                    assignee: challengerName,
                     body: description + submission,
                     title: `Challenge Submission: ` + title,
-                    points
+                    points,
+                    labels: [submitUniversity, user.login],
                 }),
                 headers: { 'Content-Type': 'application/json' },
                 method: 'POST',
@@ -248,7 +258,9 @@ ${submitSolanaUniversityDiscord}
             ></NextSeo>
             <form className="flex flex-col" onSubmit={onSubmit}>
                 <section className="flex w-full flex-col gap-7 bg-gradient-to-tr from-primary/75 to-secondary/75 p-5 sm:p-8 md:px-16 lg:px-32 lg:py-16 xl:px-48 xl:py-20">
-                    <Text variant="label">Bounty Challenge: #{challengeID}</Text>
+                    <Text variant="label">
+                        Bounty Challenge: #{challengeID}
+                    </Text>
                     <div
                         className={cn(
                             'tooltip-bottom tooltip-error',
@@ -299,15 +311,17 @@ ${submitSolanaUniversityDiscord}
 
                         <div className="flex flex-row justify-end gap-2 text-right">
                             <Markdown>
-                                **please review your entry before clicking submit*
+                                **please review your entry before clicking
+                                submit*
                             </Markdown>
                         </div>
                         <div className="width-full flex flex-row justify-end gap-2">
                             <Button
-                                className='w-40'
+                                className="w-40"
                                 type="submit"
                                 variant="orange"
                                 text="Submit"
+                                disabled={isLoading}
                             />
                         </div>
                         {/* after submit, take them/offer to the next challenge.. */}
@@ -319,3 +333,21 @@ ${submitSolanaUniversityDiscord}
 };
 
 export default SocialChallenge;
+
+export const getServerSideProps: GetServerSideProps = async context => {
+    const session = await unstable_getServerSession(
+        context.req,
+        context.res,
+        authOptions,
+    );
+
+    const accessToken = session?.accessToken as string;
+
+    const user = await getCurrentUser(accessToken);
+
+    return {
+        props: {
+            user,
+        },
+    };
+};

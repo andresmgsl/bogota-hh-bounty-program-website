@@ -1,91 +1,69 @@
+import { FormEvent, useMemo, useRef, useState } from 'react';
+import { signIn, useSession } from 'next-auth/react';
+
 import Button from 'components/common/button';
 import Card from 'components/common/card';
-import NavElement from 'components/common/layout/header/nav-element';
-import Markdown from 'components/common/markdown';
-import Text from 'components/common/text';
-import { getCurrentUser } from 'lib/github';
-import { GetServerSideProps, NextPage } from 'next';
-import { unstable_getServerSession } from 'next-auth';
-import { signIn, useSession } from 'next-auth/react';
-import { NextSeo } from 'next-seo';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { authOptions } from 'pages/api/auth/[...nextauth]';
-import { FormEvent, useMemo, useRef, useState } from 'react';
+import Markdown from 'components/common/markdown';
+import NavElement from 'components/common/layout/header/nav-element';
+import { GetServerSideProps, NextPage } from 'next';
+import { NextSeo } from 'next-seo';
 import { TbBrandGithub } from 'react-icons/tb';
-import { User } from 'types/github';
+import Text from 'components/common/text';
 import { cn } from 'utils';
+import { useRouter } from 'next/router';
+import { unstable_getServerSession } from 'next-auth';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
+import { getCurrentUser } from 'lib/github';
+import { User } from 'types/github';
 
-type DeployChallengePageProps = {
+type SocialPhotoOneChallengePageProps = {
     user: User;
 };
-const DeployChallengePage: NextPage<DeployChallengePageProps> = ({ user }) => {
+
+const SocialPhotoOneChallenge: NextPage<SocialPhotoOneChallengePageProps> = ({
+    user,
+}) => {
     const [validBountyName, setValidBountyName] = useState(true);
     const [validHunter, setValidHunter] = useState(true);
     const titleRef = useRef(null);
     const hunterRef = useRef(null);
     const { data: session } = useSession();
 
-    const [title, setTitle] = useState('Solana 101: Deploy a Program');
+    const [title, setTitle] = useState('Social Challenge');
     const [hunter, setHunter] = useState('');
 
-    const [submitProgramID, setSubmitProgramID] = useState('');
-    const [submitTransactionID, setSubmitTransactionID] = useState('');
-    const [submitTime, setSubmitTime] = useState('');
+    const [submitOne, setSubmitTwitterURL] = useState('');
+    const [submitTwo, setSubmitTwitterHandle] = useState('');
     const [submission, setSubmission] = useState('');
     const [submitUniversity, setSubmitUniversity] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [challengeID, setChallengeID] = useState('221004010');
-    const [points, setPoints] = useState(100);
+    const [challengeID, setChallengeID] = useState('221004043');
+    const [points, setPoints] = useState(50);
+
     const [description, setDescription] = useState(
         `
-### Rewards: ${points} Points 🔥 *NFT! 👻
+### Rewards: ${points} Points 🔥
 
 ___
 ### Description
-In this challenge your mission is to deploy your first Solana program to devnet!
+Time to meet others in the ecosystem! Find Dana from Solana University Relations ask some questions! 
 
-💡 Record the start time so we can reference it later.
+Snap a photo together - and remember to smile to be eligible! It's so simple.
 
-How long do you think it will take you to deploy?
 
-Good luck **Hunter**!
-
-1. Visit the Solana developer docs: <a href="https://docs.solana.com/developers" target="_blank">https://docs.solana.com/developers</a>
-2. Click on the <a href="https://docs.solana.com/getstarted/hello-world" target="_blank">Get Started</a> button
-3. <a href="https://docs.solana.com/getstarted/hello-world#what-you-will-learn" target="_blank">Follow the guide to deploy a program</a>
-4. <a href="https://docs.solana.com/getstarted/hello-world#deploy-your-program" target="_blank">Deploy your program and record the transaction signature</a>
-5. <a href="https://docs.solana.com/getstarted/hello-world#find-your-program-id" target="_blank">Find and record your program Id</a>
-
-💡 Record the end time. How long did it take?
-
-### Tips:
-- When you click deploy you should see two buttons: Solana Explorer and Solscan. Clicking the buttons should take you to a transaction explorer where you can view details and your transaction Id in the url.
-- Explorer on devnet to search for your program Id: <a href="https://explorer.solana.com/?cluster=devnet" target="_blank"> Solana Explorer</a>
-- <a href="https://explorer.solana.com/tx/4v5StXx1jeuWzh9trtBQtQRMeeUjZzk7mJSq9MTx9XhDunbqY5ZpwPZQanVKfN7Tb3X1gHtMa6xgUcARVDaG7x91?cluster=devnet" target="_blank">Example transaction Id</a> is in the url followed by: /tx/.
-- Id, Address, and Public Key are often used interchangeably to describe an address which can be used to look up account information.
-- Example of a public key or wallet address: 6UmotVc1i6y4e6DnHf5FwYzYX9qCD7ncAbErsiu4oo3U
-
-**some challenges may offer new NFTs while others may even update existing ones!*
-
-### Resources:
-
-<a href="https://docs.solana.com/developers" target="_blank">Solana Developer</a>
-
-<a href="https://beta.solpg.io/" target="_blank">Solana Playground</a>
-
+- Tweet a photo of you and Dana on twitter!
+- Follow Dana with Solana Foundation University Relations on twitter <a href="https://twitter.com/DanaDegenius" target="_blank"> here</a> and say hi!
+- Link your tweets and stay tuned!
 ___
 
 ### How to Submit
 Your submission should include the following:
-1. Your \`Transaction Id\` (tx, signature, address) from the url above.
-2. The \`Program ID\` from your deployed program.
-3. Time it took to deploy your program.
 
+- Enter your Twitter handle
+- Enter the link to your twitter post with you and Dana!
+- Follow Dana for more info on twitter!
 
-NOTE: if devnet is failing, you can use testnet and show how to properly switch network.
-
-*That was almost too easy..*
 
 `,
     );
@@ -110,46 +88,35 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="1. Transaction Id: from your program deployment"
+                            value="1. Your twitter handle"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
                                 onChange={e =>
-                                    setSubmitTransactionID(e.target.value)
+                                    setSubmitTwitterHandle(e.target.value)
                                 }
-                                placeholder="Enter transaction Id..."
+                                placeholder="Enter your twitter handle..."
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="2. Program Id:"
+                            value="2. Link to your twitter post"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
                                 onChange={e =>
-                                    setSubmitProgramID(e.target.value)
+                                    setSubmitTwitterURL(e.target.value)
                                 }
-                                placeholder="Enter program Id..."
+                                placeholder="Enter the link..."
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="3. How long did it take?  (minutes)"
-                        />
-                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
-                            <input
-                                className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitTime(e.target.value)}
-                                placeholder="Enter number of minutes it took to deploy your program..."
-                            />
-                        </Card>
-                        <input
-                            className="w-full border-none bg-transparent py-5 outline-none"
-                            value="4. Select your university"
+                            value="3. Select your university"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <select
@@ -197,29 +164,26 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
-
         try {
             const submission = `
 ___
 ### Submission Entered:
 
 Challenge Id: [#${challengeID}]
-
 Hunter: ${user.name ?? user.login}
 
-1. Transaction ID:
-${submitTransactionID}
+1. Twitter handle:
+<a href="https://twitter.com/${submitTwo}" target="_blank">${submitTwo}</a>
 
-2. Program ID:
-${submitProgramID}
+2. Twitter link to post:
+${submitOne}
 
-3. How long did it take to deploy a program? (minutes): ${submitTime}
-
-4. University:
+3. University:
 ${submitUniversity}
 -> ${user.login}
 
 `;
+
             setSubmission(submission);
             const response = await fetch('/api/bounties', {
                 body: JSON.stringify({
@@ -351,7 +315,7 @@ ${submitUniversity}
     );
 };
 
-export default DeployChallengePage;
+export default SocialPhotoOneChallenge;
 
 export const getServerSideProps: GetServerSideProps = async context => {
     const session = await unstable_getServerSession(
