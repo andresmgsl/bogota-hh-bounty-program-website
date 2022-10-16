@@ -21,20 +21,36 @@ type BountyCardProps = Omit<Bounty, 'githubUrl' | 'tags'> & {
     }>;
 };
 
-const ParticipantSection = ({ owner, hunter, githubUrl }) => (
+const UniversitySection = ({ university }) => (
     <div className="flex h-16 w-full min-w-0 flex-1 flex-row gap-3">
         <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
             <Text variant="label" className="text-secondary">
+                Name
+            </Text>
+            <Text
+                variant="heading"
+                className="w-full overflow-hidden text-ellipsis whitespace-nowrap"
+            >
+                {university}
+            </Text>
+        </div>
+    </div>
+);
+
+const ParticipantSection = ({ owner, hunter, githubUrl, university }) => (
+    <div className="flex h-16 w-full min-w-0 flex-1 flex-row gap-3">
+        <div className="flex h-full w-full flex-col justify-between gap-3 ">
+            <Text variant="label" className="text-secondary">
                 Hunter
             </Text>
-            <a href={githubUrl} target='_blank' rel="noreferrer">
+            <div className="flex ">
                 <Text
                     variant="heading"
                     className="w-full overflow-hidden text-ellipsis whitespace-nowrap"
                 >
                     {owner}
                 </Text>
-            </a>
+            </div>
         </div>
         {/* <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
             <Text variant="label" className="text-secondary">
@@ -83,7 +99,7 @@ const ChallengeSection = ({ name }) => (
 );
 
 const PointsSection = ({ owner, hunter }) => (
-    <div className="flex h-16 w-full min-w-0 flex-2 flex-row gap-3">
+    <div className="flex-2 flex h-16 w-full min-w-0 flex-row gap-3">
         <div className="flex h-full w-full flex-col justify-between gap-3 overflow-hidden">
             <Text variant="label" className="text-secondary">
                 Points
@@ -131,7 +147,7 @@ const RewardSection = ({ reward, showDetails, responsive }) => (
             variant="heading"
             className="flex max-w-full flex-row items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap text-primary"
         >
-            {(+reward).toFixed(2)}
+            {(+reward).toFixed(0)}
         </Text>
     </div>
 );
@@ -165,7 +181,8 @@ const BountyCard = ({
     showDetails = true,
     rank,
     total,
-    githubUrl
+    githubUrl,
+    university,
 }: BountyCardProps) => (
     // <Link href={`/explorer/${id}`} passHref>
     <div>
@@ -182,23 +199,26 @@ const BountyCard = ({
                     <BasicsSection name={rank} createdAt={createdAt} />
                 </div>
 
-                <div className="flex w-full max-w-full flex-row justify-between overflow-hidden">
-                    <ParticipantSection owner={owner} hunter={hunter} githubUrl={githubUrl} />
+                <div className="flex w-full max-w-full flex-row justify-between">
+                    <ParticipantSection
+                        owner={owner}
+                        hunter={hunter}
+                        githubUrl={githubUrl}
+                        university={university}
+                    />
                 </div>
 
-                <div className="flex w-full max-w-full flex-row md:justify-end justify-between overflow-hidden">
+                <div className="flex w-full max-w-full flex-row justify-between overflow-hidden md:justify-end">
                     <RewardSection
                         reward={total ?? '-'}
                         showDetails={showDetails}
                         responsive={responsive}
                     />
                 </div>
-
-
             </Card>
         </a>
         {/* </Link>
-     */}
+         */}
     </div>
 );
 

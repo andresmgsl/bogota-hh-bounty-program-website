@@ -1,6 +1,7 @@
 import Card from 'components/common/card';
 import Image from 'components/common/image';
 import Text from 'components/common/text';
+import Link from 'next/link';
 
 const Footer = () => (
     <footer className="my-16 flex flex-col justify-center gap-16 px-4 md:px-16 lg:px-32 xl:px-48">
@@ -58,6 +59,13 @@ const Footer = () => (
                 </a>
             </div>
         </Card>
+
+        <div className="flex w-full grow flex-col items-center text-center">
+            <Link href="/terms" passHref>
+                <p className="cursor-pointer underline underline-offset-1 ...">terms</p>
+                
+            </Link>
+        </div>
     </footer>
 );
 

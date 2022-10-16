@@ -33,11 +33,14 @@ const initialAccordionItems: Omit<AccordionItemProps, 'onExpand'>[] = [
         children: (
             <div className="flex flex-col gap-3">
                 <div>
-                    <Text variant="paragraph" className="text-base !text-secondary">
+                    <Text
+                        variant="paragraph"
+                        className="text-base !text-secondary"
+                    >
                         You&apos;re{' '}
-                        <span className="text-primary">not required</span> to sign
-                        in with a GitHub account to simply view and fund bounties.
-                        However, doing so will ensure an{' '}
+                        <span className="text-primary">not required</span> to
+                        sign in with a GitHub account to simply view and fund
+                        bounties. However, doing so will ensure an{' '}
                         <span className="text-primary">
                             enhanced user experience
                         </span>
@@ -45,20 +48,37 @@ const initialAccordionItems: Omit<AccordionItemProps, 'onExpand'>[] = [
                     </Text>
                     <br />
                     <br />
-                    <Text variant="paragraph" className="text-base !text-secondary">
-                        Specifically, to <span className="text-primary">claim</span>{' '}
-                        bounties, you must be signed in and have a wallet connected.
+                    <Text
+                        variant="paragraph"
+                        className="text-base !text-secondary"
+                    >
+                        Specifically, to{' '}
+                        <span className="text-primary">claim</span> bounties,
+                        you must be signed in and have a wallet connected.
                     </Text>
                     <br />
                     <br />
-                    <Text variant="paragraph" className="text-base !text-secondary">
+                    <Text
+                        variant="paragraph"
+                        className="text-base !text-secondary"
+                    >
                         To fund bounties without a wallet, please use{' '}
-                        <span className="text-primary">Solana Pay</span> by scanning
-                        the QR code on the bounty page.
+                        <span className="text-primary">Solana Pay</span> by
+                        scanning the QR code on the bounty page.
                     </Text>
                 </div>
-                <a href="https://solanapay.com/" target="_blank" rel="noreferrer">
-                    <Button variant="transparent" text="More info on Solana Pay" icon={MdLink} reversed={true} className="!w-full" />
+                <a
+                    href="https://solanapay.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    <Button
+                        variant="transparent"
+                        text="More info on Solana Pay"
+                        icon={MdLink}
+                        reversed={true}
+                        className="!w-full"
+                    />
                 </a>
             </div>
         ),
@@ -114,19 +134,6 @@ const initialAccordionItems: Omit<AccordionItemProps, 'onExpand'>[] = [
                     <span className="text-primary">GitHub</span>.
                 </Text>
                 <div className="flex flex-row flex-wrap gap-3">
-                    <a
-                        href="https://github.com/andresmgsl/solana-cohort-june-2022/"
-                        rel="noreferrer"
-                        target="_blank"
-                        className="flex-1"
-                    >
-                        <Button
-                            variant="orange"
-                            text="Bounty Program"
-                            icon={MdCode}
-                            className="!w-full"
-                        />
-                    </a>
                     <a
                         href="https://github.com/heavy-duty/platform/"
                         rel="noreferrer"

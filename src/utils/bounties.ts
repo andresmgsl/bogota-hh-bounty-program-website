@@ -50,7 +50,7 @@ const toBounty = (issue: Issue, drillResponse: DrillResponse): Bounty => {
 
     const reward = Number(drillResponse?.amount) / 1_000_000;
     const rank = 9999;
-    
+
     return {
         address: drillResponse?.address?.toString() ?? null,
         createdAt: formatDate(created_at),
@@ -62,7 +62,7 @@ const toBounty = (issue: Issue, drillResponse: DrillResponse): Bounty => {
         name: title,
         owner: creator.login,
         reward,
-        state,
+        state: state as 'open' | 'closed',
         tags: labels.map(label => ({ value: label.name })),
         rank,
     };

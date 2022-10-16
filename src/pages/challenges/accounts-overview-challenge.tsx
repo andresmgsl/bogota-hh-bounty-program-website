@@ -3,16 +3,26 @@ import Card from 'components/common/card';
 import NavElement from 'components/common/layout/header/nav-element';
 import Markdown from 'components/common/markdown';
 import Text from 'components/common/text';
-import { NextPage } from 'next';
+import { getCurrentUser } from 'lib/github';
+import { GetServerSideProps, NextPage } from 'next';
+import { unstable_getServerSession } from 'next-auth';
 import { signIn, useSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { FormEvent, useMemo, useRef, useState } from 'react';
 import { TbBrandGithub } from 'react-icons/tb';
+import { User } from 'types/github';
 import { cn } from 'utils';
 
-const AccountsOverviewChallengePage: NextPage = () => {
+type AccountsOverviewChallengePageProps = {
+    user: User;
+};
+
+const AccountsOverviewChallengePage: NextPage<
+    AccountsOverviewChallengePageProps
+> = ({ user }) => {
     const [validBountyName, setValidBountyName] = useState(true);
     const [validHunter, setValidHunter] = useState(true);
     const titleRef = useRef(null);
@@ -27,6 +37,8 @@ const AccountsOverviewChallengePage: NextPage = () => {
     const [answerThree, setThirdAnswer] = useState('');
     const [answerFour, setFourAnswer] = useState('');
     const [submission, setSubmission] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [submitUniversity, setSubmitUniversity] = useState('');
     const [challengeID, setChallengeID] = useState('221007030');
     const [points, setPoints] = useState(100);
     const [description, setDescription] = useState(
@@ -41,7 +53,7 @@ Let's get into it ${session?.user?.name}!
 
 1. Preview the Solana Bytes video on <a href="https://www.youtube.com/watch?v=pRYs49MqapI&list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm&index=1" target="_blank">The Solana Programming Model</a>.
 2. Look out for the answers to the challenge questions:
-    - How can I find where an account is stored on-chain?    
+    - How can I find where an account is stored on-chain?
     - What change to an account's data is the only exception to the signer rules?
     - If my program is the owner of an account, that allows my program to do what to the account?
     - If my account is a Program Derived Address (PDA), what's different about my keys?
@@ -98,9 +110,7 @@ Your submission should include the following:
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e =>
-                                    setFirstAnswer(e.target.value)
-                                }
+                                onChange={e => setFirstAnswer(e.target.value)}
                                 placeholder="Enter your answer..."
                             />
                         </Card>
@@ -114,9 +124,7 @@ Your submission should include the following:
                                 className="w-full items-center bg-transparent outline-none"
                                 maxLength={200}
                                 rows={3}
-                                onChange={e =>
-                                    setSecondAnswer(e.target.value)
-                                }
+                                onChange={e => setSecondAnswer(e.target.value)}
                                 placeholder="Enter your answer..."
                             />
                         </Card>
@@ -144,7 +152,28 @@ Your submission should include the following:
                                 placeholder="Enter your answer..."
                             />
                         </Card>
-
+                        <input
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="5. Select your university"
+                        />
+                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
+                            <select
+                                className="w-full items-center bg-transparent outline-none"
+                                onChange={e =>
+                                    setSubmitUniversity(e.target.value)
+                                }
+                                placeholder="Tell us where are you from"
+                                required
+                            >
+                                <option value="">None</option>
+                                <option className="text-black" value="CALHACKS">
+                                    CALHACKS
+                                </option>
+                                <option className="text-black" value="HACKTX">
+                                    HACKTX
+                                </option>
+                            </select>
+                        </Card>
                         {/* additional feedback, was it easy, suggestions, etc */}
                     </div>
                 ),
@@ -171,36 +200,7 @@ Your submission should include the following:
 
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
-
-        if (title === '' && hunter === '') {
-            setValidHunter(false);
-            setValidBountyName(false);
-            titleRef.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-            });
-            return;
-        } else if (title === '') {
-            titleRef.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-            });
-            setValidBountyName(false);
-            return;
-        }
-        const challengerName = session?.user?.name;
-        const responseUser = await fetch(`/api/${challengerName}`);
-
-        const user = await responseUser.json();
-
-        // if (!user) {
-        //     setValidHunter(false);
-        //     hunterRef.current.scrollIntoView({
-        //         behavior: 'smooth',
-        //         block: 'center',
-        //     });
-        //     return;
-        // }
+        setIsLoading(true);
 
         try {
             const submission = `
@@ -209,7 +209,7 @@ ___
 
 Challenge Id: [#${challengeID}]
 
-Hunter: ${session?.user?.name}
+Hunter: ${user.name ?? user.login}
 
 
 
@@ -228,15 +228,18 @@ ${answerThree}
 4. If my account is a Program Derived Address (PDA), what's different about my keys?
 ${answerFour}
 
+5. University:
+${submitUniversity}
+-> ${user.login}
+
 `;
             setSubmission(submission);
             const response = await fetch('/api/bounties', {
                 body: JSON.stringify({
-                    // assignee: hunter,
-                    assignee: challengerName,
                     body: description + submission,
                     title: `Challenge Submission: ` + title,
                     points,
+                    labels: [submitUniversity, user.login],
                 }),
                 headers: { 'Content-Type': 'application/json' },
                 method: 'POST',
@@ -340,7 +343,8 @@ ${answerFour}
 
                         <div className="flex flex-row justify-end gap-2 text-right">
                             <Markdown>
-                                **please review your entry before clicking submit*
+                                **please review your entry before clicking
+                                submit*
                             </Markdown>
                         </div>
                         <div className="width-full flex flex-row justify-end gap-2">
@@ -349,6 +353,7 @@ ${answerFour}
                                 type="submit"
                                 variant="orange"
                                 text="Submit"
+                                disabled={isLoading}
                             />
                         </div>
                         {/* after submit, take them/offer to the next challenge.. */}
@@ -360,3 +365,21 @@ ${answerFour}
 };
 
 export default AccountsOverviewChallengePage;
+
+export const getServerSideProps: GetServerSideProps = async context => {
+    const session = await unstable_getServerSession(
+        context.req,
+        context.res,
+        authOptions,
+    );
+
+    const accessToken = session?.accessToken as string;
+
+    const user = await getCurrentUser(accessToken);
+
+    return {
+        props: {
+            user,
+        },
+    };
+};

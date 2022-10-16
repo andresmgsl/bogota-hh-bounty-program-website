@@ -16,76 +16,69 @@ import { TbBrandGithub } from 'react-icons/tb';
 import { User } from 'types/github';
 import { cn } from 'utils';
 
-type DeployChallengePageProps = {
+type CPIChallengePageProps = {
     user: User;
 };
-const DeployChallengePage: NextPage<DeployChallengePageProps> = ({ user }) => {
+
+const CPIChallengePage: NextPage<CPIChallengePageProps> = ({ user }) => {
     const [validBountyName, setValidBountyName] = useState(true);
     const [validHunter, setValidHunter] = useState(true);
     const titleRef = useRef(null);
     const hunterRef = useRef(null);
     const { data: session } = useSession();
 
-    const [title, setTitle] = useState('Solana 101: Deploy a Program');
+    const [title, setTitle] = useState('CPI');
     const [hunter, setHunter] = useState('');
 
-    const [submitProgramID, setSubmitProgramID] = useState('');
-    const [submitTransactionID, setSubmitTransactionID] = useState('');
-    const [submitTime, setSubmitTime] = useState('');
-    const [submission, setSubmission] = useState('');
+    const [answerOne, setWhyWeUse] = useState('');
+    const [answerTwo, setWhichPrograms] = useState('');
+    const [answerThree, setWhichCommand] = useState('');
     const [submitUniversity, setSubmitUniversity] = useState('');
+    const [submission, setSubmission] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [challengeID, setChallengeID] = useState('221004010');
+    const [challengeID, setChallengeID] = useState('221007101');
     const [points, setPoints] = useState(100);
     const [description, setDescription] = useState(
         `
-### Rewards: ${points} Points 🔥 *NFT! 👻
+### Rewards: ${points} Points 🔥
 
-___
+---
+
 ### Description
-In this challenge your mission is to deploy your first Solana program to devnet!
 
-💡 Record the start time so we can reference it later.
+In this challenge we're going to learn all about Cross-Program Invocation (CPI).
 
-How long do you think it will take you to deploy?
+Good luck **${session?.user?.name}**!
 
-Good luck **Hunter**!
-
-1. Visit the Solana developer docs: <a href="https://docs.solana.com/developers" target="_blank">https://docs.solana.com/developers</a>
-2. Click on the <a href="https://docs.solana.com/getstarted/hello-world" target="_blank">Get Started</a> button
-3. <a href="https://docs.solana.com/getstarted/hello-world#what-you-will-learn" target="_blank">Follow the guide to deploy a program</a>
-4. <a href="https://docs.solana.com/getstarted/hello-world#deploy-your-program" target="_blank">Deploy your program and record the transaction signature</a>
-5. <a href="https://docs.solana.com/getstarted/hello-world#find-your-program-id" target="_blank">Find and record your program Id</a>
-
-💡 Record the end time. How long did it take?
+1. Preview the Solana Bytes video on [Cross-Program Invocation](https://www.youtube.com/watch?v=re1O2D_qqTA&list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm&index=6).
+2. Look out for the answers to the challenge questions.
+3. Use the documentation provided as an additional resource!
 
 ### Tips:
-- When you click deploy you should see two buttons: Solana Explorer and Solscan. Clicking the buttons should take you to a transaction explorer where you can view details and your transaction Id in the url.
-- Explorer on devnet to search for your program Id: <a href="https://explorer.solana.com/?cluster=devnet" target="_blank"> Solana Explorer</a>
-- <a href="https://explorer.solana.com/tx/4v5StXx1jeuWzh9trtBQtQRMeeUjZzk7mJSq9MTx9XhDunbqY5ZpwPZQanVKfN7Tb3X1gHtMa6xgUcARVDaG7x91?cluster=devnet" target="_blank">Example transaction Id</a> is in the url followed by: /tx/.
-- Id, Address, and Public Key are often used interchangeably to describe an address which can be used to look up account information.
-- Example of a public key or wallet address: 6UmotVc1i6y4e6DnHf5FwYzYX9qCD7ncAbErsiu4oo3U
 
-**some challenges may offer new NFTs while others may even update existing ones!*
+- Listen closely to some of the specifics about what's happening.
+- Pay attention to the commands used to conduct a CPI.
+- If you have to, rewatch the video again!
 
 ### Resources:
 
-<a href="https://docs.solana.com/developers" target="_blank">Solana Developer</a>
+[Solana Developer Docs: CPI](https://docs.solana.com/developing/programming-model/calling-between-programs)
 
-<a href="https://beta.solpg.io/" target="_blank">Solana Playground</a>
+[Solana Cookbook: Accounts](https://solanacookbook.com/core-concepts/accounts.html#facts)
 
-___
+[Solana Bytes YouTube Playlist](https://solanacookbook.com/references/programs.html#how-to-do-cross-program-invocation)
+
+---
 
 ### How to Submit
+
 Your submission should include the following:
-1. Your \`Transaction Id\` (tx, signature, address) from the url above.
-2. The \`Program ID\` from your deployed program.
-3. Time it took to deploy your program.
+
+1. Why do we need to use Cross-Program Invocation on Solana?
+2. Which programs are you allowed to send a CPI to?
+3. What command is used to conduct a CPI from your program?
 
 
-NOTE: if devnet is failing, you can use testnet and show how to properly switch network.
-
-*That was almost too easy..*
 
 `,
     );
@@ -110,41 +103,37 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="1. Transaction Id: from your program deployment"
+                            value="1. Why do we need to use Cross-Program Invocation on Solana?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e =>
-                                    setSubmitTransactionID(e.target.value)
-                                }
-                                placeholder="Enter transaction Id..."
+                                onChange={e => setWhyWeUse(e.target.value)}
+                                placeholder="Give a brief reason"
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="2. Program Id:"
+                            value="2. Which programs are you allowed to send a CPI to?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e =>
-                                    setSubmitProgramID(e.target.value)
-                                }
-                                placeholder="Enter program Id..."
+                                onChange={e => setWhichPrograms(e.target.value)}
+                                placeholder="Is it program-specific?"
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="3. How long did it take?  (minutes)"
+                            value="3. What command is used to conduct a CPI from your program?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitTime(e.target.value)}
-                                placeholder="Enter number of minutes it took to deploy your program..."
+                                onChange={e => setWhichCommand(e.target.value)}
+                                placeholder="Enter the CPI command"
                             />
                         </Card>
                         <input
@@ -207,13 +196,14 @@ Challenge Id: [#${challengeID}]
 
 Hunter: ${user.name ?? user.login}
 
-1. Transaction ID:
-${submitTransactionID}
+1. Why do we need to use Cross-Program Invocation on Solana?
+${answerOne}
 
-2. Program ID:
-${submitProgramID}
+2. Which programs are you allowed to send a CPI to?
+${answerTwo}
 
-3. How long did it take to deploy a program? (minutes): ${submitTime}
+3. What command is used to conduct a CPI from your program?
+${answerThree}
 
 4. University:
 ${submitUniversity}
@@ -351,7 +341,7 @@ ${submitUniversity}
     );
 };
 
-export default DeployChallengePage;
+export default CPIChallengePage;
 
 export const getServerSideProps: GetServerSideProps = async context => {
     const session = await unstable_getServerSession(

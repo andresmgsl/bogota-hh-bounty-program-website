@@ -16,76 +16,73 @@ import { TbBrandGithub } from 'react-icons/tb';
 import { User } from 'types/github';
 import { cn } from 'utils';
 
-type DeployChallengePageProps = {
+type SolanaStaking101ChallengePageProps = {
     user: User;
 };
-const DeployChallengePage: NextPage<DeployChallengePageProps> = ({ user }) => {
+
+const SolanaStaking101ChallengePage: NextPage<
+    SolanaStaking101ChallengePageProps
+> = ({ user }) => {
     const [validBountyName, setValidBountyName] = useState(true);
     const [validHunter, setValidHunter] = useState(true);
     const titleRef = useRef(null);
     const hunterRef = useRef(null);
     const { data: session } = useSession();
 
-    const [title, setTitle] = useState('Solana 101: Deploy a Program');
+    const [title, setTitle] = useState('Solana Staking: 101');
     const [hunter, setHunter] = useState('');
 
-    const [submitProgramID, setSubmitProgramID] = useState('');
-    const [submitTransactionID, setSubmitTransactionID] = useState('');
-    const [submitTime, setSubmitTime] = useState('');
+    const [answerTwo, setSecondAnswer] = useState('');
+    const [answerOne, setFirstAnswer] = useState('');
+    const [answerThree, setThirdAnswer] = useState('');
+    const [answerFour, setFourAnswer] = useState('');
+    const [answerFive, setFiveAnswer] = useState('');
+    const [answerSix, setSixAnswer] = useState('');
     const [submission, setSubmission] = useState('');
-    const [submitUniversity, setSubmitUniversity] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [challengeID, setChallengeID] = useState('221004010');
+    const [submitUniversity, setSubmitUniversity] = useState('');
+    const [challengeID, setChallengeID] = useState('221007052');
     const [points, setPoints] = useState(100);
     const [description, setDescription] = useState(
         `
-### Rewards: ${points} Points 🔥 *NFT! 👻
+### Rewards: ${points} Points
 
 ___
 ### Description
-In this challenge your mission is to deploy your first Solana program to devnet!
+In this challenge we're going to learn about staking on Solana.
 
-💡 Record the start time so we can reference it later.
+Let's get to it ${user.name ?? user.login}!
 
-How long do you think it will take you to deploy?
+1. Read about Staking on Solana here: <a href="https://solana.com/staking" target="_blank">Staking</a>.
+2. Look out for the answers to the challenge questions:
+    - Who can stake on Solana?
+    - What is Proof-of-Stake?
+    - What are token holders eligible for when they choose to stake?
+    - Is slashing automatic, and what causes it?
+    - How often are staking rewards issued? How long is that?
+    - What are two community operated tools used to view information about the network?
 
-Good luck **Hunter**!
-
-1. Visit the Solana developer docs: <a href="https://docs.solana.com/developers" target="_blank">https://docs.solana.com/developers</a>
-2. Click on the <a href="https://docs.solana.com/getstarted/hello-world" target="_blank">Get Started</a> button
-3. <a href="https://docs.solana.com/getstarted/hello-world#what-you-will-learn" target="_blank">Follow the guide to deploy a program</a>
-4. <a href="https://docs.solana.com/getstarted/hello-world#deploy-your-program" target="_blank">Deploy your program and record the transaction signature</a>
-5. <a href="https://docs.solana.com/getstarted/hello-world#find-your-program-id" target="_blank">Find and record your program Id</a>
-
-💡 Record the end time. How long did it take?
+3. Use the documentation provided as an additional resource!
 
 ### Tips:
-- When you click deploy you should see two buttons: Solana Explorer and Solscan. Clicking the buttons should take you to a transaction explorer where you can view details and your transaction Id in the url.
-- Explorer on devnet to search for your program Id: <a href="https://explorer.solana.com/?cluster=devnet" target="_blank"> Solana Explorer</a>
-- <a href="https://explorer.solana.com/tx/4v5StXx1jeuWzh9trtBQtQRMeeUjZzk7mJSq9MTx9XhDunbqY5ZpwPZQanVKfN7Tb3X1gHtMa6xgUcARVDaG7x91?cluster=devnet" target="_blank">Example transaction Id</a> is in the url followed by: /tx/.
-- Id, Address, and Public Key are often used interchangeably to describe an address which can be used to look up account information.
-- Example of a public key or wallet address: 6UmotVc1i6y4e6DnHf5FwYzYX9qCD7ncAbErsiu4oo3U
-
-**some challenges may offer new NFTs while others may even update existing ones!*
+- Discover how easy deepllinks implementation can be
+- If you have to, rewatch the video again!
 
 ### Resources:
 
-<a href="https://docs.solana.com/developers" target="_blank">Solana Developer</a>
-
-<a href="https://beta.solpg.io/" target="_blank">Solana Playground</a>
+<a href="https://solana.com/staking" target="_blank">Staking on Solana</a>
 
 ___
 
 ### How to Submit
 Your submission should include the following:
-1. Your \`Transaction Id\` (tx, signature, address) from the url above.
-2. The \`Program ID\` from your deployed program.
-3. Time it took to deploy your program.
+1. Who can stake on Solana?
+2. What is Proof-of-Stake?
+3. What are token holders eligible for when they choose to stake?
+4. Is slashing automatic? AND what causes it? (2 parts)
+5. How often are staking rewards issued? How long is that? (2 parts)
+6. What are two community operated tools used to view information about the network?
 
-
-NOTE: if devnet is failing, you can use testnet and show how to properly switch network.
-
-*That was almost too easy..*
 
 `,
     );
@@ -110,46 +107,85 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="1. Transaction Id: from your program deployment"
+                            value="1. Who can stake on Solana?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e =>
-                                    setSubmitTransactionID(e.target.value)
-                                }
-                                placeholder="Enter transaction Id..."
+                                onChange={e => setFirstAnswer(e.target.value)}
+                                placeholder="Enter your answer..."
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="2. Program Id:"
+                            value="2. What is Proof-of-Stake?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
-                            <input
+                            <textarea
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e =>
-                                    setSubmitProgramID(e.target.value)
-                                }
-                                placeholder="Enter program Id..."
+                                maxLength={200}
+                                rows={3}
+                                onChange={e => setSecondAnswer(e.target.value)}
+                                placeholder="Enter your answer..."
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="3. How long did it take?  (minutes)"
+                            value="3. What are token holders eligible for when they choose to stake?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitTime(e.target.value)}
-                                placeholder="Enter number of minutes it took to deploy your program..."
+                                onChange={e => setThirdAnswer(e.target.value)}
+                                placeholder="Enter your answer..."
                             />
                         </Card>
+
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="4. Select your university"
+                            value="4. Is slashing automatic, and what causes it?"
+                        />
+                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
+                            <textarea
+                                className="w-full items-center bg-transparent outline-none"
+                                maxLength={200}
+                                rows={3}
+                                onChange={e => setFourAnswer(e.target.value)}
+                                placeholder="Enter your answer..."
+                            />
+                        </Card>
+
+                        <input
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="5. How often are staking rewards issued? How long is that?"
+                        />
+                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
+                            <input
+                                className="w-full items-center bg-transparent outline-none"
+                                onChange={e => setFiveAnswer(e.target.value)}
+                                placeholder="Enter your answer..."
+                            />
+                        </Card>
+
+                        <input
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="6. What are two community operated tools used to view information about the network?"
+                        />
+                        <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
+                            <textarea
+                                className="w-full items-center bg-transparent outline-none"
+                                maxLength={200}
+                                rows={3}
+                                onChange={e => setSixAnswer(e.target.value)}
+                                placeholder="Enter your answer..."
+                            />
+                        </Card>
+
+                        <input
+                            className="w-full border-none bg-transparent py-5 outline-none"
+                            value="7. Select your university"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <select
@@ -197,25 +233,33 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
-
         try {
             const submission = `
 ___
 ### Submission Entered:
 
 Challenge Id: [#${challengeID}]
-
 Hunter: ${user.name ?? user.login}
 
-1. Transaction ID:
-${submitTransactionID}
+1.Who can stake on Solana?
+${answerOne}
 
-2. Program ID:
-${submitProgramID}
+2. What is Proof-of-Stake?
+${answerTwo}
 
-3. How long did it take to deploy a program? (minutes): ${submitTime}
+3. What are token holders eligible for when they choose to stake?
+${answerThree}
 
-4. University:
+4. Is slashing automatic, and what causes it?
+${answerFour}
+
+5. How often are staking rewards issued? How long is that?
+${answerFive}
+
+6. What are two community operated tools used to view information about the network?
+${answerSix}
+
+7. University:
 ${submitUniversity}
 -> ${user.login}
 
@@ -351,7 +395,7 @@ ${submitUniversity}
     );
 };
 
-export default DeployChallengePage;
+export default SolanaStaking101ChallengePage;
 
 export const getServerSideProps: GetServerSideProps = async context => {
     const session = await unstable_getServerSession(

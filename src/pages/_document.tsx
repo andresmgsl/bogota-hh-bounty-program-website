@@ -1,3 +1,4 @@
+import { authenticateGithubApp } from 'lib/github';
 import { Head, Html, Main, NextScript } from 'next/document';
 
 const Document = () => (

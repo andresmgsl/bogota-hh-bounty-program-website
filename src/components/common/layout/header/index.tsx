@@ -33,22 +33,22 @@ const Header = () => {
                             className="hidden font-thin !tracking-widest sm:inline"
                         >
                             {' '}
-                            Colombia HH - Bounty program{' '}
+                            Bogotá Hacker House{' '}
                         </Text>
                     </div>
                 </div>
             </Link>
             <div className="flex h-full flex-row items-center gap-5">
-                <div className="flex h-2/3 flex-row gap-5 self-end sm:gap-7 sm:flex hidden ">
+                <div className="flex hidden h-2/3 flex-row gap-5 self-end sm:flex sm:gap-7 ">
                     <NavElement label="Home" href="/" />
                     {/* <NavElement label="Explorer" href="/explorer" /> */}
                     <NavElement label="Leader Board" href="/leaderboard" />
-                    <NavElement label="Challenges" href="/challenges" />
+                    <NavElement label="Claim NFT" href="/claim" />
                 </div>
 
-                <div className="flex h-2/3 flex-row gap-5 self-end sm:gap-7 sm:hidden">
+                <div className="flex h-2/3 flex-row gap-5 self-end sm:hidden sm:gap-7">
                     <NavElement label="Board" href="/leaderboard" />
-                    <NavElement label="Challenges" href="/challenges" />
+                    <NavElement label="Claim NFT" href="/claim" />
                 </div>
 
                 <div className="flex h-full flex-row items-center gap-3 md:gap-5">

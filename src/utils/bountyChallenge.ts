@@ -35,9 +35,11 @@ const getDrillResponsesFromIssues = async (
  * @param issue Issue object
  * @param drillResponse DrillResponse object
  */
-const toBountyChallenge = (issue: Issue, drillResponse: DrillResponse): BountyChallenge => {
+const toBountyChallenge = (
+    issue: Issue,
+    drillResponse: DrillResponse,
+): BountyChallenge => {
     const {
-        assignee,
         created_at,
         body,
         html_url,
@@ -48,12 +50,25 @@ const toBountyChallenge = (issue: Issue, drillResponse: DrillResponse): BountyCh
         user: creator,
     } = issue;
 
-    const points = labels.filter(z => z.name.includes('points')) as unknown as IssueLabel[];
+    const points = labels.filter(z =>
+        z.name.includes('points'),
+    ) as unknown as IssueLabel[];
+    const university = labels.filter(
+        z => z.name.includes('CALHACKS') || z.name.includes('HACKTX'),
+    ) as unknown as IssueLabel[];
     let reward = 0;
     points.forEach((point: IssueLabel) => {
         reward = Number(point?.name.split(':')[1]);
-    })
+    });
 
+    const assignee = labels.filter(
+        e =>
+            !e.name.includes('challenge') &&
+            !e.name.includes('points') &&
+            !e.name.includes('completed'),
+    );
+
+    const assigneeUsername = creator.login;
     const rank = 9999;
 
     return {
@@ -61,16 +76,17 @@ const toBountyChallenge = (issue: Issue, drillResponse: DrillResponse): BountyCh
         createdAt: formatDate(created_at),
         description: body,
         githubUrl: html_url,
-        ...(assignee && { hunter: assignee.login }),
+        hunter: assigneeUsername,
         id: number,
         mint: drillResponse?.mint?.toString() ?? null,
         name: title,
-        owner: creator.login,
+        owner: assigneeUsername,
         reward: reward,
-        state,
+        state: state as 'open' | 'closed',
         labels,
         tags: labels.map(label => ({ value: label.name })),
         rank,
+        university: university[0] ? university[0].name : null,
     };
 };
 
@@ -84,6 +100,27 @@ const toBountyChallenge = (issue: Issue, drillResponse: DrillResponse): BountyCh
 const toBountyChallengeList = (
     issues: Issue[],
     drillResponses: DrillResponse[],
-): BountyChallenge[] => issues.map((issue, i) => toBountyChallenge(issue, drillResponses[i]));
+): BountyChallenge[] =>
+    issues
+        .filter(
+            issue =>
+                issue.state === 'open' &&
+                issue.labels.some(label => label.name === 'challenge') &&
+                issue.labels.some(label => label.name === 'completed'),
+        )
+        .map((issue, i) => toBountyChallenge(issue, drillResponses[i]));
 
-export { filterBounties as filterBountyChallenges, getDrillResponsesFromIssues, toBountyChallenge, toBountyChallengeList };
+/**
+ * Returns a string that represents the description of the NFT challengers can
+ * claim once the event is done.
+ */
+const getNftDescription = () =>
+    'This NFT was originally minted during the Bogotá Dev Challenge.';
+
+export {
+    filterBounties as filterBountyChallenges,
+    getDrillResponsesFromIssues,
+    toBountyChallenge,
+    toBountyChallengeList,
+    getNftDescription,
+};

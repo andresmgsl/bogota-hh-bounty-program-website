@@ -16,76 +16,64 @@ import { TbBrandGithub } from 'react-icons/tb';
 import { User } from 'types/github';
 import { cn } from 'utils';
 
-type DeployChallengePageProps = {
+type CustomAccountDataChallengePageProps = {
     user: User;
 };
-const DeployChallengePage: NextPage<DeployChallengePageProps> = ({ user }) => {
+
+const CustomAccountDataChallengePage: NextPage<
+    CustomAccountDataChallengePageProps
+> = ({ user }) => {
     const [validBountyName, setValidBountyName] = useState(true);
     const [validHunter, setValidHunter] = useState(true);
     const titleRef = useRef(null);
     const hunterRef = useRef(null);
     const { data: session } = useSession();
 
-    const [title, setTitle] = useState('Solana 101: Deploy a Program');
+    const [title, setTitle] = useState('Custom Account Data');
     const [hunter, setHunter] = useState('');
 
-    const [submitProgramID, setSubmitProgramID] = useState('');
-    const [submitTransactionID, setSubmitTransactionID] = useState('');
-    const [submitTime, setSubmitTime] = useState('');
-    const [submission, setSubmission] = useState('');
+    const [answerOne, setWhichLibrary] = useState('');
+    const [answerTwo, setWhatDataForm] = useState('');
+    const [answerThree, setWhatDoesSizeDo] = useState('');
     const [submitUniversity, setSubmitUniversity] = useState('');
+    const [submission, setSubmission] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [challengeID, setChallengeID] = useState('221004010');
+    const [challengeID, setChallengeID] = useState('221007102');
     const [points, setPoints] = useState(100);
     const [description, setDescription] = useState(
         `
-### Rewards: ${points} Points 🔥 *NFT! 👻
-
+### Rewards: ${points} Points 🔥
 ___
+
 ### Description
-In this challenge your mission is to deploy your first Solana program to devnet!
 
-💡 Record the start time so we can reference it later.
+In this challenge you're going to learn about custom account data on Solana. 
 
-How long do you think it will take you to deploy?
+Good luck **${session?.user?.name}**!
 
-Good luck **Hunter**!
-
-1. Visit the Solana developer docs: <a href="https://docs.solana.com/developers" target="_blank">https://docs.solana.com/developers</a>
-2. Click on the <a href="https://docs.solana.com/getstarted/hello-world" target="_blank">Get Started</a> button
-3. <a href="https://docs.solana.com/getstarted/hello-world#what-you-will-learn" target="_blank">Follow the guide to deploy a program</a>
-4. <a href="https://docs.solana.com/getstarted/hello-world#deploy-your-program" target="_blank">Deploy your program and record the transaction signature</a>
-5. <a href="https://docs.solana.com/getstarted/hello-world#find-your-program-id" target="_blank">Find and record your program Id</a>
-
-💡 Record the end time. How long did it take?
+1. Preview the Solana Bytes video on [Custom Account Data](https://www.youtube.com/watch?v=SCS6jt8sye0&list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm&index=7).
+2. Look out for the answers to the challenge questions.
+3. Use the documentation provided as an additional resource!
 
 ### Tips:
-- When you click deploy you should see two buttons: Solana Explorer and Solscan. Clicking the buttons should take you to a transaction explorer where you can view details and your transaction Id in the url.
-- Explorer on devnet to search for your program Id: <a href="https://explorer.solana.com/?cluster=devnet" target="_blank"> Solana Explorer</a>
-- <a href="https://explorer.solana.com/tx/4v5StXx1jeuWzh9trtBQtQRMeeUjZzk7mJSq9MTx9XhDunbqY5ZpwPZQanVKfN7Tb3X1gHtMa6xgUcARVDaG7x91?cluster=devnet" target="_blank">Example transaction Id</a> is in the url followed by: /tx/.
-- Id, Address, and Public Key are often used interchangeably to describe an address which can be used to look up account information.
-- Example of a public key or wallet address: 6UmotVc1i6y4e6DnHf5FwYzYX9qCD7ncAbErsiu4oo3U
 
-**some challenges may offer new NFTs while others may even update existing ones!*
+- Listen closely to some of the specifics about **serialization**.
+- If you have to, rewatch the video again!
 
 ### Resources:
-
-<a href="https://docs.solana.com/developers" target="_blank">Solana Developer</a>
-
-<a href="https://beta.solpg.io/" target="_blank">Solana Playground</a>
-
+<a href="https://docs.solana.com/developers" target="_blank">Solana Developer Docs</a>   
+<a href="https://solanacookbook.com/guides/serialization.html#setting-up-for-borsh-serialization" target="_blank">Solana Cookbook: Serializing Data</a>   
+<a href="https://www.youtube.com/playlist?list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm" target="_blank">Solana Bytes YouTube Playlist</a>
 ___
 
 ### How to Submit
 Your submission should include the following:
-1. Your \`Transaction Id\` (tx, signature, address) from the url above.
-2. The \`Program ID\` from your deployed program.
-3. Time it took to deploy your program.
-
-
-NOTE: if devnet is failing, you can use testnet and show how to properly switch network.
-
+1. What library does Solana use to serialize/deserialize account data?
+2. In what form is data stored in the Solana blockchain?
+3. What does the size of your account determine, besides space?
 *That was almost too easy..*
+
+
 
 `,
     );
@@ -110,41 +98,39 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="1. Transaction Id: from your program deployment"
+                            value="1. What library does Solana use to serialize/deserialize account data?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e =>
-                                    setSubmitTransactionID(e.target.value)
-                                }
-                                placeholder="Enter transaction Id..."
+                                onChange={e => setWhichLibrary(e.target.value)}
+                                placeholder="Enter the name of the library"
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="2. Program Id:"
+                            value="2. In what form is data stored in the Solana blockchain?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e =>
-                                    setSubmitProgramID(e.target.value)
-                                }
-                                placeholder="Enter program Id..."
+                                onChange={e => setWhatDataForm(e.target.value)}
+                                placeholder="Enter the data format, or acronym (hint)"
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="3. How long did it take?  (minutes)"
+                            value="3. What does the size of your account determine, besides space?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
-                                onChange={e => setSubmitTime(e.target.value)}
-                                placeholder="Enter number of minutes it took to deploy your program..."
+                                onChange={e =>
+                                    setWhatDoesSizeDo(e.target.value)
+                                }
+                                placeholder="Enter what the purpose of declaring size is"
                             />
                         </Card>
                         <input
@@ -169,7 +155,6 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
                                 </option>
                             </select>
                         </Card>
-
                         {/* additional feedback, was it easy, suggestions, etc */}
                     </div>
                 ),
@@ -197,7 +182,6 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
-
         try {
             const submission = `
 ___
@@ -207,17 +191,19 @@ Challenge Id: [#${challengeID}]
 
 Hunter: ${user.name ?? user.login}
 
-1. Transaction ID:
-${submitTransactionID}
+1. What library does Solana use to serialize/deserialize account data?
+${answerOne}
 
-2. Program ID:
-${submitProgramID}
+2. In what form is data stored in the Solana blockchain?
+${answerTwo}
 
-3. How long did it take to deploy a program? (minutes): ${submitTime}
+3. What does the size of your account determine, besides space?
+${answerThree}
 
 4. University:
 ${submitUniversity}
 -> ${user.login}
+
 
 `;
             setSubmission(submission);
@@ -351,7 +337,7 @@ ${submitUniversity}
     );
 };
 
-export default DeployChallengePage;
+export default CustomAccountDataChallengePage;
 
 export const getServerSideProps: GetServerSideProps = async context => {
     const session = await unstable_getServerSession(

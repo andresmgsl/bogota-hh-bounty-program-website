@@ -16,76 +16,74 @@ import { TbBrandGithub } from 'react-icons/tb';
 import { User } from 'types/github';
 import { cn } from 'utils';
 
-type DeployChallengePageProps = {
+type LookupTableChallengePageProps = {
     user: User;
 };
-const DeployChallengePage: NextPage<DeployChallengePageProps> = ({ user }) => {
+
+const LookupTableChallengePage: NextPage<LookupTableChallengePageProps> = ({
+    user,
+}) => {
     const [validBountyName, setValidBountyName] = useState(true);
     const [validHunter, setValidHunter] = useState(true);
     const titleRef = useRef(null);
     const hunterRef = useRef(null);
     const { data: session } = useSession();
 
-    const [title, setTitle] = useState('Solana 101: Deploy a Program');
+    const [title, setTitle] = useState('Lookup Table');
     const [hunter, setHunter] = useState('');
 
-    const [submitProgramID, setSubmitProgramID] = useState('');
-    const [submitTransactionID, setSubmitTransactionID] = useState('');
-    const [submitTime, setSubmitTime] = useState('');
+    const [answerOne, setSubmitTransactionID] = useState('');
+    const [answerTwo, setSubmitLookupTableID] = useState('');
+    const [answerThree, setSubmitTime] = useState('');
     const [submission, setSubmission] = useState('');
     const [submitUniversity, setSubmitUniversity] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [challengeID, setChallengeID] = useState('221004010');
-    const [points, setPoints] = useState(100);
+    const [challengeID, setChallengeID] = useState('221007105');
+    const [points, setPoints] = useState(300);
     const [description, setDescription] = useState(
         `
 ### Rewards: ${points} Points 🔥 *NFT! 👻
-
 ___
+
 ### Description
-In this challenge your mission is to deploy your first Solana program to devnet!
 
-💡 Record the start time so we can reference it later.
+In this challenge your mission is to send a Version 0 Transaction using an Address Lookup Table. 
 
-How long do you think it will take you to deploy?
+These are brand new Solana features.
 
-Good luck **Hunter**!
+How long do you think it will take you to send it?
 
-1. Visit the Solana developer docs: <a href="https://docs.solana.com/developers" target="_blank">https://docs.solana.com/developers</a>
-2. Click on the <a href="https://docs.solana.com/getstarted/hello-world" target="_blank">Get Started</a> button
-3. <a href="https://docs.solana.com/getstarted/hello-world#what-you-will-learn" target="_blank">Follow the guide to deploy a program</a>
-4. <a href="https://docs.solana.com/getstarted/hello-world#deploy-your-program" target="_blank">Deploy your program and record the transaction signature</a>
-5. <a href="https://docs.solana.com/getstarted/hello-world#find-your-program-id" target="_blank">Find and record your program Id</a>
+Good luck **${session?.user?.name}**!
+
+1. Visit the new [Versioned Transactions Guide](https://docs.solana.com/developers).
+2. Create an Address Lookup Table.
+3. Create a simple instruction, like [LookupTable](https://solana-labs.github.io/solana-web3.js/classes/SystemProgram.html#transfer).
+4. Use that instruction to build a Transaction v0.
+5. Successfully send that Transaction v0 over \`devnet\`.
 
 💡 Record the end time. How long did it take?
 
 ### Tips:
-- When you click deploy you should see two buttons: Solana Explorer and Solscan. Clicking the buttons should take you to a transaction explorer where you can view details and your transaction Id in the url.
-- Explorer on devnet to search for your program Id: <a href="https://explorer.solana.com/?cluster=devnet" target="_blank"> Solana Explorer</a>
-- <a href="https://explorer.solana.com/tx/4v5StXx1jeuWzh9trtBQtQRMeeUjZzk7mJSq9MTx9XhDunbqY5ZpwPZQanVKfN7Tb3X1gHtMa6xgUcARVDaG7x91?cluster=devnet" target="_blank">Example transaction Id</a> is in the url followed by: /tx/.
-- Id, Address, and Public Key are often used interchangeably to describe an address which can be used to look up account information.
-- Example of a public key or wallet address: 6UmotVc1i6y4e6DnHf5FwYzYX9qCD7ncAbErsiu4oo3U
-
-**some challenges may offer new NFTs while others may even update existing ones!*
+- You'll need to create an Address Lookup Tabe to reference in your transaction.
+- You'll need to build a Transaction Message using components such as BlockHash. These can be obtained using the \`Connection\` object.
+- The function to send a transaction (ie. \`sendAndConfirmTransaction\`) will return a signature string. You can use this string to look up your transaction on the Explorer.
+- Explorer on devnet to search for your Transaction Signature (ID): [Solana Explorer](https://explorer.solana.com/?cluster=devnet)
+- [Example transaction Id](https://explorer.solana.com/tx/4v5StXx1jeuWzh9trtBQtQRMeeUjZzk7mJSq9MTx9XhDunbqY5ZpwPZQanVKfN7Tb3X1gHtMa6xgUcARVDaG7x91?cluster=devnet) is in the url followed by: /tx/.
 
 ### Resources:
-
-<a href="https://docs.solana.com/developers" target="_blank">Solana Developer</a>
-
-<a href="https://beta.solpg.io/" target="_blank">Solana Playground</a>
-
+[Solana Developer Docs](https://docs.solana.com/developers)   
+[Web3 Examples](https://github.com/solana-developers/web3-examples)   
+[Solana Bytes: Transaction v0](https://www.youtube.com/watch?v=8k68cMeLX2U&list=PLilwLeBwGuK51Ji870apdb88dnBr1Xqhm&index=12)   
 ___
 
 ### How to Submit
 Your submission should include the following:
-1. Your \`Transaction Id\` (tx, signature, address) from the url above.
-2. The \`Program ID\` from your deployed program.
-3. Time it took to deploy your program.
-
-
-NOTE: if devnet is failing, you can use testnet and show how to properly switch network.
-
+1. Your \`Transaction Id\` of your transaction.
+2. The address of your Lookup Table.
+3. Time it took to successfully send this transaction.
 *That was almost too easy..*
+
+
 
 `,
     );
@@ -110,7 +108,7 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="1. Transaction Id: from your program deployment"
+                            value="1. Enter your Transaction ID of the transaction you ran:"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
@@ -118,33 +116,33 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
                                 onChange={e =>
                                     setSubmitTransactionID(e.target.value)
                                 }
-                                placeholder="Enter transaction Id..."
+                                placeholder="Transaction ID"
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="2. Program Id:"
+                            value="2. Enter the address of your Lookup Table you created:"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
                                 onChange={e =>
-                                    setSubmitProgramID(e.target.value)
+                                    setSubmitLookupTableID(e.target.value)
                                 }
-                                placeholder="Enter program Id..."
+                                placeholder="Lookup Table Address"
                             />
                         </Card>
 
                         <input
                             className="w-full border-none bg-transparent py-5 outline-none"
-                            value="3. How long did it take?  (minutes)"
+                            value="3. How long did it take you to run the transaction without errors?"
                         />
                         <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                             <input
                                 className="w-full items-center bg-transparent outline-none"
                                 onChange={e => setSubmitTime(e.target.value)}
-                                placeholder="Enter number of minutes it took to deploy your program..."
+                                placeholder="Enter the time it took you to run the transaction"
                             />
                         </Card>
                         <input
@@ -169,7 +167,6 @@ NOTE: if devnet is failing, you can use testnet and show how to properly switch 
                                 </option>
                             </select>
                         </Card>
-
                         {/* additional feedback, was it easy, suggestions, etc */}
                     </div>
                 ),
@@ -208,12 +205,13 @@ Challenge Id: [#${challengeID}]
 Hunter: ${user.name ?? user.login}
 
 1. Transaction ID:
-${submitTransactionID}
+${answerOne}
 
-2. Program ID:
-${submitProgramID}
+2. Lookup Table Address:
+${answerTwo}
 
-3. How long did it take to deploy a program? (minutes): ${submitTime}
+3. How long did it take to deploy a program? (minutes): 
+${answerThree}
 
 4. University:
 ${submitUniversity}
@@ -351,7 +349,7 @@ ${submitUniversity}
     );
 };
 
-export default DeployChallengePage;
+export default LookupTableChallengePage;
 
 export const getServerSideProps: GetServerSideProps = async context => {
     const session = await unstable_getServerSession(
