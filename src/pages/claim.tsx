@@ -18,9 +18,8 @@ interface ClaimPageProps {
 }
 
 const ClaimPage: NextPage<ClaimPageProps> = ({ token }) => {
-    const [walletPublicKey, setWalletPublicKey] =
-        useState('');
-    const [isLoading,setIsloading] = useState(false);
+    const [walletPublicKey, setWalletPublicKey] = useState('');
+    const [isLoading, setIsloading] = useState(false);
     const description = getNftDescription();
 
     const onSubmit = async (e: FormEvent) => {
@@ -34,52 +33,53 @@ const ClaimPage: NextPage<ClaimPageProps> = ({ token }) => {
                 }),
                 method: 'POST',
             });
-    
+
             const data = await response.json();
-            
+
             console.log(data);
-            alert("NFT Minted, please check your wallet");
+            alert('Your NFT is being minted!!');
             setIsloading(false);
-        } catch(e) {
-            alert("Error, try again.");
+        } catch (e) {
+            alert('Error, try again!!');
             console.log(e);
         }
-    }
+    };
 
     return (
-        <div className="flex flex-col md:flex-row items-center md:items-start mt-8 mx-auto gap-4 md:gap-8">
-            <Card className="w-[350px] px-8 py-4 flex flex-col items-center">
+        <div className="mx-auto mt-8 flex flex-col items-center gap-4 md:flex-row md:items-start md:gap-8">
+            <Card className="flex w-[350px] flex-col items-center px-8 py-4">
                 <div>
                     <Image
                         src="/bogota-nft-1.png"
                         width="320px"
                         height="320px"
-                        alt=""    
+                        alt=""
                     />
                 </div>
                 <p>
-                    <span className="text-opacity-25 text-xl">Description: </span> <br/>
+                    <span className="text-xl text-opacity-25">
+                        Description:{' '}
+                    </span>{' '}
+                    <br />
                     {description}
                 </p>
             </Card>
-            
+
             <form onSubmit={onSubmit} className="w-[350px]">
-                <label
-                    className="w-full py-5 border-none bg-transparent outline-none"
-                >
+                <label className="w-full border-none bg-transparent py-5 outline-none">
                     Your wallet:
                 </label>
                 <Card className="h-fit w-full p-5 transition-all duration-300 focus-within:border-3 focus-within:border-primary">
                     <input
                         className="w-full items-center bg-transparent outline-none"
-                        placeholder='Enter a public key'
+                        placeholder="Enter a public key"
                         onChange={e => setWalletPublicKey(e.target.value)}
                     />
                 </Card>
 
                 <div className="width-full flex flex-row justify-end gap-2">
                     <Button
-                        className="w-40 mt-4"
+                        className="mt-4 w-40"
                         type="submit"
                         variant="orange"
                         text="Submit"
@@ -88,11 +88,10 @@ const ClaimPage: NextPage<ClaimPageProps> = ({ token }) => {
                 </div>
             </form>
         </div>
-    )
+    );
 };
 
 export default ClaimPage;
-
 
 export const getServerSideProps: GetServerSideProps = async context => {
     const session = await unstable_getServerSession(
@@ -101,20 +100,20 @@ export const getServerSideProps: GetServerSideProps = async context => {
         authOptions,
     );
 
-    const accessToken = session?.accessToken;
+    const accessToken = session?.accessToken as string;
     const user = await getCurrentUser(accessToken);
 
     if (!user) {
         return { notFound: true };
     }
 
-    const bounties = await getChallengesByAssignee(user.login, accessToken);  
+    const bounties = await getChallengesByAssignee(user.login, accessToken);
 
     return {
         props: {
             token: accessToken,
             user,
-            bounties
+            bounties,
         },
     };
 };

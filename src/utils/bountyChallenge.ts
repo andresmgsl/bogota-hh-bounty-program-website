@@ -82,7 +82,7 @@ const toBountyChallenge = (
         name: title,
         owner: assigneeUsername,
         reward: reward,
-        state,
+        state: state as 'open' | 'closed',
         labels,
         tags: labels.map(label => ({ value: label.name })),
         rank,
