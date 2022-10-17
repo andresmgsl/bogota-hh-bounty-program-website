@@ -13,7 +13,7 @@ import {
     PublicKey,
     Transaction,
 } from '@solana/web3.js';
-import { getChallengesByAssignee } from 'lib/bounties';
+import { getBountyChallenges } from 'lib/bounties';
 import { authenticateGithubApp, getCurrentUser } from 'lib/github';
 import { NextApiHandler } from 'next';
 import { unstable_getServerSession } from 'next-auth';
@@ -35,15 +35,27 @@ const handler: NextApiHandler = async (req, res) => {
         return { notFound: true };
     }
 
-    const bounties = await getChallengesByAssignee(user.login, accessToken);
-    const points = bounties.reduce(
-        (total, bounty) => (total += bounty.reward),
-        0,
-    );
+    const allBounties = await getBountyChallenges(accessToken);
 
-    if (bounties.length === 0) {
-        return { notFound: true };
+    const participantsMap = allBounties.reduce((participantsMap, bounty) => ({
+        ...participantsMap,
+        [bounty.owner]: (participantsMap[bounty.owner] ?? 0) + bounty.reward
+    }), {})
+
+    const leaderBoard = Object.keys(participantsMap).map(participant => ({
+        id: participant,
+        points: participantsMap[participant]
+    })).sort((a , b) => b.points - a.points);
+
+    const participantIndex = leaderBoard.findIndex(({ id }) =>  id === user.login);
+
+    if (participantIndex === -1) {
+        return res.status(400).json({ message: 'Participant not found' });
     }
+
+    const participant = leaderBoard[participantIndex];
+    const rank = participantIndex + 1;
+    const points = participant.points;
 
     const description = getNftDescription();
     const keypair = Keypair.fromSecretKey(
@@ -85,7 +97,7 @@ const handler: NextApiHandler = async (req, res) => {
                     labels: [DRILL_CLAIM_LABEL, user.login, 'claim:processing'],
                 })
             ).data;
-            console.log('Checkpoint 6');
+
             try {
                 const name = 'Bogotá Dev Challenge';
 
@@ -99,6 +111,10 @@ const handler: NextApiHandler = async (req, res) => {
                         {
                             trait_type: 'Challenger',
                             value: user.login,
+                        },
+                        {
+                            trait_type: 'Rank',
+                            value: `#${rank}`,
                         },
                         {
                             trait_type: 'Points',
